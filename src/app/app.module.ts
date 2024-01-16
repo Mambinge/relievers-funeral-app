@@ -50,22 +50,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PayoutsComponent } from './ui/payments/payouts/payouts.component';
 import { PaymentPremiumsComponent } from './ui/payments/payment-premiums/payment-premiums.component';
 import { AddPayoutsComponent } from './ui/payments/payouts/add-payouts/add-payouts.component';
-
-function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
-  return () => {
-    return keycloak.init({
-      config: {
-        url: 'http://192.168.10.44:9001',
-        realm: 'funeral-services',
-        clientId: 'funeral-service-admin',
-      },
-      initOptions: {
-        onLoad: 'login-required',
-        checkLoginIframe: false,
-      },
-      enableBearerInterceptor: true,
-    });
-}}
+import { ToastrModule } from 'ngx-toastr';
+// function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
+//   return () => {
+//     return keycloak.init({
+//       config: {
+//         url: 'http://192.168.10.44:9001',
+//         realm: 'funeral-services',
+//         clientId: 'funeral-service-admin',
+//       },
+//       initOptions: {
+//         onLoad: 'login-required',
+//         checkLoginIframe: false,
+//       },
+//       enableBearerInterceptor: true,
+//     });
+// }}
 
 @NgModule({
   declarations: [
@@ -118,17 +118,24 @@ function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
     SharedModule.forRoot({ environment: environment.baseUrl, production: environment.production }),
     HttpClientModule,
     FormsModule,
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      progressAnimation: 'increasing',
+      closeButton: true
+    }),
     ReactiveFormsModule,
     NgxSpinnerModule.forRoot({ type: 'ball-clip-rotate-multiple' })  
   ],
   providers: [HttpClient, ApiService, KeycloakService,
 
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeKeycloak,
-      multi: true,
-      deps: [KeycloakService],
-    },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: initializeKeycloak,
+    //   multi: true,
+    //   deps: [KeycloakService],
+    // },
   ],  bootstrap: [AppComponent]
 })
 export class AppModule {

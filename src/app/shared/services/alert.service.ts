@@ -1,35 +1,25 @@
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
-  providedIn: 'root' // It will inject this provider at the root level of the application so it can be accessed anywhere.
+  providedIn: 'root',
 })
 export class AlertService {
-  showSuccess(message: string): void {
-    this.showAlert('success', message);
+  constructor(private toastr: ToastrService) {}
+
+  showSuccess(message: string, title: string = 'Success') {
+    this.toastr.success(message, title);
   }
 
-  showError(message: string): void {
-    this.showAlert('danger', message);
+  showError(message: string, title: string = 'Error') {
+    this.toastr.error(message, title);
   }
 
-  showInfo(message: string): void {
-    this.showAlert('info', message);
+  showInfo(message: string, title: string = 'Info') {
+    this.toastr.info(message, title);
   }
 
-  private showAlert(type: string, message: string): void {
-    // You may need to adapt this based on Flowbite's alert implementation
-    const alert = document.createElement('div');
-    alert.className = `alert alert-${type} alert-dismissible fade show`;
-    alert.innerHTML = `
-      <strong>${type.charAt(0).toUpperCase() + type.slice(1)}!</strong> ${message}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    `;
-
-    document.body.appendChild(alert);
-
-    // Adjust the duration to match your Flowbite alert behavior
-    setTimeout(() => {
-      alert.remove();
-    }, 5000); // Remove the alert after 5 seconds (adjust as needed)
+  showWarning(message: string, title: string = 'Warning') {
+    this.toastr.warning(message, title);
   }
 }

@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, catchError, throwError, finalize } from "r
 import { AuthService } from "./auth.service";
 import { EnvironmentInterface, _environment } from "../models";
 import { AlertService } from "./alert.service";
+import { ToastrService } from "ngx-toastr";
 
 @Injectable()
 export class HTTPStatus {
@@ -21,7 +22,7 @@ export class HTTPListener implements HttpInterceptor {
   readonly baseUrl: string;
   constructor(private status: HTTPStatus,
     private notification: AlertService,
-
+    private toastr: ToastrService,
               private injector: Injector,
               private auth: AuthService) {
     this.baseUrl = this.injector.get<EnvironmentInterface>(_environment).environment;
