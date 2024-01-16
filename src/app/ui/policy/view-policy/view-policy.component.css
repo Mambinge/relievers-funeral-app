@@ -1,0 +1,13 @@
+.flex-container {
+    display: flex;
+  }
+  
+  .left-side {
+    flex: 1; /* Take up available space */
+    margin-right: 10px; /* Add margin between left and right side */
+  }
+  
+  .right-side {
+    flex: 1; /* Take up available space */
+  }
+  
