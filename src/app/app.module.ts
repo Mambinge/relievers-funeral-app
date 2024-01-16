@@ -51,21 +51,21 @@ import { PayoutsComponent } from './ui/payments/payouts/payouts.component';
 import { PaymentPremiumsComponent } from './ui/payments/payment-premiums/payment-premiums.component';
 import { AddPayoutsComponent } from './ui/payments/payouts/add-payouts/add-payouts.component';
 
-// function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
-//   return () => {
-//     return keycloak.init({
-//       config: {
-//         url: 'http://192.168.10.44:9001',
-//         realm: 'funeral-services',
-//         clientId: 'funeral-service-admin',
-//       },
-//       initOptions: {
-//         onLoad: 'login-required',
-//         checkLoginIframe: false,
-//       },
-//       enableBearerInterceptor: true,
-//     });
-// }}
+function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
+  return () => {
+    return keycloak.init({
+      config: {
+        url: 'http://192.168.10.44:9001',
+        realm: 'funeral-services',
+        clientId: 'funeral-service-admin',
+      },
+      initOptions: {
+        onLoad: 'login-required',
+        checkLoginIframe: false,
+      },
+      enableBearerInterceptor: true,
+    });
+}}
 
 @NgModule({
   declarations: [
@@ -123,12 +123,12 @@ import { AddPayoutsComponent } from './ui/payments/payouts/add-payouts/add-payou
   ],
   providers: [HttpClient, ApiService, KeycloakService,
 
-    // {
-    //   provide: APP_INITIALIZER,
-    //   useFactory: initializeKeycloak,
-    //   multi: true,
-    //   deps: [KeycloakService],
-    // },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
+    },
   ],  bootstrap: [AppComponent]
 })
 export class AppModule {
