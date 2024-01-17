@@ -1,1 +1,0 @@
-{"ast":null,"code":"export * from './api.data';","map":{"version":3,"names":[],"sources":["C:\\Users\\mambi\\OneDrive\\Documents\\Personal\\Angular\\richo\\relievers-funeral-app\\src\\app\\shared\\data\\index.ts"],"sourcesContent":["export * from './api.data';\r\n"],"mappings":"AAAA,cAAc,YAAY"},"metadata":{},"sourceType":"module","externalDependencies":[]}
