@@ -11,7 +11,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 30vh; /* Optional: Make the container full height of the viewport */
+    height: 50vh; /* Optional: Make the container full height of the viewport */
   }
   
   .welcome-heading {

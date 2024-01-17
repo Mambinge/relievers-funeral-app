@@ -5,3 +5,14 @@
   .bg-colour {
     background-color: #feb139
   }
+
+  .ms-3 {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .links {
+    font-size: 13px;
+    font-weight: 450;
+
+  }

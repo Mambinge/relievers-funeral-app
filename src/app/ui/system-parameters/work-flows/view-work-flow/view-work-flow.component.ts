@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ApiService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-view-work-flow',
@@ -7,14 +8,27 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-work-flow.component.css']
 })
 export class ViewWorkFlowComponent {
-product:any
-constructor(private route: ActivatedRoute) {
- ;
-}
-  ngOnInit(){
+  workFlow:any
+  workFlows: any
+  stages:any
 
+  constructor(private route: ActivatedRoute, private request: ApiService) {}
+
+  ngOnInit() {
     this.route.params.subscribe((params : any) => {
-      const workFlowId = +params['id'];
+      const workFlowId = params['id'];
+      this.workFlow = this.getWorkFlow(workFlowId);
     });
   }
-    }
+
+  getWorkFlow(workFlowId:any){
+    this.request.getFromUrl(`workflows/${workFlowId}`).subscribe((res) => {
+      this.workFlows = res
+      this.stages = res.stages
+      this.stages= this.stages.sort((a: { order: number; }, b: { order: number; }) => a.order - b.order);
+      console.log(this.workFlows)
+    })
+  }
+
+
+}
