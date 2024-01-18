@@ -23,7 +23,7 @@ export class WorkFlowsComponent implements OnInit {
 
   getAll(){
     this.spinner.show()
-    this.service.getAll(`workflows?page=${this.currentPage}&size=10`).subscribe((res)=>{
+    this.service.getAll(`workflows?page=${this.currentPage}&size=8`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide()
       this.totalPages = res.totalPages;

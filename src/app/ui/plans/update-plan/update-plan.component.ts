@@ -7,6 +7,7 @@ import { first } from 'rxjs/operators';
 import { Plan } from '../plans.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-update-plan',
@@ -22,7 +23,7 @@ export class UpdatePlanComponent {
   planOption: any[] = [];
   plan:any
 
-  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
+  constructor(private spinner: NgxSpinnerService,private alert: AlertService, private route: ActivatedRoute,
     private router: Router, private fb: FormBuilder, private service: ApiService) {
   } 
 
@@ -61,6 +62,7 @@ export class UpdatePlanComponent {
       this.service.updateToUrl(`plan/${this.planId}`, this.planForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
+        this.alert.showSuccess("Updated Successfully")
         this.router.navigate(['/plans']);
       });
     }

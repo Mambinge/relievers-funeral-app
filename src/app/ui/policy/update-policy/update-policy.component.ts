@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Status } from 'src/app/models/policy-status';
 import { ApiService } from 'src/app/shared/services';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-update-policy',
@@ -19,7 +20,7 @@ export class UpdatePolicyComponent {
   // @Input() policyId!: any;
   policyId:any
 
-  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
+  constructor(private spinner: NgxSpinnerService,private alert: AlertService, private route: ActivatedRoute,
     private router: Router, private fb: FormBuilder, private service: ApiService) {
   } 
 
@@ -71,6 +72,7 @@ export class UpdatePolicyComponent {
       this.spinner.show()
       this.service.updateToUrl(`policies/${this.policyId}`, this.policyForm.value).subscribe((res) => {
         this.data = res;
+        this.alert.showSuccess("Updated Successfully")
         this.spinner.hide()
         this.router.navigate(['/policies']);
       });

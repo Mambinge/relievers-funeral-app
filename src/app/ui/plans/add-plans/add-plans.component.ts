@@ -6,6 +6,8 @@ import { Status } from 'src/app/models/policy-status';
 import { ApiService } from 'src/app/shared/services';
 import { first } from 'rxjs/operators';
 import { Plan } from '../plans.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-add-plans',
@@ -22,7 +24,8 @@ export class AddPlansComponent implements OnInit {
   @Output() planAdded : EventEmitter<number> = new EventEmitter<number>();
   @Input() planId!: Plan | any;
 
-  constructor(private fb: FormBuilder, private http: ApiService, private route: ActivatedRoute,) {
+  constructor(private fb: FormBuilder, private http: ApiService, private route: ActivatedRoute,
+    private spinner: NgxSpinnerService,private alert: AlertService) {
 
   } 
 
@@ -55,8 +58,11 @@ export class AddPlansComponent implements OnInit {
   onSubmit(event: Event) {
     event.preventDefault(); 
     if (this.planForm.valid) { 
+      this.spinner.show()
       this.http.postToUrl('plan', this.planForm.value).subscribe((res) => {
         this.data = res;
+        this.spinner.hide()
+        this.alert.showSuccess("Saved Successfully")
         this.planAdded.emit(res);
         this.closeModal();
       });

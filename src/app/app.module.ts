@@ -119,7 +119,7 @@ import { ToastrModule } from 'ngx-toastr';
     HttpClientModule,
     FormsModule,
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 8000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
       progressAnimation: 'increasing',

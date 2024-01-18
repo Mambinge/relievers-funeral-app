@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Status } from 'src/app/models/policy-status';
 import { ApiService } from 'src/app/shared/services';
 import { first } from 'rxjs/operators';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-update-premiums',
@@ -20,7 +21,7 @@ export class UpdatePremiumsComponent {
   planOptions: any[] = [];
   premium:any
 
-  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
+  constructor(private spinner: NgxSpinnerService,private alert: AlertService, private route: ActivatedRoute,
     private router: Router, private fb: FormBuilder, private service: ApiService) {
   } 
 
@@ -56,6 +57,7 @@ getPremium(premiumId:any){
       this.service.updateToUrl(`premiums/${this.premiumId}`, this.premiumsForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
+        this.alert.showSuccess("Updated Successfully")
         this.router.navigate(['/premiums']);
 
       });

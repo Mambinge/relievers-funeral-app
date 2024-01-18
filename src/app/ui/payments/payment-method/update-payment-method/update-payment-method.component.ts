@@ -5,6 +5,7 @@ import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Status } from 'src/app/models/policy-status';
 import { ApiService } from 'src/app/shared/services';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-update-payment-method',
@@ -19,7 +20,7 @@ export class UpdatePaymentMethodComponent {
   paymentMethodData:any
   @Input() paymentMethodId!: string;
   
-  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
+  constructor(private spinner: NgxSpinnerService,private alert: AlertService, private route: ActivatedRoute,
     private router: Router, private fb: FormBuilder, private service: ApiService) {
   } 
 
@@ -53,6 +54,7 @@ export class UpdatePaymentMethodComponent {
       this.service.updateToUrl(`payment-methods/${this.paymentMethodId}`, this.paymentMethodForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
+        this.alert.showSuccess("Update Successfully")
         this.router.navigate(['/payment-method']);
       });
     }

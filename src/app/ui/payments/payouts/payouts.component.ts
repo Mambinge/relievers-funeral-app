@@ -24,7 +24,7 @@ export class PayoutsComponent {
 
   getAll(reload: boolean, _$event?: Event){
     this.spinner.show();
-    this.service.getAll(`https://a621-68-178-203-55.ngrok-free.app/payments/payouts?page=${this.currentPage}&size=10`).subscribe((res)=>{
+    this.service.getAll(`https://a621-68-178-203-55.ngrok-free.app/payments/payouts?page=${this.currentPage}&size=8`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide();
       this.totalPages = res.totalPages;

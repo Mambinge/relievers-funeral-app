@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Status } from 'src/app/models/policy-status';
 import { ApiService } from 'src/app/shared/services';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-add-payment-method',
@@ -16,7 +18,7 @@ export class AddPaymentMethodComponent {
   statusOptions = Object.values(Status);
   data: any
   
-  constructor(private fb: FormBuilder, private service: ApiService) {
+  constructor(private spinner: NgxSpinnerService,private alert: AlertService, private fb: FormBuilder, private service: ApiService) {
     this.paymentMethodForm = this.fb.group({
       name: '',
       description: '',
@@ -27,10 +29,13 @@ export class AddPaymentMethodComponent {
   onSubmit(event: Event) {
     event.preventDefault(); 
     if (this.paymentMethodForm.valid) { 
+      this.spinner.show()
       this.service.postToUrl('payment-methods', this.paymentMethodForm.value).subscribe((res) => {
         this.data = res;
+        this.spinner.hide()
+        this.alert.showSuccess("Saved Successfully")
+        this.closeModal()
         this.paymentMethodAdded.emit();
-        this.closeModal();
       });
     }
   }
@@ -41,10 +46,10 @@ export class AddPaymentMethodComponent {
       },
   };
   const instanceOptions: InstanceOptions = {
-    id: 'crud-modal',
+    id: 'rider-modal',
     override: true
   };
-    const modal = new Modal(document.getElementById('crud-modal'), modalOptions, instanceOptions);
+    const modal = new Modal(document.getElementById('rider-modal'), modalOptions, instanceOptions);
     modal.hide();
   }
 }

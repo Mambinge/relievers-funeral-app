@@ -5,6 +5,7 @@ import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Status } from 'src/app/models/policy-status';
 import { ApiService } from 'src/app/shared/services';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-update-work-flow',
@@ -19,7 +20,7 @@ export class UpdateWorkFlowComponent {
   workFlowData:any
   @Input() workFlowId!: any;
 
-  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
+  constructor(private spinner: NgxSpinnerService, private alert: AlertService, private route: ActivatedRoute,
     private router: Router, private fb: FormBuilder, private service: ApiService) {
   }
   
@@ -55,6 +56,7 @@ export class UpdateWorkFlowComponent {
       this.service.updateToUrl(`workflows/${this.workFlowId}`, this.workFlowForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
+        this.alert.showSuccess("Updated Successfully")
         this.router.navigate(['/work-flows']);
       });
     }
