@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/shared/services';
 import { first } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-update-riders',
@@ -19,7 +20,7 @@ export class UpdateRidersComponent {
   @Input() ridersId!: string;
   rider:any
   
-  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
+  constructor(private spinner: NgxSpinnerService,private alert: AlertService, private route: ActivatedRoute,
     private router: Router, private fb: FormBuilder, private service: ApiService) {
   } 
 
@@ -49,6 +50,7 @@ export class UpdateRidersComponent {
       this.service.updateToUrl(`rider/${this.ridersId}`, this.riderForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
+        this.alert.showSuccess("Updated Successfully")
         this.router.navigate(['/riders']);
       });
     }

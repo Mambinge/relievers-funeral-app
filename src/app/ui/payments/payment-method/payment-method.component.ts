@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/shared/services';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-payment-method',
@@ -14,7 +15,7 @@ export class PaymentMethodComponent implements OnInit {
   currentPage = 0;
   totalPages:any
 
-  constructor(private service: ApiService, private router: Router,private spinner: NgxSpinnerService,){}
+  constructor(private service: ApiService, private router: Router,private spinner: NgxSpinnerService,private alert: AlertService){}
 
 
   ngOnInit(){
@@ -23,7 +24,7 @@ export class PaymentMethodComponent implements OnInit {
 
   getAll(){
     this.spinner.show()
-    this.service.getAll(`payment-methods?page=${this.currentPage}&size=10`).subscribe((res)=>{
+    this.service.getAll(`payment-methods?page=${this.currentPage}&size=8`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide()
       this.totalPages = res.totalPages;

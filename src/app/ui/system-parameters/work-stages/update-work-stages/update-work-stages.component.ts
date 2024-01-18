@@ -5,6 +5,7 @@ import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Status } from 'src/app/models/policy-status';
 import { ApiService } from 'src/app/shared/services';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-update-work-stages',
@@ -22,7 +23,7 @@ export class UpdateWorkStagesComponent {
   workId:any
   work:any
 
-  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
+  constructor(private spinner: NgxSpinnerService, private alert: AlertService, private route: ActivatedRoute,
     private router: Router, private fb: FormBuilder, private service: ApiService) {
   } 
 
@@ -42,7 +43,7 @@ export class UpdateWorkStagesComponent {
       status: '' 
     });
     
-    this.service.getAll('workflows').subscribe((data) => {
+    this.service.getAll('workflow-stages').subscribe((data) => {
       this.workFlowOptions = data.content;
     });
   }
@@ -58,13 +59,15 @@ export class UpdateWorkStagesComponent {
 
     fetchworkFlow(workFlowId:number) {
       if (workFlowId) {
-        this.service.getFromUrl(`policies/${workFlowId}`).subscribe((res) => {
+        this.service.getFromUrl(`workflow-stages/${workFlowId}`).subscribe((res) => {
 
           this.workFlowData = res;
           this.workFlowForm.patchValue({
             name: this.workFlowData.name,
-            description: this.workFlowData.description,
-            status: this.workFlowData.status
+            order:  this.workFlowData.order,
+            requiredRoles: this.workFlowData.requiredRoles,
+            requiredPermissions:  this.workFlowData.requiredPermissions,
+            status:  this.workFlowData.status 
           });            
 
         });
@@ -75,9 +78,10 @@ export class UpdateWorkStagesComponent {
     event.preventDefault(); 
     if (this.workFlowForm.valid) { 
       this.spinner.show() 
-      this.service.updateToUrl(`workflow-stages/${this.workFlowId}`, this.workFlowForm.value).subscribe((res) => {
+      this.service.updateToUrl(`workflow-stages/${this.workId}`, this.workFlowForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
+        this.alert.showSuccess("Updated Successfully")
         this.router.navigate(['/work-flows-stage']);
       });
     }

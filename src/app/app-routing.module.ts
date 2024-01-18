@@ -28,7 +28,7 @@ import { UpdatePolicyComponent } from './ui/policy/update-policy/update-policy.c
 import { UpdateWorkStagesComponent } from './ui/system-parameters/work-stages/update-work-stages/update-work-stages.component';
 
 const routes: Routes = [
-  // { path: '', component: LoginPageComponent},
+  { path: '', component: LoginPageComponent},
 
   {
     path: '',
