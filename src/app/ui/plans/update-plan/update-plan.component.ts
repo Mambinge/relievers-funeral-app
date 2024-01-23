@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { Status } from 'src/app/models/policy-status';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 import { first } from 'rxjs/operators';
 import { Plan } from '../plans.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,7 +28,7 @@ export class UpdatePlanComponent {
   } 
 
   ngOnInit() {
-    this.service.getFromUrl(`policies`)
+    this.service.getFromUrl(`${API.SERVICE}policies`)
     .subscribe((res)=>{
       this.planOptions = res.content
       this.route.params.subscribe((params : any) => {
@@ -49,7 +49,7 @@ export class UpdatePlanComponent {
 
   getPlan(planId:any){
     if (planId) {
-      this.service.getFromUrl(`plan/${planId}`).pipe(first())
+      this.service.getFromUrl(`${API.SERVICE}plan/${planId}`).pipe(first())
         .subscribe(x => this.planForm.patchValue(x));
     }
   }
@@ -59,7 +59,7 @@ export class UpdatePlanComponent {
     event.preventDefault(); 
     if (this.planForm.valid) { 
       this.spinner.show()
-      this.service.updateToUrl(`plan/${this.planId}`, this.planForm.value).subscribe((res) => {
+      this.service.updateToUrl(`${API.SERVICE}plan/${this.planId}`, this.planForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
         this.alert.showSuccess("Updated Successfully")

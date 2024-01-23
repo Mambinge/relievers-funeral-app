@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { Status } from 'src/app/models/policy-status';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 import { first } from 'rxjs/operators';
 import { Plan } from '../plans.component';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -43,11 +43,11 @@ export class AddPlansComponent implements OnInit {
     });
 
     if (this.planId) {
-      this.http.getFromUrl(`plan/${this.planId.id}`).pipe(first())
+      this.http.getFromUrl(`${API.SERVICE}plan/${this.planId.id}`).pipe(first())
       .subscribe(x => this.planForm.patchValue(x));
     }
 
-    this.http.getFromUrl(`policies`)
+    this.http.getFromUrl(`${API.SERVICE}policies`)
     .subscribe((res)=>{
       this.planOptions = res.content
     });
@@ -59,12 +59,12 @@ export class AddPlansComponent implements OnInit {
     event.preventDefault(); 
     if (this.planForm.valid) { 
       this.spinner.show()
-      this.http.postToUrl('plan', this.planForm.value).subscribe((res) => {
+      this.http.postToUrl(`${API.SERVICE}plan`, this.planForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
         this.alert.showSuccess("Saved Successfully")
-        this.planAdded.emit(res);
         this.closeModal();
+        this.planAdded.emit(res);
       });
     }
   }

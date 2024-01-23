@@ -26,6 +26,13 @@ import { UpdateWorkFlowComponent } from './ui/system-parameters/work-flows/updat
 import { UpdatePaymentMethodComponent } from './ui/payments/payment-method/update-payment-method/update-payment-method.component';
 import { UpdatePolicyComponent } from './ui/policy/update-policy/update-policy.component';
 import { UpdateWorkStagesComponent } from './ui/system-parameters/work-stages/update-work-stages/update-work-stages.component';
+import { UpdatePaymentSettingsComponent } from './ui/payments/payment-settings/update-payment-settings/update-payment-settings.component';
+import { AccountsComponent } from './ui/accounts/accounts.component';
+import { ViewAccountsComponent } from './ui/accounts/view-accounts/view-accounts.component';
+import { AddAccountsComponent } from './ui/accounts/add-accounts/add-accounts.component';
+import { PaymentPremiumsComponent } from './ui/payments/payment-premiums/payment-premiums.component';
+import { DependentsComponent } from './ui/dependents/dependents.component';
+import { UpdateAccountsComponent } from './ui/accounts/update-accounts/update-accounts.component';
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent},
@@ -35,6 +42,11 @@ const routes: Routes = [
     component: LayoutComponent,
     canActivate: [],
     children: [
+      { path: 'accounts', component: AccountsComponent},
+      { path: 'view-accounts/:id', component: ViewAccountsComponent},
+      { path: 'open-account', component: AddAccountsComponent},
+      { path: 'update-accounts/:id', component: UpdateAccountsComponent},
+
       { path: 'users', component: UsersComponent},
       { path: 'user-profile', component: UserProfileComponent},
 
@@ -57,7 +69,7 @@ const routes: Routes = [
       { path: 'update-payment-method/:id', component: UpdatePaymentMethodComponent},
 
       { path: 'payment-settings', component: PaymentSettingsComponent},
-      { path: 'update-payment-settings/:id', component: UpdatePremiumsComponent},
+      { path: 'update-payment-settings/:id', component: UpdatePaymentSettingsComponent},
 
       { path: 'work-flows', component: WorkFlowsComponent},
       { path: 'update-work-flow/:id', component: UpdateWorkFlowComponent},
@@ -66,7 +78,11 @@ const routes: Routes = [
       { path: 'work-flows-stage', component: WorkStagesComponent},
       { path: 'update-work-stage/:id', component: UpdateWorkStagesComponent},
 
-      { path: 'payouts', component: PayoutsComponent},
+      { path: 'payment-payouts', component: PayoutsComponent},
+
+      { path: 'payment-premiums', component: PaymentPremiumsComponent},
+
+      { path: 'dependent', component: DependentsComponent},
 
       { path: '**', component: DashboardComponent }
     ]

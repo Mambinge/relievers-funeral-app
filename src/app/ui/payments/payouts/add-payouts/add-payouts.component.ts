@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { first } from 'rxjs';
 import { Status } from 'src/app/models/policy-status';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-add-payouts',
@@ -35,7 +35,7 @@ export class AddPayoutsComponent {
     // this.isAddMode = !this.id;
 
     this.payoutForm = this.fb.group({
-      caimId: '',
+      claimId: '',
       paymentMethodId: '',
       amount: '',
       balance: '',
@@ -47,16 +47,21 @@ export class AddPayoutsComponent {
 
     if (this.payoutId) {
       this.http
-        .getFromUrl(`payment/payouts/${this.payoutId.id}`)
+        .getFromUrl(`${API.PAYMENTS}payment/payouts/${this.payoutId.id}`)
         .pipe(first())
         .subscribe((x) => this.payoutForm.patchValue(x));
     }
+
+    this.http.getFromUrl(`${API.SERVICE}payment-methods`).subscribe((res)=>{
+      this.paymentMethodOptions = res.content;
+      console.log(this.claimOptions)
+    })
   }
 
   onSubmit(event: Event) {
     event.preventDefault();
     if (this.payoutForm.valid) {
-      this.http.postToUrl('payment/payouts', this.payoutForm.value).subscribe((res) => {
+      this.http.postToUrl(`${API.PAYMENTS}payment/payouts`, this.payoutForm.value).subscribe((res) => {
         this.data = res;
         this.payoutAdded.emit(res);
         this.closeModal();

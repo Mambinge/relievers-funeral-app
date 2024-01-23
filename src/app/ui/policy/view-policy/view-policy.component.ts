@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import tabs from 'flowbite/lib/esm/components/tabs';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-view-policy',
@@ -26,7 +26,7 @@ export class ViewPolicyComponent {
   }
 
   getPolicy(policyId:any){
-    this.request.getFromUrl(`policies/${policyId}`).subscribe((res) => {
+    this.request.getFromUrl(`${API.SERVICE}policies/${policyId}`).subscribe((res) => {
       this.policies = res
       // this.user = res.permissions
     })
