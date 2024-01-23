@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Status } from 'src/app/models/policy-status';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
@@ -40,7 +40,7 @@ export class UpdatePolicyComponent {
   }
 
   getPolicy(policyId:any){
-    this.service.getFromUrl(`policies/${policyId}`)
+    this.service.getFromUrl(`${API.SERVICE}policies/${policyId}`)
     .subscribe(x => this.policyForm.patchValue(x))
   }
   
@@ -55,7 +55,7 @@ export class UpdatePolicyComponent {
 
     fetchPolicy(policyId:number) {
       if (this.policyId) {
-        this.service.getFromUrl(`policies/${policyId}`).subscribe((res) => {
+        this.service.getFromUrl(`${API.SERVICE}policies/${policyId}`).subscribe((res) => {
           this.policyData = res;
           this.policyForm.patchValue({
             name: this.policyData.name,
@@ -70,7 +70,7 @@ export class UpdatePolicyComponent {
     event.preventDefault(); 
     if (this.policyForm.valid) { 
       this.spinner.show()
-      this.service.updateToUrl(`policies/${this.policyId}`, this.policyForm.value).subscribe((res) => {
+      this.service.updateToUrl(`${API.SERVICE}policies/${this.policyId}`, this.policyForm.value).subscribe((res) => {
         this.data = res;
         this.alert.showSuccess("Updated Successfully")
         this.spinner.hide()

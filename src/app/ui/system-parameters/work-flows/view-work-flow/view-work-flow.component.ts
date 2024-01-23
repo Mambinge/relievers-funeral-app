@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-view-work-flow',
@@ -9,7 +9,7 @@ import { ApiService } from 'src/app/shared/services';
 })
 export class ViewWorkFlowComponent {
   workFlow:any
-  workFlows: any
+  @Output() workFlows: any
   stages:any
 
   constructor(private route: ActivatedRoute, private request: ApiService) {}
@@ -22,7 +22,7 @@ export class ViewWorkFlowComponent {
   }
 
   getWorkFlow(workFlowId:any){
-    this.request.getFromUrl(`workflows/${workFlowId}`).subscribe((res) => {
+    this.request.getFromUrl(`${API.SERVICE}workflows/${workFlowId}`).subscribe((res) => {
       this.workFlows = res
       this.stages = res.stages
       this.stages= this.stages.sort((a: { order: number; }, b: { order: number; }) => a.order - b.order);
@@ -30,5 +30,11 @@ export class ViewWorkFlowComponent {
     })
   }
 
+  onworkFlowAdded() {
+    // this.getAll();
+  }
 
+  trackByFn(index: number, item: any): any {
+    return item.id; // Replace 'id' with the actual unique identifier property of each stage object
+  }
 }

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Status } from 'src/app/models/policy-status';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
@@ -43,7 +43,7 @@ export class UpdatePaymentMethodComponent {
 
   fetchpaymentMethod(paymentMethodId:number) {
     if (paymentMethodId) {
-      this.service.getFromUrl(`payment-methods/${paymentMethodId}`).subscribe(x => this.paymentMethodForm.patchValue(x));
+      this.service.getFromUrl(`${API.SERVICE}payment-methods/${paymentMethodId}`).subscribe(x => this.paymentMethodForm.patchValue(x));
     }
   }
 
@@ -51,7 +51,7 @@ export class UpdatePaymentMethodComponent {
     event.preventDefault(); 
     if (this.paymentMethodForm.valid) { 
       this.spinner.show()
-      this.service.updateToUrl(`payment-methods/${this.paymentMethodId}`, this.paymentMethodForm.value).subscribe((res) => {
+      this.service.updateToUrl(`${API.SERVICE}payment-methods/${this.paymentMethodId}`, this.paymentMethodForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
         this.alert.showSuccess("Update Successfully")

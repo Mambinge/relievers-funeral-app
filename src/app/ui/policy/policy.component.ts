@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 import { UpdatePolicyComponent } from './update-policy/update-policy.component';
 import { InstanceOptions, Modal, ModalOptions } from 'flowbite';
 import { FormBuilder } from '@angular/forms';
@@ -28,7 +28,7 @@ export class PolicyComponent implements OnInit {
 
   getAll(){
     this.spinner.show();
-    this.service.getAll(`policies?page=${this.currentPage}&size=8`).subscribe((res)=>{
+    this.service.getAll(`${API.SERVICE}policies?page=${this.currentPage}&size=8`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide()
       this.totalPages = res.totalPages;
@@ -43,7 +43,7 @@ export class PolicyComponent implements OnInit {
   }
 
   deletePolicy(id: string) {
-    this.service.delete(`policies/${id}`).subscribe(() => {
+    this.service.delete(`${API.SERVICE}policies/${id}`).subscribe(() => {
       this.getAll();
     });
   }

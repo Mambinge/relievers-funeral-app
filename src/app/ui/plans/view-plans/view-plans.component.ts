@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-view-plans',
@@ -25,7 +25,7 @@ export class ViewPlansComponent {
   }
 
   getPlan(planId:any){
-    this.request.getFromUrl(`plan/${planId}`).subscribe((res) => {
+    this.request.getFromUrl(`${API.SERVICE}plan/${planId}`).subscribe((res) => {
       this.plans = res
       // this.user = res.permissions
     })

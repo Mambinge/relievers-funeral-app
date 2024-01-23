@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-payouts',
@@ -23,8 +23,8 @@ export class PayoutsComponent {
   }
 
   getAll(reload: boolean, _$event?: Event){
-    this.spinner.show();
-    this.service.getAll(`https://a621-68-178-203-55.ngrok-free.app/payments/payouts?page=${this.currentPage}&size=8`).subscribe((res)=>{
+    // this.spinner.show();
+    this.service.getAll(`${API.PAYMENTS}payments/payouts?page=${this.currentPage}&size=8`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide();
       this.totalPages = res.totalPages;
@@ -39,7 +39,7 @@ export class PayoutsComponent {
   }
 
   deletepayout(id: string) {
-    this.service.delete(`payout/${id}`).subscribe((res) => {
+    this.service.delete(`${API.PAYMENTS}payout/${id}`).subscribe((res) => {
       this.getAll(false)
     });
   }

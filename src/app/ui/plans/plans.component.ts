@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-plans',
@@ -24,7 +24,7 @@ export class PlansComponent {
 
   getAll(reload: boolean, _$event?: Event){
     this.spinner.show();
-    this.service.getAll(`plan?page=${this.currentPage}&size=8`).subscribe((res)=>{
+    this.service.getAll(`${API.SERVICE}plan?page=${this.currentPage}&size=8`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide();
       this.totalPages = res.totalPages;
@@ -39,7 +39,7 @@ export class PlansComponent {
   }
 
   deletePlan(id: string) {
-    this.service.delete(`plan/${id}`).subscribe((res) => {
+    this.service.delete(`${API.SERVICE}plan/${id}`).subscribe((res) => {
       this.getAll(false)
     });
   }

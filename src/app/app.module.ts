@@ -51,6 +51,20 @@ import { PayoutsComponent } from './ui/payments/payouts/payouts.component';
 import { PaymentPremiumsComponent } from './ui/payments/payment-premiums/payment-premiums.component';
 import { AddPayoutsComponent } from './ui/payments/payouts/add-payouts/add-payouts.component';
 import { ToastrModule } from 'ngx-toastr';
+import { AccountsComponent } from './ui/accounts/accounts.component';
+import { AddAccountsComponent } from './ui/accounts/add-accounts/add-accounts.component';
+import { UpdateAccountsComponent } from './ui/accounts/update-accounts/update-accounts.component';
+import { ViewAccountsComponent } from './ui/accounts/view-accounts/view-accounts.component';
+import { DependentsComponent } from './ui/dependents/dependents.component';
+import { AddContactDetailsComponent } from './ui/accounts/add-contact-details/add-contact-details.component';
+import { AddBankDetailsComponent } from './ui/accounts/add-bank-details/add-bank-details.component';
+import { AddPersonalDetailsComponent } from './ui/accounts/add-personal-details/add-personal-details.component';
+import { AddDependentsComponent } from './ui/dependents/add-dependents/add-dependents.component';
+import { UpdateDependentsComponent } from './ui/dependents/update-dependents/update-dependents.component';
+import { AddPaymentPremiumsComponent } from './ui/payments/payment-premiums/add-payment-premiums/add-payment-premiums.component';
+import { FilesComponent } from './ui/files/files.component';
+import { AddFilesComponent } from './ui/files/add-files/add-files.component';
+
 // function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
 //   return () => {
 //     return keycloak.init({
@@ -108,6 +122,19 @@ import { ToastrModule } from 'ngx-toastr';
     PayoutsComponent,
     PaymentPremiumsComponent,
     AddPayoutsComponent,
+    AccountsComponent,
+    AddAccountsComponent,
+    UpdateAccountsComponent,
+    ViewAccountsComponent,
+    DependentsComponent,
+    AddContactDetailsComponent,
+    AddBankDetailsComponent,
+    AddPersonalDetailsComponent,
+    AddDependentsComponent,
+    UpdateDependentsComponent,
+    AddPaymentPremiumsComponent,
+    FilesComponent,
+    AddFilesComponent,
     
   ],
   imports: [

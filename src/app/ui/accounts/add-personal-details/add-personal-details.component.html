@@ -1,0 +1,63 @@
+<form class="mt-10" [formGroup]="accountsForm" (submit)="nextStep($event)">
+    <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">Personal Details</h3>
+
+    <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div>
+            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+            <select formControlName="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option *ngFor="let title of titleOptions" [value]="title">{{title}}</option>
+            </select>        
+        </div>
+        <div >
+            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+            <input formControlName="name" type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+        </div>
+        <div >
+            <label for="surname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Surname</label>
+            <input formControlName="surname" type="text" name="surname" id="surname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  >
+        </div>                       
+         <div>
+            <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+            <select formControlName="gender" id="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option *ngFor="let gender of genderOptions" [value]="gender">{{gender}}</option>
+            </select>        
+        </div>
+        <div>
+            <label for="nationality" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nationality</label>
+            <select formControlName="nationality" id="nationality" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option *ngFor="let nationality of nationalityOptions" [value]="nationality">{{nationality}}</option>
+            </select>        
+        </div>
+        <div>
+            <label for="dateOfBirth" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of birth</label>
+            <input formControlName="dateOfBirth" type="date" name="dateOfBirth" id="dateOfBirth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  >
+        </div>
+
+        <div>
+            <label for="idNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ID Number</label>
+            <input formControlName="idNumber" type="text" name="idNumber" id="idNumber" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  >
+        </div> 
+        <div>
+            <label for="sourceOfIncome" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Source of income</label>
+            <input formControlName="sourceOfIncome" type="text" name="sourceOfIncome" id="sourceOfIncome" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  >
+        </div>
+
+        <div>
+            <label for="plan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a Plan</label>
+
+            <select formControlName="plan" id="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option *ngFor="let plan of planOptions" [value]="plan.id">{{plan.name}}</option>
+              </select>
+        </div>
+
+
+        
+    </div>
+    <button type="submit"
+    class="block text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">
+        Next: Contact Details
+    </button>
+
+</form> 
+
+
