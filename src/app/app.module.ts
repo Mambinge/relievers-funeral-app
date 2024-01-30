@@ -64,6 +64,9 @@ import { UpdateDependentsComponent } from './ui/dependents/update-dependents/upd
 import { AddPaymentPremiumsComponent } from './ui/payments/payment-premiums/add-payment-premiums/add-payment-premiums.component';
 import { FilesComponent } from './ui/files/files.component';
 import { AddFilesComponent } from './ui/files/add-files/add-files.component';
+import { UpdateFilesComponent } from './ui/files/update-files/update-files.component';
+import { ArrearsComponent } from './ui/payments/arrears/arrears.component';
+import { AddArrearsComponent } from './ui/payments/arrears/add-arrears/add-arrears.component';
 
 // function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
 //   return () => {
@@ -135,6 +138,9 @@ import { AddFilesComponent } from './ui/files/add-files/add-files.component';
     AddPaymentPremiumsComponent,
     FilesComponent,
     AddFilesComponent,
+    UpdateFilesComponent,
+    ArrearsComponent,
+    AddArrearsComponent,
     
   ],
   imports: [

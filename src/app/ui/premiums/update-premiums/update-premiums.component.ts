@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Status } from 'src/app/models/policy-status';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 import { first } from 'rxjs/operators';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
@@ -40,13 +40,13 @@ export class UpdatePremiumsComponent {
       amount:''
     });
 
-    this.service.getAll('plan').subscribe((data) => {
+    this.service.getAll(`${API.SERVICE}plan`).subscribe((data) => {
       this.planOptions = data.content;
     });
   }
 
 getPremium(premiumId:any){
-  this.service.getFromUrl(`premiums/${premiumId}`).pipe(first())
+  this.service.getFromUrl(`${API.SERVICE}premiums/${premiumId}`).pipe(first())
   .subscribe(x => this.premiumsForm.patchValue(x))
 
 }
@@ -54,7 +54,7 @@ getPremium(premiumId:any){
     event.preventDefault(); 
     if (this.premiumsForm.valid) { 
       this.spinner.show()
-      this.service.updateToUrl(`premiums/${this.premiumId}`, this.premiumsForm.value).subscribe((res) => {
+      this.service.updateToUrl(`${API.SERVICE}premiums/${this.premiumId}`, this.premiumsForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
         this.alert.showSuccess("Updated Successfully")

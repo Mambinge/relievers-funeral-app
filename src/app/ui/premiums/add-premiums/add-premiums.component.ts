@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Status } from 'src/app/models/policy-status';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
@@ -30,7 +30,7 @@ export class AddPremiumsComponent implements OnInit {
 
 
   ngOnInit() {
-    this.http.getAll('plan').subscribe((data) => {
+    this.http.getAll(`${API.SERVICE}plan`).subscribe((data) => {
       this.planOptions = data.content;
     });
   }
@@ -39,7 +39,7 @@ export class AddPremiumsComponent implements OnInit {
     event.preventDefault(); 
     if (this.premiumsForm.valid) { 
       this.spinner.show()
-      this.http.postToUrl('premiums', this.premiumsForm.value).subscribe((res) => {
+      this.http.postToUrl(`${API.SERVICE}premiums`, this.premiumsForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
         this.alert.showSuccess("Saved Successfully")

@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Status } from 'src/app/models/policy-status';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
@@ -29,7 +29,7 @@ export class AddRidersComponent {
     event.preventDefault(); 
     if (this.riderForm.valid) { 
       this.spinner.show()
-      this.service.postToUrl('rider', this.riderForm.value).subscribe((res) => {
+      this.service.postToUrl(`${API.SERVICE}rider`, this.riderForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
         this.alert.showSuccess("Saved Successfully")
