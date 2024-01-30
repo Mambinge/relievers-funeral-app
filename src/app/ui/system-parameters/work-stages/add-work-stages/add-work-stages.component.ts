@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -17,9 +17,14 @@ export class AddWorkStagesComponent {
   workStageForm!: FormGroup;
   statusOptions = Object.values(Status);
   data: any
+  @Input() workFlows:any;
   
   constructor(private fb: FormBuilder, private service: ApiService,private spinner: NgxSpinnerService, private alert: AlertService ) {
+  } 
+
+  ngOnInit() {
     this.workStageForm = this.fb.group({
+      // workFlowId: this.workFlows.name,
       workFlowId: '',
       name: '',
       order: '',
@@ -27,9 +32,7 @@ export class AddWorkStagesComponent {
       requiredPermissions: '',
       status: ''  
      });
-  } 
-
-  ngOnInit() {
+     console.log(this.workStageForm.value.workFlowId)
     this.service.getAll('workflows').subscribe((data) => {
       this.workFlowOptions = data.content;
     });
@@ -39,6 +42,12 @@ export class AddWorkStagesComponent {
     event.preventDefault(); 
     if (this.workStageForm.valid) { 
       this.spinner.show()
+      // const workFlowId = this.workStageForm.value.workFlowId.id;
+      // console.log(workFlowId)
+      // const formData = {
+      //   ...this.workStageForm.value,
+      //   workFlowId
+      // };
       this.service.postToUrl('workflow-stages', this.workStageForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()

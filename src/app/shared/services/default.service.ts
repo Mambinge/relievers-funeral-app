@@ -3,21 +3,26 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, empty, map } from 'rxjs';
 
 
+
 export class DefaultService<T> {
 
   public getAll(url:string): Observable<any> {
     return this.defaultHttpClient.get<any[]>(`${this.baseUrl}${url}`)
       .pipe(catchError(() => empty())); 
+     
     }
 
 
+
+  // public getFromUrl(url: string): Observable<any> {
+  //   return this.defaultHttpClient.get(`${this.baseUrl}${url}`)
+  //     .pipe(catchError(() => empty()));
+  // }
 
   public getFromUrl(url: string): Observable<any> {
     return this.defaultHttpClient.get(`${this.baseUrl}${url}`)
       .pipe(catchError(() => empty()));
   }
-
-
 
   public get(id: number | string,body:any): Observable<T> {
     return this.getFromUrl(`${id}`);

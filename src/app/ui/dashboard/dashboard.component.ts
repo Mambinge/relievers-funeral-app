@@ -10,7 +10,11 @@ export class DashboardComponent {
   charts:any
 
   constructor(){
-    window.addEventListener("load", function() {
+
+}
+
+ngOnInit() {
+  window.addEventListener("load", function() {
     let options = {
       chart: {
         height: "100%",

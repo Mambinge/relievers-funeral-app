@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Modal } from 'flowbite';
 import { Status } from 'src/app/models/policy-status';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 import type { ModalOptions, ModalInterface } from 'flowbite';
 import type { InstanceOptions } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -32,7 +32,7 @@ export class AddPolicyComponent {
     event.preventDefault(); 
     if (this.policyForm.valid) { 
       this.spinner.show()
-      this.service.postToUrl('policies', this.policyForm.value).subscribe((res) => {
+      this.service.postToUrl(`${API.SERVICE}policies`, this.policyForm.value).subscribe((res) => {
         this.data = res;
         this.alert.showSuccess('Saved Successfully')
         this.spinner.hide()

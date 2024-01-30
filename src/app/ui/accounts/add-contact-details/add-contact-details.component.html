@@ -1,0 +1,22 @@
+<form [formGroup]="contactForm" (submit)="submit($event)">
+    <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">Contact Details</h3>
+    <div class="grid gap-4 mb-4 sm:grid-cols-2">
+        <div >
+            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
+            <input formControlName="phone" type="text" email="phone" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+        </div>
+        <div >
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+            <input formControlName="email" type="email" email="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+        </div>  
+        <div>
+            <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
+            <input formControlName="address" type="text" email="address" id="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required="">
+        </div>
+    </div>
+    <button type="submit" 
+    class="block text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">
+        Next: Bank Details
+    </button>
+
+</form>
