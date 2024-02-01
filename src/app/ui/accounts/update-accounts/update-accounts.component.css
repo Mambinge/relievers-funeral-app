@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+  }
+  
+  .stepper {
+    width: 200px; 
+    padding: 20px;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+ 
+  }
+  
+  .step-content {
+    flex: 1; 
+    padding: 20px; 
+    
+  }
+  
+  .relative li {
+    height: 130px; 
+  }
+
+
+
+  .stepper li:last-child {
+    border-bottom: none;
+  }
+  
+  

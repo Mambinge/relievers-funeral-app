@@ -4,9 +4,9 @@ export enum API {
 
   // SERVICE='https://ba79-68-178-203-55.ngrok-free.app/',
   // CLIENTS ="https://035b-68-178-203-55.ngrok-free.app/",
-  // CLIENTS ="http://192.168.10.24:8991/",
+  CLIENTS ="http://192.168.10.24:8991/",
   SERVICE="http://68.178.203.55:8989/",
-  CLIENTS ="http://68.178.203.55:8991/",
+  // CLIENTS ="http://68.178.203.55:8991/",
   PAYMENTS ='http://68.178.203.55:8990/'
 
 }

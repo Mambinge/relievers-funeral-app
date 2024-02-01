@@ -34,6 +34,8 @@ import { PaymentPremiumsComponent } from './ui/payments/payment-premiums/payment
 import { DependentsComponent } from './ui/dependents/dependents.component';
 import { UpdateAccountsComponent } from './ui/accounts/update-accounts/update-accounts.component';
 import { ArrearsComponent } from './ui/payments/arrears/arrears.component';
+import { AccountApprovalComponent } from './ui/account-approval/account-approval.component';
+import { ViewAccountApprovalComponent } from './ui/account-approval/view-account-approval/view-account-approval.component';
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent},
@@ -47,6 +49,10 @@ const routes: Routes = [
       { path: 'view-accounts/:id', component: ViewAccountsComponent},
       { path: 'open-account', component: AddAccountsComponent},
       { path: 'update-accounts/:id', component: UpdateAccountsComponent},
+
+      { path: 'account-approvals', component: AccountApprovalComponent},
+      { path: 'view-account-approval/:id', component: ViewAccountApprovalComponent},
+
 
       { path: 'arrears', component: ArrearsComponent},
 

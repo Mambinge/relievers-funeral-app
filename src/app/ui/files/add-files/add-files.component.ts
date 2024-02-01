@@ -75,32 +75,25 @@ export class AddFilesComponent {
     }
   }
 
-  uploadFile(event: Event) {
+  uploadFile(event: any) {
     event.preventDefault();
-  
-    const formData = new FormData();
-    const file = this.fileForm.get('file')?.value;
-  
-    if (file) {
-      formData.append('file', file, file.name); // Make sure 'file' is not null
+    const pdfFiles = event.target.files;
+    if (pdfFiles && pdfFiles.length > 0) {
+      const pdfFile = pdfFiles[0];
+      const formData: FormData = new FormData();
+      formData.append('pdfFile', pdfFile);
       this.spinner.show();
-  
       this.httpClient.post(`${API.CLIENTS}kyc-files/upload`, formData).subscribe(
         (res) => {
           this.alert.showSuccess('Saved Successfully');
           this.spinner.hide();
           this.closeModal();
           this.policyAdded.emit();
-        },
-        (error) => {
-          console.error('Error uploading file:', error);
-          this.spinner.hide();
         }
       );
-    } else {
-      console.error('No file selected.');
-    }
+    } 
   }
+  
     
 
 

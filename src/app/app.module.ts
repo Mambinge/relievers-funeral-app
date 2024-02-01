@@ -67,6 +67,13 @@ import { AddFilesComponent } from './ui/files/add-files/add-files.component';
 import { UpdateFilesComponent } from './ui/files/update-files/update-files.component';
 import { ArrearsComponent } from './ui/payments/arrears/arrears.component';
 import { AddArrearsComponent } from './ui/payments/arrears/add-arrears/add-arrears.component';
+import { AccountPremiumsComponent } from './ui/account-payments/account-premiums/account-premiums.component';
+import { AccountPayoutsComponent } from './ui/account-payments/account-payouts/account-payouts.component';
+import { AddAccountPayoutsComponent } from './ui/account-payments/account-payouts/add-account-payouts/add-account-payouts.component';
+import { AddAccountPremiumsComponent } from './ui/account-payments/account-premiums/add-account-premiums/add-account-premiums.component';
+import { AccountApprovalComponent } from './ui/account-approval/account-approval.component';
+import { AddAccountApprovalComponent } from './ui/account-approval/add-account-approval/add-account-approval.component';
+import { ViewAccountApprovalComponent } from './ui/account-approval/view-account-approval/view-account-approval.component';
 
 // function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
 //   return () => {
@@ -141,6 +148,13 @@ import { AddArrearsComponent } from './ui/payments/arrears/add-arrears/add-arrea
     UpdateFilesComponent,
     ArrearsComponent,
     AddArrearsComponent,
+    AccountPremiumsComponent,
+    AccountPayoutsComponent,
+    AddAccountPayoutsComponent,
+    AddAccountPremiumsComponent,
+    AccountApprovalComponent,
+    AddAccountApprovalComponent,
+    ViewAccountApprovalComponent,
     
   ],
   imports: [

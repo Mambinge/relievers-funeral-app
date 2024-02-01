@@ -23,6 +23,8 @@ export class AddPlansComponent implements OnInit {
   id:any;
   @Output() planAdded : EventEmitter<number> = new EventEmitter<number>();
   @Input() planId!: Plan | any;
+  policy:any
+  products:any
 
   constructor(private fb: FormBuilder, private http: ApiService, private route: ActivatedRoute,
     private spinner: NgxSpinnerService,private alert: AlertService) {
@@ -31,15 +33,20 @@ export class AddPlansComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.planId)
- 
-    // this.isAddMode = !this.id;
+    this.route.params.subscribe((params : any) => {
+      const policyId = params['id'];
+      this.policy = +policyId
+      console.log(policyId)
+
+    });
+
+
 
     this.planForm = this.fb.group({
       name: '',
       description: '',
       status: '',
-      policyId:''
+      policyId: this.policy
     });
 
     if (this.planId) {
@@ -54,6 +61,12 @@ export class AddPlansComponent implements OnInit {
 
   }
 
+  // getAll(policyId:any){
+  //   this.http.getFromUrl(`${API.SERVICE}policies/${policyId}`).subscribe((res) => {
+  //     this.products = res.plans
+  //     console.log(this.products)
+  //   })
+  // }
 
   onSubmit(event: Event) {
     event.preventDefault(); 
@@ -80,5 +93,18 @@ export class AddPlansComponent implements OnInit {
   };
     const modal = new Modal(document.getElementById('crud-modal'), modalOptions, instanceOptions);
     modal.hide();
+  }
+
+  showModal() {
+    const modalOptions: ModalOptions = {
+      onShow: () => {
+      },
+  };
+  const instanceOptions: InstanceOptions = {
+    id: 'crud-modal',
+    override: true
+  };
+    const modal = new Modal(document.getElementById('crud-modal'), modalOptions, instanceOptions);
+    modal.show();
   }
 }

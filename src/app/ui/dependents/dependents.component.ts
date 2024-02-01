@@ -36,7 +36,7 @@ export class DependentsComponent {
 
   getAll(dependentsId: any, _$event?: Event){
     // this.spinner.show();
-    this.service.getAll(`${API.CLIENTS}dependants?page=${this.currentPage}&size=8`).subscribe((res)=>{
+    this.service.getAll(`${API.CLIENTS}dependants?policyHolderId=${this.dependentsId}&page=${this.currentPage}&size=8`).subscribe((res)=>{
       this.products = res.content
       // this.spinner.hide();
       this.totalPages = res.totalPages;

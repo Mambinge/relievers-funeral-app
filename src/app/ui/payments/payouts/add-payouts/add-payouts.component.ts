@@ -84,4 +84,17 @@ export class AddPayoutsComponent {
     );
     modal.hide();
   }
+
+  showModal() {
+    const modalOptions: ModalOptions = {
+      onShow: () => {
+      },
+  };
+  const instanceOptions: InstanceOptions = {
+    id: 'crud-modal',
+    override: true
+  };
+    const modal = new Modal(document.getElementById('crud-modal'), modalOptions, instanceOptions);
+    modal.show();
+  }
 }
