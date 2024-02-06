@@ -32,7 +32,6 @@ export class AddPersonalDetailsComponent {
   } 
 
   ngOnInit() {
-   
       this.route.params.subscribe((params : any) => {
         const accountsId = params['id'];
         this.accountsId = accountsId
@@ -40,8 +39,6 @@ export class AddPersonalDetailsComponent {
         this.accounts = this.getAccount(accountsId);
       }
       });
-
-
 
     this.accountsForm = this.fb.group({
       title: '',
@@ -52,12 +49,15 @@ export class AddPersonalDetailsComponent {
       idNumber: '',
       dateOfBirth: '',
       sourceOfIncome: '',
-      plan: { id: '', name: '' }
-    });
+      plan: {
+        id:'',
+        name: ''
+              }
+      });
 
     this.http.getFromUrl(`${API.SERVICE}policies`)
     .subscribe((res)=>{
-      this.planOptions = res.content
+      this.planOptions = res.content.map((plan: any) => ({ id: plan.id, name: plan.name }));
       console.log(this.planOptions)
     });
 
@@ -75,8 +75,27 @@ export class AddPersonalDetailsComponent {
     event.preventDefault(); 
     if (this.accountsForm.valid) { 
       this.spinner.show()
-        this.output.emit(this.accountsForm.value)
-        console.log(this.accountsForm.value)
+
+      const selectedPlan = this.accountsForm.value.plan;
+      const selectedPlanId = selectedPlan.id; 
+      const selectedPlanName = selectedPlan.name; 
+
+      const requestBody = {
+        title: this.accountsForm.value.title,
+        name: this.accountsForm.value.name,
+        surname: this.accountsForm.value.surname,
+        gender: this.accountsForm.value.gender,
+        nationality: this.accountsForm.value.nationality,
+        idNumber: this.accountsForm.value.idNumber,
+        dateOfBirth: this.accountsForm.value.dateOfBirth,
+        sourceOfIncome: this.accountsForm.value.sourceOfIncome,
+        plan: {
+          id: selectedPlanId,
+          name: selectedPlanName 
+        }
+      };
+        this.output.emit(requestBody)
+        console.log(requestBody)
         this.spinner.hide()
 
     }

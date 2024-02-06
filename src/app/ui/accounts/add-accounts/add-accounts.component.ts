@@ -27,24 +27,11 @@ constructor(private fb: FormBuilder, private http: ApiService, private router: R
 }
 
   ngOnInit(){
-    // this.http.getFromUrl(`${API.SERVICE}policies`)
-    // .subscribe((res)=>{
-    //   this.planOptions = res.content
-    //   console.log(this.planOptions)
-    // });
-
-
-   
   }
 
 
-
-  backPress(event:any) {
-    if (this.current > 0) this.current--;
   
-  }
-  
-    prevStep() {
+    prevStep(event:any) {
       if (this.currentStep > 0) {
         this.currentStep--;
       }

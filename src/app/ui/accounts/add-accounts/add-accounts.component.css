@@ -1,29 +1,29 @@
-/* Add your styling for the stepper here
+.container {
+  display: flex;
+}
 
-ol {
-    list-style-type: none;
-    display: flex;
-  }
+.stepper {
+  width: 200px; 
+  padding: 20px;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.step-content {
+  flex: 1; 
+  padding: 20px; 
   
-  li {
-    flex: 1;
-    text-align: center;
-    cursor: pointer;
-  }
-  
-  li.active {
-    color: blue; 
-  }
-  
-  .step-content {
-    margin-top: 20px;
-  }
-  
-  .buttons {
-    margin-top: 20px;
-  }
-  
-  button {
-    margin-right: 10px;
-  }
-   */
+}
+
+.relative li {
+  height: 130px; 
+}
+
+
+
+.stepper li:last-child {
+  border-bottom: none;
+}
+

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-payment-settings',
@@ -23,7 +23,7 @@ export class PaymentSettingsComponent implements OnInit {
 
   getAll(){
     this.spinner.show()
-    this.service.getAll(`payment-settings?page=${this.currentPage}&size=8`).subscribe((res)=>{
+    this.service.getAll(`${API.SERVICE}payment-settings?page=${this.currentPage}&size=8`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide()
       this.totalPages = res.totalPages;
@@ -38,7 +38,7 @@ export class PaymentSettingsComponent implements OnInit {
   }
 
   deletepaymentSettings(id: string) {
-    this.service.delete(`payment-settings/${id}`).subscribe((res) => {
+    this.service.delete(`${API.SERVICE}payment-settings/${id}`).subscribe((res) => {
       this.getAll()
     });
   }

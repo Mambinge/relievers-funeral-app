@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-work-stages',
@@ -23,7 +23,7 @@ export class WorkStagesComponent {
 
   getAll(){
     this.spinner.show()
-    this.service.getAll(`workflow-stages?page=${this.currentPage}&size=8`).subscribe((res)=>{
+    this.service.getAll(`${API.SERVICE}workflow-stages?page=${this.currentPage}&size=8`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide()
       this.totalPages = res.totalPages;
@@ -38,7 +38,7 @@ export class WorkStagesComponent {
   }
 
   deleteworkFlow(id: string) {
-    this.service.delete(`workflow-stages/${id}`).subscribe(() => {
+    this.service.delete(`${API.SERVICE}workflow-stages/${id}`).subscribe(() => {
       this.getAll();
     });
   }

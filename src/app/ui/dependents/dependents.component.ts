@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { API, ApiService } from 'src/app/shared/services';
 import { Dependent } from './model/dependent';
@@ -15,17 +15,28 @@ export class DependentsComponent {
   currentPage = 0;
   totalPages:any
   dependent!: Dependent[]
+  dependentsId!: number;
+  dependents!:any
+  id!:any
 
-  constructor(private service: ApiService, private router: Router,  private spinner: NgxSpinnerService,){}
+  constructor(private service: ApiService, private router: Router, 
+    private route: ActivatedRoute, private spinner: NgxSpinnerService,){}
 
 
   ngOnInit(){
     this.getAll(false)
+    this.route.params.subscribe((params : any) => {
+      const dependentsId = params['id'];
+      this.dependentsId = +dependentsId
+      if(dependentsId){
+        this.id = this.getAll(dependentsId)
+      }
+    });
   }
 
-  getAll(reload: boolean, _$event?: Event){
+  getAll(dependentsId: any, _$event?: Event){
     // this.spinner.show();
-    this.service.getAll(`${API.CLIENTS}dependants?page=${this.currentPage}&size=8`).subscribe((res)=>{
+    this.service.getAll(`${API.CLIENTS}dependants?policyHolderId=${this.dependentsId}&page=${this.currentPage}&size=8`).subscribe((res)=>{
       this.products = res.content
       // this.spinner.hide();
       this.totalPages = res.totalPages;
@@ -40,13 +51,9 @@ export class DependentsComponent {
   }
 
   deleteDependent(id: string) {
-    this.service.delete(`depandentS/${id}`).subscribe((res) => {
+    this.service.delete(`dependentS/${id}`).subscribe((res) => {
       this.getAll(false)
     });
-  }
-
-  viewDependent(id: string) {
-    this.router.navigate(['/view-dependents', id]);
   }
 
   updateDependent(id: string) {
@@ -60,4 +67,6 @@ export class DependentsComponent {
   toggleView() {
     this.showListUsers = !this.showListUsers;
   }
+
+
 }

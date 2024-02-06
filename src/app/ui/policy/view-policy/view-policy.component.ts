@@ -12,6 +12,7 @@ export class ViewPolicyComponent {
   policy:any
   policies: any
   selectedPlan: any;
+  selectedTab: string = 'policy';
 
   showPlanDetails(plan: any) {
     this.selectedPlan = plan;
@@ -32,5 +33,7 @@ export class ViewPolicyComponent {
     })
   }
 
-
+  selectTab(tab: string): void {
+    this.selectedTab = tab;
+  }
 }

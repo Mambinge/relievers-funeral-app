@@ -63,7 +63,7 @@ export class UpdatePlanComponent {
         this.data = res;
         this.spinner.hide()
         this.alert.showSuccess("Updated Successfully")
-        this.router.navigate(['/plans']);
+        // this.router.navigate([`/view-policy/${}`]);
       });
     }
   }

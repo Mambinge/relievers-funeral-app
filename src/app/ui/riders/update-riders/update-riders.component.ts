@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { Status } from 'src/app/models/policy-status';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 import { first } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -39,7 +39,7 @@ export class UpdateRidersComponent {
   }
 
   getRider(riderId:any){
-      this.service.getFromUrl(`rider/${riderId}`).pipe(first())
+      this.service.getFromUrl(`${API.SERVICE}rider/${riderId}`).pipe(first())
         .subscribe(x => this.riderForm.patchValue(x));
   }
 
@@ -47,7 +47,7 @@ export class UpdateRidersComponent {
     event.preventDefault(); 
     if (this.riderForm.valid) {
       this.spinner.show() 
-      this.service.updateToUrl(`rider/${this.ridersId}`, this.riderForm.value).subscribe((res) => {
+      this.service.updateToUrl(`${API.SERVICE}rider/${this.ridersId}`, this.riderForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
         this.alert.showSuccess("Updated Successfully")

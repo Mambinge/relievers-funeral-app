@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService, API } from 'src/app/shared/services';
-import { Gender, Nationality } from '../model/accounts';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-add-contact-details',
@@ -13,6 +11,8 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 })
 export class AddContactDetailsComponent {
   @Output() output = new EventEmitter<any>();
+  @Output() cancel = new EventEmitter<any>();
+
   @Input() personalDetails! :any
   contactForm!: FormGroup
   currentStep = 0;
@@ -50,17 +50,15 @@ export class AddContactDetailsComponent {
 
 
   submit(event: Event) {
-    // event.preventDefault(); 
-    // if ( this.contactForm.valid) { 
-      console.log(this.contactForm.valid)
       this.spinner.show()
         this.output.emit(this.contactForm.value)
-        console.log(this.contactForm.value)
         this.spinner.hide()
-
-    // }
   }
 
+ back(){
+  this.currentStep = 0;
+  this.cancel.emit()
 
+ }
  
 }

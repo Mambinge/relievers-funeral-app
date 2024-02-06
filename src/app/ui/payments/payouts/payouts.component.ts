@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { API, ApiService } from 'src/app/shared/services';
 
@@ -14,17 +14,20 @@ export class PayoutsComponent {
   currentPage = 0;
   totalPages:any
   payout!: any[]
+  clientsId:any
+  id:any
 
-  constructor(private service: ApiService, private router: Router,  private spinner: NgxSpinnerService,){}
+  constructor(private route: ActivatedRoute, private service: ApiService, private router: Router,  private spinner: NgxSpinnerService,){}
 
 
   ngOnInit(){
     this.getAll(false)
-  }
 
-  getAll(reload: boolean, _$event?: Event){
+ }
+
+  getAll(clientId:any, _$event?: Event){
     // this.spinner.show();
-    this.service.getAll(`${API.PAYMENTS}payments/payouts?page=${this.currentPage}&size=8`).subscribe((res)=>{
+    this.service.getAll(`${API.PAYMENTS}payments/payouts?&page=${this.currentPage}&size=8`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide();
       this.totalPages = res.totalPages;

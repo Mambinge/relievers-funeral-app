@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-premiums',
@@ -23,7 +23,7 @@ export class PremiumsComponent {
 
   getAll(){
     this.spinner.show()
-    this.service.getAll(`premiums?page=${this.currentPage}&size=8`).subscribe((res)=>{
+    this.service.getAll(`${API.SERVICE}premiums?page=${this.currentPage}&size=8`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide()
       this.totalPages = res.totalPages;
@@ -38,7 +38,7 @@ export class PremiumsComponent {
   }
 
   deletePremium(id: string) {
-    this.service.delete(`premiums/${id}`).subscribe((res) => {
+    this.service.delete(`${API.SERVICE}premiums/${id}`).subscribe((res) => {
       this.getAll()
     });
   }

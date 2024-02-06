@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Status } from 'src/app/models/policy-status';
-import { ApiService } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
@@ -43,7 +43,7 @@ export class UpdateWorkStagesComponent {
       status: '' 
     });
     
-    this.service.getAll('workflow-stages').subscribe((data) => {
+    this.service.getAll(`${API.SERVICE}workflow-stages`).subscribe((data) => {
       this.workFlowOptions = data.content;
     });
   }
@@ -59,7 +59,7 @@ export class UpdateWorkStagesComponent {
 
     fetchworkFlow(workFlowId:number) {
       if (workFlowId) {
-        this.service.getFromUrl(`workflow-stages/${workFlowId}`).subscribe((res) => {
+        this.service.getFromUrl(`${API.SERVICE}workflow-stages/${workFlowId}`).subscribe((res) => {
 
           this.workFlowData = res;
           this.workFlowForm.patchValue({
@@ -78,7 +78,7 @@ export class UpdateWorkStagesComponent {
     event.preventDefault(); 
     if (this.workFlowForm.valid) { 
       this.spinner.show() 
-      this.service.updateToUrl(`workflow-stages/${this.workId}`, this.workFlowForm.value).subscribe((res) => {
+      this.service.updateToUrl(`${API.SERVICE}workflow-stages/${this.workId}`, this.workFlowForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
         this.alert.showSuccess("Updated Successfully")

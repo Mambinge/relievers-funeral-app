@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { API, ApiService } from 'src/app/shared/services';
 
@@ -14,22 +14,40 @@ export class PlansComponent {
   currentPage = 0;
   totalPages:any
   plan!: Plan[]
+  policy:any
+  policies:any
 
-  constructor(private service: ApiService, private router: Router,  private spinner: NgxSpinnerService,){}
+  constructor(private service: ApiService, private router: Router, private route: ActivatedRoute,
+      private spinner: NgxSpinnerService,){}
 
 
   ngOnInit(){
+    this.route.params.subscribe((params : any) => {
+      const policyId = params['id'];
+      // this.policy = this.getPolicy(policyId);
+      this.policy = +policyId
+
+    });
+
     this.getAll(false)
   }
 
   getAll(reload: boolean, _$event?: Event){
-    this.spinner.show();
-    this.service.getAll(`${API.SERVICE}plan?page=${this.currentPage}&size=8`).subscribe((res)=>{
-      this.products = res.content
-      this.spinner.hide();
-      this.totalPages = res.totalPages;
+    this.service.getFromUrl(`${API.SERVICE}policies/${this.policy}`).subscribe((res) => {
+      this.products = res.plans
+
+      // this.user = res.permissions
     })
   }
+
+  // getAll(reload: boolean, _$event?: Event){
+  //   this.spinner.show();
+  //   this.service.getAll(`${API.SERVICE}plan?page=${this.currentPage}&size=8`).subscribe((res)=>{
+  //     this.products = res.content
+  //     this.spinner.hide();
+  //     this.totalPages = res.totalPages;
+  //   })
+  // }
 
   changePage(newPage: number) {
     if(newPage >= 0 && newPage < this.totalPages) {
