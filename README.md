@@ -1,27 +1,39 @@
-# RelieversFuneralApp
+# Relievers Funeral App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.5.
+Welcome to the Relievers Funeral Administration System, a secure web-based application designed to manage funeral policies efficiently. This project was generated with Angular CLI version 16.2
 
-## Development server
+## Overview
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+The Relievers Funeral Administration System is a secure web-based application designed to manage funeral policies efficiently. Built using Angular CLI version 16.2.5 and incorporating Flowbite (Tailwind CSS), this system offers a user-friendly interface for administrators to handle various aspects of funeral policy management.
 
-## Code scaffolding
+## Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The system includes the following modules:
 
-## Build
+1. **User Management**
+2. **Policy Management**
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+3. **Document Management**
 
-## Running unit tests
+4. **Workflow Management**
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+5. **Payments Management**
 
-## Running end-to-end tests
+6. **Commissions and Remittance Management**
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+7. **Death Claims Management**
 
-## Further help
+8. **Forms Management**
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+9. **Reports and Analytics**
+
+## Technologies Used
+
+- **Angular CLI**: Front-end development framework for building robust web applications.
+- **Flowbite (Tailwind CSS)**: Utilized for creating responsive and visually appealing user interfaces.
+- **Other Dependencies**: Additional libraries and packages may be integrated to enhance functionality and user experience.
+
+
+## Copyright
+
+© Ruvimbo Mambinge 2024. All rights reserved.
