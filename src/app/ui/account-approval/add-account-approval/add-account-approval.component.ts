@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import {  NgxSpinnerService } from 'ngx-spinner';
 import { ApiService, API } from 'src/app/shared/services';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-add-account-approval',
@@ -19,29 +20,27 @@ export class AddAccountApprovalComponent {
   data: any;
   isAddMode!: boolean;
   accounts:any;
-  approvalAdded:any
   @Input() accountId:any
   @Input() account:any
-   status ="APPROVED"
+  @Output() approvalAdded = new EventEmitter<void>();
+  status ="APPROVED"
 
   filteredWorkFlowStageOptions:any
   constructor(
     private fb: FormBuilder,
     private http: ApiService,
     private spinner: NgxSpinnerService
+    ,private alert: AlertService
   ) {}
 
   ngOnInit() {
- console.log(this.account)
- console.log(this.accountId)
-
     this.approvalForm = this.fb.group({
       accountId: this.accountId,
       status: this.status,
       policyNumber:'',
       reason: '',
       workFlow: {
-        id:''   
+        id:1   
       } ,
       workFlowStage: {
         id:this.account?.id,
@@ -51,7 +50,6 @@ export class AddAccountApprovalComponent {
    
     this.http.getFromUrl(`${API.SERVICE}workflows`).subscribe((res)=>{
       this.workFlowOptions = res.content;
-      console.log(this.workFlowOptions)
 
     })
 
@@ -61,7 +59,6 @@ export class AddAccountApprovalComponent {
 onWorkFlowChange(event: Event) {
   const selectedWorkFlowId = (event.target as HTMLSelectElement).value;
   this.filteredWorkFlowStageOptions = this.workFlowStageOptions.filter((stages) => stages.workFlowId === selectedWorkFlowId);
-console.log(this.filteredWorkFlowStageOptions)
 }
 
   onSubmit(event: Event) {
@@ -75,7 +72,8 @@ console.log(this.filteredWorkFlowStageOptions)
         status: this.status,
         reason: this.approvalForm.value.reason,
         workFlow: {
-          id: parseInt(this.approvalForm.value.workFlow, 10)
+          // id: parseInt(this.approvalForm.value.workFlow, 10)
+          id: 1
         },
         workFlowStage: {
           id: this.account?.id
@@ -84,9 +82,9 @@ console.log(this.filteredWorkFlowStageOptions)
       console.log(requestBody)
       this.http.postToUrl(`${API.CLIENTS}account-approval`, requestBody).subscribe((res) => {
         this.data = res;
+        this.alert.showSuccess('Saved Successfully')
         this.spinner.hide()
-
-        this.approvalAdded.emit(res);
+        this.approvalAdded.emit();
         this.closeModal();
       });
     }

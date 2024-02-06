@@ -15,9 +15,13 @@ export class ViewAccountApprovalComponent {
   accountId:any
   workflowData:any
   workFlow:any
-
+  approvalData:any
+  approvals:any
+  approvalName:any
+  approvalOrder:any
   currentStep = 0;
   sortedApprovalStages!: any[];
+
   constructor(private route: ActivatedRoute, private service: ApiService){}
 
   ngOnInit(){
@@ -25,13 +29,26 @@ export class ViewAccountApprovalComponent {
       const accountsId = params['id'];
       this.accounts = this.getAccount(accountsId);
       this.workflowData = this.getWorkflow(accountsId)
+      this.approvalData = this.getApprovals(accountsId) 
+
       this.accountId = accountsId
     });
-   console.log(this.accountId)
-   console.log(this.accounts)
   //  this.sortedApprovalStages = this.account.sort((a: { order: number; }, b: { order: number; }) => a.order - b.order);
-    
 }
+
+getApprovals(accountsId: any) {
+  this.service.getFromUrl(`${API.CLIENTS}account-approval?page=0&size=1000&accountId=${accountsId}`).subscribe((res) => {
+    this.approvals = res.content;
+    console.log(this.approvals);
+
+    if (Array.isArray(this.approvals)) {
+      this.approvalName = this.approvals.map(approval => approval.workFlowStage);
+      this.approvalOrder = this.approvals.map(approval => approval.workFlowStage.order)
+      console.log(this.approvalName);
+    }
+  });
+}
+
 
   getAccount(accountsId:any){
     this.service.getFromUrl(`${API.CLIENTS}clients/${accountsId}`).subscribe((res) => {
@@ -42,12 +59,12 @@ export class ViewAccountApprovalComponent {
   getWorkflow(accountsId:any){
     this.service.getFromUrl(`${API.CLIENTS}account-approval?page=0&size=1&accountId=${accountsId}`).subscribe((res) => {
       this.workFlow = res.content[0]
-      console.log(this.workFlow)
     })
 
   }
   approvalAdded(){
     this.getAccount(this.accountId)
+    this.getApprovals(this.accountId)
   }
 
   selectTab(tab: string): void {

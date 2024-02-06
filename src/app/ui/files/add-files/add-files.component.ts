@@ -75,7 +75,7 @@ export class AddFilesComponent {
         this.closeModal()
         this.fileAdded.emit();
         this.policyForm.reset()
-
+        this.fileForm.reset()
       });
     }
   }
