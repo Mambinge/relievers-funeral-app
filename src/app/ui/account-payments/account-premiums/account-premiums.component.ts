@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService, API } from 'src/app/shared/services';
@@ -16,12 +16,15 @@ export class AccountPremiumsComponent {
   payout!: any[]
   clientsId:any
   id:any
-
+  @Input() policyNumber:any
+number:any
   constructor(private service: ApiService, private route: ActivatedRoute,
      private router: Router,  private spinner: NgxSpinnerService,){}
 
 
   ngOnInit(){
+    console.log(this.policyNumber)
+  this.number = this.policyNumber
     this.route.params.subscribe((params : any) => {
       const clientId = params['id'];
       this.clientsId = +clientId

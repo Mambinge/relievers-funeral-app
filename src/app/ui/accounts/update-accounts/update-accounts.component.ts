@@ -22,7 +22,7 @@ export class UpdateAccountsComponent {
   accountsId:any;
   accounts:any
 
-constructor(private fb: FormBuilder, private http: ApiService, private router: Router,private route: ActivatedRoute,
+constructor(private http: ApiService, private router: Router,private route: ActivatedRoute,
   private spinner: NgxSpinnerService,private alert: AlertService){
 
 }

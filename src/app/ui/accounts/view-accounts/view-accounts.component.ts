@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { API, ApiService } from 'src/app/shared/services';
 import { initFlowbite } from 'flowbite';
 @Component({

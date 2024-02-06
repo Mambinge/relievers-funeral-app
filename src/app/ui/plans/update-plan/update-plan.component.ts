@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { Status } from 'src/app/models/policy-status';
 import { API, ApiService } from 'src/app/shared/services';
 import { first } from 'rxjs/operators';
@@ -24,7 +23,7 @@ export class UpdatePlanComponent {
   plan:any
 
   constructor(private spinner: NgxSpinnerService,private alert: AlertService, private route: ActivatedRoute,
-    private router: Router, private fb: FormBuilder, private service: ApiService) {
+   private fb: FormBuilder, private service: ApiService) {
   } 
 
   ngOnInit() {
@@ -63,7 +62,6 @@ export class UpdatePlanComponent {
         this.data = res;
         this.spinner.hide()
         this.alert.showSuccess("Updated Successfully")
-        // this.router.navigate([`/view-policy/${}`]);
       });
     }
   }

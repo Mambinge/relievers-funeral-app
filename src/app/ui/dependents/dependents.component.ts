@@ -24,7 +24,6 @@ export class DependentsComponent {
 
 
   ngOnInit(){
-    this.getAll(false)
     this.route.params.subscribe((params : any) => {
       const dependentsId = params['id'];
       this.dependentsId = +dependentsId
@@ -34,11 +33,9 @@ export class DependentsComponent {
     });
   }
 
-  getAll(dependentsId: any, _$event?: Event){
-    // this.spinner.show();
-    this.service.getAll(`${API.CLIENTS}dependants?policyHolderId=${this.dependentsId}&page=${this.currentPage}&size=8`).subscribe((res)=>{
+  getAll(dependentsId: any){
+    this.service.getAll(`${API.CLIENTS}dependants?policyHolderId=${dependentsId}&page=${this.currentPage}&size=8`).subscribe((res)=>{
       this.products = res.content
-      // this.spinner.hide();
       this.totalPages = res.totalPages;
     })
   }
@@ -46,14 +43,14 @@ export class DependentsComponent {
   changePage(newPage: number) {
     if(newPage >= 0 && newPage < this.totalPages) {
       this.currentPage = newPage;
-      this.getAll(false);
-    }
+      this.getAll(this.dependentsId);
+        }
   }
 
   deleteDependent(id: string) {
-    this.service.delete(`dependentS/${id}`).subscribe((res) => {
-      this.getAll(false)
-    });
+    this.service.delete(`${API.CLIENTS}dependants/${id}`).subscribe((res) => {
+      this.getAll(this.dependentsId);  
+      });
   }
 
   updateDependent(id: string) {
@@ -61,8 +58,8 @@ export class DependentsComponent {
   }
 
   onDependentAdded() {
-    this.getAll(false);
-  }
+    this.getAll(this.dependentsId);
+    }
 
   toggleView() {
     this.showListUsers = !this.showListUsers;

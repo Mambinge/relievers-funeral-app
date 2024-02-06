@@ -22,6 +22,7 @@ export class AddAccountPremiumsComponent {
   id: any;
   @Output() payoutAdded: EventEmitter<number> = new EventEmitter<number>();
   @Input() payoutId!:  any;
+  @Input() policyNumber:any
 
   constructor(
     private fb: FormBuilder,
@@ -31,11 +32,12 @@ export class AddAccountPremiumsComponent {
 
   ngOnInit() {
     console.log(this.payoutId);
+    console.log(this.policyNumber)
 
     // this.isAddMode = !this.id;
 
     this.payoutForm = this.fb.group({
-      clientPolicyId: '',
+      clientPolicyId: this.policyNumber,
       paymentMethodId: '',
       amount: '',
       balance: '',

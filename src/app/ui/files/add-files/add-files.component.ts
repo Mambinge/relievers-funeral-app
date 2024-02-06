@@ -1,12 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Status } from 'src/app/models/policy-status';
 import { ApiService, API } from 'src/app/shared/services';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { UploadService } from './file.service';
 
 @Component({
   selector: 'app-add-files',
@@ -14,7 +14,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
   styleUrls: ['./add-files.component.css']
 })
 export class AddFilesComponent {
-  @Output() policyAdded = new EventEmitter<void>();
+  @Output() fileAdded = new EventEmitter<void>();
   policyForm!: FormGroup;
   fileForm!: FormGroup;
   typeOptions = Object.values(Type);
@@ -22,9 +22,10 @@ export class AddFilesComponent {
   data: any
   account:any
   accountsId:any
-  
-  constructor(private spinner: NgxSpinnerService,private httpClient:HttpClient ,private alert: AlertService, private route: ActivatedRoute,
-     private fb: FormBuilder, private service: ApiService, ) {
+  dataFile: any;
+
+  constructor(private spinner: NgxSpinnerService ,private alert: AlertService, private route: ActivatedRoute,
+     private fb: FormBuilder, private service: ApiService,private uploadService: UploadService ) {
  
   } 
 
@@ -42,13 +43,11 @@ export class AddFilesComponent {
 
     });
     this.policyForm = this.fb.group({
-      accountId: this.account,
+      accountId: this.accountsId,
       type: '',
-      name:'',
-      extension: '',
-      location: this.fileForm.value.file
+      extension: '.png',
+      location: this.dataFile?.location
     });
-
 
   }
 
@@ -56,7 +55,6 @@ export class AddFilesComponent {
     this.service.getFromUrl(`${API.CLIENTS}clients/${accountsId}`)
     .subscribe((x)=>{
       this.data = x
-      console.log(this.data)
     })
 
   }
@@ -65,36 +63,35 @@ export class AddFilesComponent {
     event.preventDefault(); 
     if (this.policyForm.valid) { 
       this.spinner.show()
-      this.service.postToUrl(`${API.CLIENTS}kyc-files`, this.policyForm.value).subscribe((res) => {
+      this.policyForm.patchValue({
+        location: this.dataFile?.location
+      });
+      this.service.postToUrl(`${API.CLIENTS}kyc-files`, this.policyForm.value,
+      
+      ).subscribe((res) => {
         this.data = res;
         this.alert.showSuccess('Saved Successfully')
         this.spinner.hide()
         this.closeModal()
-        this.policyAdded.emit();
+        this.fileAdded.emit();
+        this.policyForm.reset()
+        this.fileForm.reset()
       });
     }
   }
 
-  uploadFile(event: any) {
-    event.preventDefault();
-    const pdfFiles = event.target.files;
-    if (pdfFiles && pdfFiles.length > 0) {
-      const pdfFile = pdfFiles[0];
-      const formData: FormData = new FormData();
-      formData.append('pdfFile', pdfFile);
-      this.spinner.show();
-      this.httpClient.post(`${API.CLIENTS}kyc-files/upload`, formData).subscribe(
-        (res) => {
-          this.alert.showSuccess('Saved Successfully');
-          this.spinner.hide();
-          this.closeModal();
-          this.policyAdded.emit();
-        }
-      );
-    } 
-  }
-  
+onFileSelected(event:any) {
+  const file: File = event.target.files[0];
+
+  if (file) {
+    this.uploadService.uploadFile(file).subscribe((response) => {
+        this.dataFile = response
+      })
+    }    
     
+
+  }
+
 
 
   closeModal() {
@@ -125,8 +122,8 @@ export class AddFilesComponent {
 }
 
 export enum Type{
-  BIRTH_CERT="BIRTH CERTIFICATE", 
-  NATIONAL_ID="NATIONAL ID", 
+  BIRTH_CERT="BIRTH_CERT", 
+  NATIONAL_ID="NATIONAL_ID", 
   PASSPORT="PASSPORT", 
   OTHER="OTHER" 
 }
