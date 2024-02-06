@@ -31,10 +31,9 @@ export class ViewWorkFlowComponent {
   }
 
   onworkFlowAdded() {
-    // this.getAll();
   }
 
   trackByFn(index: number, item: any): any {
-    return item.id; // Replace 'id' with the actual unique identifier property of each stage object
+    return item.id; 
   }
 }

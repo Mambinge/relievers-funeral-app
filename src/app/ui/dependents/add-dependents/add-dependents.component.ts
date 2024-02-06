@@ -89,6 +89,7 @@ export class AddDependentsComponent {
         this.alert.showSuccess("Saved Successfully");
         this.closeModal();
         this.dependentAdded.emit(res);
+        this.dependentForm.reset()
       });
     }
   }

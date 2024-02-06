@@ -27,7 +27,6 @@ export class ViewPlansComponent {
   getPlan(planId:any){
     this.request.getFromUrl(`${API.SERVICE}plan/${planId}`).subscribe((res) => {
       this.plans = res
-      // this.user = res.permissions
     })
   }
 

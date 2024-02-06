@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService, API } from 'src/app/shared/services';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Plan } from '../../plans/plans.component';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-update-dependents',
@@ -22,6 +23,7 @@ export class UpdateDependentsComponent {
   id:any;
   @Output() dependentAdded : EventEmitter<number> = new EventEmitter<number>();
   @Input() planId!: Plan | any;
+  @Input() dependentId! : any;
   dependentsId!: number;
   dependents!:any
 
@@ -30,14 +32,6 @@ export class UpdateDependentsComponent {
   } 
 
   ngOnInit() {
-    this.route.params.subscribe((params : any) => {
-      const dependentsId = params['id'];
-      this.dependentsId = +dependentsId
-      if(dependentsId){
-      console.log(this.dependentsId)
-    }
-    }); 
-
     this.dependentForm = this.fb.group({
         policyHolderId: '',
         name: '',
@@ -51,12 +45,22 @@ export class UpdateDependentsComponent {
     });
 
 
+
     this.http.getFromUrl(`${API.SERVICE}plan`)
     .subscribe((res)=>{
       this.planOptions = res.content.map((plan: any) => ({ id: plan.id, name: plan.name }));
       console.log(this.planOptions);
         });
 
+        const dependentId = this.dependentId
+        if (dependentId) {        
+          this.getDependent()
+        }
+  }
+
+  getDependent(){
+    this.http.getFromUrl(`${API.CLIENTS}dependants/${this.dependentId}`).pipe(first())
+    .subscribe(x => this.dependentForm.patchValue(x));
   }
 
 
@@ -81,7 +85,7 @@ export class UpdateDependentsComponent {
         }
       };
   
-      this.http.updateToUrl(`${API.CLIENTS}dependants`, requestBody).subscribe((res) => {
+      this.http.updateToUrl(`${API.CLIENTS}dependants/${this.dependentId}`, requestBody).subscribe((res) => {
         this.data = res;
         this.spinner.hide();
         this.alert.showSuccess("Saved Successfully");
@@ -96,10 +100,10 @@ export class UpdateDependentsComponent {
       },
   };
   const instanceOptions: InstanceOptions = {
-    id: 'crud-modal',
+    id: 'modal',
     override: true
   };
-    const modal = new Modal(document.getElementById('crud-modal'), modalOptions, instanceOptions);
+    const modal = new Modal(document.getElementById('modal'), modalOptions, instanceOptions);
     modal.hide();
   }
 
@@ -109,10 +113,10 @@ export class UpdateDependentsComponent {
       },
   };
   const instanceOptions: InstanceOptions = {
-    id: 'crud-modal',
+    id: 'modal',
     override: true
   };
-    const modal = new Modal(document.getElementById('crud-modal'), modalOptions, instanceOptions);
+    const modal = new Modal(document.getElementById('modal'), modalOptions, instanceOptions);
     modal.show();
   }
 }

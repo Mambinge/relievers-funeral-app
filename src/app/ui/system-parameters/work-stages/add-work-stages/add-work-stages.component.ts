@@ -24,7 +24,6 @@ export class AddWorkStagesComponent {
 
   ngOnInit() {
     this.workStageForm = this.fb.group({
-      // workFlowId: this.workFlows.name,
       workFlowId: '',
       name: '',
       order: '',
@@ -42,12 +41,6 @@ export class AddWorkStagesComponent {
     event.preventDefault(); 
     if (this.workStageForm.valid) { 
       this.spinner.show()
-      // const workFlowId = this.workStageForm.value.workFlowId.id;
-      // console.log(workFlowId)
-      // const formData = {
-      //   ...this.workStageForm.value,
-      //   workFlowId
-      // };
       this.service.postToUrl(`${API.SERVICE}workflow-stages`, this.workStageForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()

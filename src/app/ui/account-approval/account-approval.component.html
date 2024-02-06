@@ -11,9 +11,8 @@
       <tr>
         <th scope="col" class="px-6 py-3">Title</th>
         <th scope="col" class="px-6 py-3">Full Name</th>
-
-        <th scope="col" class="px-6 py-3">Gender</th>
         <th scope="col" class="px-6 py-3">Status</th>
+        <th scope="col" class="px-6 py-3">Notification</th>
         <th scope="col" class="px-6 py-3">Action</th>
       </tr>
     </thead>
@@ -29,21 +28,27 @@
           {{ product.title }}
         </th>
         <td class="px-6 py-4">{{ product.name }} {{ product.surname }}</td>
-        <td class="px-6 py-4">
-          {{ product.gender }}
-        </td>
+  
         <td class="px-6 py-4">
           <ng-container *ngIf="product.status === 'APPROVED'">
             <span class="bg-green-100 text-green-800 text-xs font-small me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">{{ product.status }}</span>
           </ng-container>
-          <ng-container *ngIf="product.status === 'AWAITING_APPROVALS'">
+          <ng-container *ngIf="product.status === 'PENDING'">
             <span class="bg-red-100 text-red-800 text-xs font-small me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">{{ product.status }}</span>
           </ng-container>
+          <ng-container *ngIf="product.status === 'AWAITING_APPROVALS'">
+            <span class="bg-orange-100 text-orange-800 text-xs font-small me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-orange-400">{{ product.status }}</span>
+          </ng-container>
         </td>
-
+        <td class="px-6 py-4">
+          <ng-container *ngIf="product.status === 'PENDING'">
+            <span class="bg-red-100 text-red-800 text-xs font-small me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">Add Client Files</span>
+          </ng-container>
+ 
+        </td>
         <td class="px-6 py-4 flex space-x-4">
 
-          <a
+          <a *ngIf="product.status !== 'PENDING'"
             (click)="viewAccount(product.id)"
             class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
           >
