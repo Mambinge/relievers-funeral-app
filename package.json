@@ -25,7 +25,6 @@
     "flowbite-datepicker": "^1.2.6",
     "keycloak-angular": "^14.2.0",
     "keycloak-js": "^23.0.3",
-    "ngx-scrollbar": "^13.0.3",
     "ngx-spinner": "^16.0.2",
     "ngx-toastr": "^18.0.0",
     "rxjs": "~7.8.0",
