@@ -23,7 +23,7 @@
     "apexcharts": "^3.45.1",
     "flowbite": "^2.2.0",
     "flowbite-datepicker": "^1.2.6",
-    "keycloak-angular": "^15.0.0",
+    "keycloak-angular": "^14.2.0",
     "keycloak-js": "^23.0.3",
     "ngx-scrollbar": "^13.0.3",
     "ngx-spinner": "^16.0.2",
