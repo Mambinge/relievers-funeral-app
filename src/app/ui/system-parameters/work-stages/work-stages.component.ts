@@ -23,7 +23,7 @@ export class WorkStagesComponent {
 
   getAll(){
     this.spinner.show()
-    this.service.getAll(`${API.SERVICE}workflow-stages?page=${this.currentPage}&size=8`).subscribe((res)=>{
+    this.service.getAll(`${API.SERVICE}workflow-stages?page=${this.currentPage}&size=7`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide()
       this.totalPages = res.totalPages;

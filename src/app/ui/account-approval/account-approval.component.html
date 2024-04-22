@@ -9,10 +9,10 @@
       class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
     >
       <tr>
+        <th scope="col" class="px-6 py-3"></th>
         <th scope="col" class="px-6 py-3">Title</th>
         <th scope="col" class="px-6 py-3">Full Name</th>
         <th scope="col" class="px-6 py-3">Status</th>
-        <th scope="col" class="px-6 py-3">Notification</th>
         <th scope="col" class="px-6 py-3">Action</th>
       </tr>
     </thead>
@@ -21,6 +21,13 @@
         *ngFor="let product of products"
         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
       >
+      <th>
+        <ng-container *ngIf="product.status === 'PENDING'">
+        <svg class="w-4 h-4 text-red-500 dark:text-red-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z"/>
+      </svg>
+      </ng-container>
+      </th>
         <th
           scope="row"
           class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -40,12 +47,12 @@
             <span class="bg-orange-100 text-orange-800 text-xs font-small me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-orange-400">{{ product.status }}</span>
           </ng-container>
         </td>
-        <td class="px-6 py-4">
+        <!-- <td class="px-6 py-4">
           <ng-container *ngIf="product.status === 'PENDING'">
             <span class="bg-red-100 text-red-800 text-xs font-small me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">Add Client Files</span>
           </ng-container>
  
-        </td>
+        </td> -->
         <td class="px-6 py-4 flex space-x-4">
 
           <a *ngIf="product.status !== 'PENDING'"

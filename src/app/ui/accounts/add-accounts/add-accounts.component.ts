@@ -63,7 +63,7 @@ constructor(private fb: FormBuilder, private http: ApiService, private router: R
     const personalDetails = this.personalDetails
     const contactDetails = this.contactDetails 
     const bankDetails = this.bankDetails
-
+console.log(personalDetails)
     const requestBody = {
       title: personalDetails.title,
       name: personalDetails.name,
@@ -75,7 +75,11 @@ constructor(private fb: FormBuilder, private http: ApiService, private router: R
       sourceOfIncome: personalDetails.sourceOfIncome,
       plan: {
         id: personalDetails.plan.id,
-        name: personalDetails.plan.name
+        name: personalDetails.plan.name,
+        premiums: [{
+          name: personalDetails.plan.premiums.name,
+          amount: personalDetails.plan.premiums.amount,
+        }]
       },
       bankDetails: {
         bank: bankDetails.bank,

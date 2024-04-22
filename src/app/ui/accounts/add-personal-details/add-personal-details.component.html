@@ -46,13 +46,34 @@
         </div>
 
         <div>
-            <label for="plan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a Plan</label>
-            <select formControlName="plan" id="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option *ngFor="let plan of planOptions" [ngValue]="plan">{{plan.name}}</option>
+            <label for="policy" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a Policy</label>
+            <select (change)="onPolicyChange($event)" id="policy" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="" disabled selected>Select a Policy</option>
+                <option *ngFor="let policy of policyOptions" [value]="policy.id">{{policy.name}}</option>
             </select>
-          </div>
-          
+        </div>
+        
+        <div *ngIf="selectedPolicy">
+            <label for="plan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a Plan</label>
+            <select (change)="onPlanChange($event)" formControlName="plan" id="plan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="" disabled selected>Select a Plan</option>
+                <option *ngFor="let plan of filteredPlans" [ngValue]="plan">{{plan.name}}</option>
+            </select>
+        </div>
+    
+        <div *ngIf="selectedPremium">
+            <label for="premiums" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a Premium</label>
+            <select formControlName="plan.premiums.name" id="premiums" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="" disabled selected>Select a Premium</option>
+                <option *ngFor="let premium of filteredPremium" [ngValue]="premium">{{premium.name}}</option>
+            </select>
+        </div>
 
+      <!-- Amount -->
+<div *ngIf="selectedPremium">
+    <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount</label>
+    <input formControlName="plan.premiums.amount" type="number" name="amount" id="amount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  >
+</div>
 
         
     </div>

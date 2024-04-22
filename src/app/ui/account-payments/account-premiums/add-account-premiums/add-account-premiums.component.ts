@@ -40,10 +40,10 @@ export class AddAccountPremiumsComponent {
       clientPolicyId: this.policyNumber,
       paymentMethodId: '',
       amount: '',
-      balance: '',
+      // balance: '',
       paymentDate: '',
       paymentReference: '',
-      status: '',
+      // status: '',
       notes: '',
     });
 
@@ -63,7 +63,7 @@ export class AddAccountPremiumsComponent {
   onSubmit(event: Event) {
     event.preventDefault();
     if (this.payoutForm.valid) {
-      this.http.postToUrl(`${API.PAYMENTS}payment/premiums`, this.payoutForm.value).subscribe((res) => {
+      this.http.postToUrl(`${API.PAYMENTS}payment/premiums/pay`, this.payoutForm.value).subscribe((res) => {
         this.data = res;
         this.payoutAdded.emit(res);
         this.closeModal();

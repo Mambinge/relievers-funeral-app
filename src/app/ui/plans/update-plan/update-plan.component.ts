@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Status } from 'src/app/models/policy-status';
 import { API, ApiService } from 'src/app/shared/services';
@@ -7,6 +7,7 @@ import { Plan } from '../plans.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 
 @Component({
   selector: 'app-update-plan',
@@ -18,6 +19,7 @@ export class UpdatePlanComponent {
   statusOptions = Object.values(Status);
   data: any
   @Input() planId!: Plan | any;
+  @Output() planAdded : EventEmitter<number> = new EventEmitter<number>();
   planOptions: any[] = [];
   planOption: any[] = [];
   plan:any
@@ -62,8 +64,37 @@ export class UpdatePlanComponent {
         this.data = res;
         this.spinner.hide()
         this.alert.showSuccess("Updated Successfully")
+        this.closeModal();
+        this.planAdded.emit(res);
       });
     }
+  }
+
+
+  closeModal() {
+    const modalOptions: ModalOptions = {
+      onHide: () => {
+      },
+  };
+  const instanceOptions: InstanceOptions = {
+    id: 'modal',
+    override: true
+  };
+    const modal = new Modal(document.getElementById('modal'), modalOptions, instanceOptions);
+    modal.hide();
+  }
+
+  showModal() {
+    const modalOptions: ModalOptions = {
+      onShow: () => {
+      },
+  };
+  const instanceOptions: InstanceOptions = {
+    id: 'modal',
+    override: true
+  };
+    const modal = new Modal(document.getElementById('modal'), modalOptions, instanceOptions);
+    modal.show();
   }
 
 }

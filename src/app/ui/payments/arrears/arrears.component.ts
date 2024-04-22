@@ -23,8 +23,8 @@ export class ArrearsComponent {
   }
 
   getAll(reload: boolean, _$event?: Event){
-    // this.spinner.show();
-    this.service.getAll(`${API.PAYMENTS}arrears/premiums?page=${this.currentPage}&size=8`).subscribe((res)=>{
+    this.spinner.show();
+    this.service.getAll(`${API.CLIENTS}clients?page=${this.currentPage}&size=7`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide();
       this.totalPages = res.totalPages;

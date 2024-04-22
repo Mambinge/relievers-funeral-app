@@ -74,6 +74,12 @@ import { AddAccountPremiumsComponent } from './ui/account-payments/account-premi
 import { AccountApprovalComponent } from './ui/account-approval/account-approval.component';
 import { AddAccountApprovalComponent } from './ui/account-approval/add-account-approval/add-account-approval.component';
 import { ViewAccountApprovalComponent } from './ui/account-approval/view-account-approval/view-account-approval.component';
+import { PlannerComponent } from './ui/system-parameters/planner/planner.component';
+import { ViewPlannerComponent } from './ui/system-parameters/planner/view-planner/view-planner.component';
+import { PlanPremiumsComponent } from './ui/system-parameters/planner/plan-premiums/plan-premiums.component';
+import { AddPlanPremiumsComponent } from './ui/system-parameters/planner/plan-premiums/add-plan-premiums/add-plan-premiums.component';
+import { UpdatePlanPremiumsComponent } from './ui/system-parameters/planner/plan-premiums/update-plan-premiums/update-plan-premiums.component';
+import { ViewArrearsComponent } from './ui/payments/arrears/view-arrears/view-arrears.component';
 
 // function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
 //   return () => {
@@ -155,6 +161,12 @@ import { ViewAccountApprovalComponent } from './ui/account-approval/view-account
     AccountApprovalComponent,
     AddAccountApprovalComponent,
     ViewAccountApprovalComponent,
+    PlannerComponent,
+    ViewPlannerComponent,
+    PlanPremiumsComponent,
+    AddPlanPremiumsComponent,
+    UpdatePlanPremiumsComponent,
+    ViewArrearsComponent,
     
   ],
   imports: [

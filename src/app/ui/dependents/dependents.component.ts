@@ -34,7 +34,7 @@ export class DependentsComponent {
   }
 
   getAll(dependentsId: any){
-    this.service.getAll(`${API.CLIENTS}dependants?policyHolderId=${dependentsId}&page=${this.currentPage}&size=8`).subscribe((res)=>{
+    this.service.getAll(`${API.CLIENTS}dependants?policyHolderId=${dependentsId}&page=${this.currentPage}&size=7`).subscribe((res)=>{
       this.products = res.content
       this.totalPages = res.totalPages;
     })
