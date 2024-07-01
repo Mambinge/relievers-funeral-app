@@ -36,8 +36,6 @@ export class AddPlansComponent implements OnInit {
     this.route.params.subscribe((params : any) => {
       const policyId = params['id'];
       this.policy = +policyId
-      console.log(policyId)
-
     });
 
 

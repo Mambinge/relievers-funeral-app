@@ -27,7 +27,7 @@ export class PayoutsComponent {
 
   getAll(clientId:any, _$event?: Event){
     // this.spinner.show();
-    this.service.getAll(`${API.PAYMENTS}payments/payouts?&page=${this.currentPage}&size=8`).subscribe((res)=>{
+    this.service.getAll(`${API.PAYMENTS}payments/payouts?&page=${this.currentPage}&size=7`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide();
       this.totalPages = res.totalPages;

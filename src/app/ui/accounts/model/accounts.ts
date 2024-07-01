@@ -42,6 +42,8 @@ export interface Accounts {
     American="American", 
     Andorran="Andorran", 
     Angolan="Angolan", 
+    Zimbabwean="Zimbabwean",
+
   }
 
   export enum Title {

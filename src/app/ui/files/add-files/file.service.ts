@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';import { HttpClient } from '@angular/common/http';
+import { API } from 'src/app/shared/services';
 @Injectable({
   providedIn: 'root'})export class UploadService {
   constructor(private http: HttpClient) { }
@@ -7,7 +8,7 @@ import { Injectable } from '@angular/core';import { HttpClient } from '@angular/
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
 
-    return this.http.post('http://68.178.203.55:8991/kyc-files/upload', formData, {
+    return this.http.post(`${API.CLIENTS}kyc-files/upload`, formData, {
       headers: {
         'accept': '*/*'
       }

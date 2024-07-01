@@ -6,8 +6,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { API, ApiService } from 'src/app/shared/services';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
-declare var Datepicker: any;
-
 @Component({
   selector: 'app-add-personal-details',
   templateUrl: './add-personal-details.component.html',
@@ -18,13 +16,22 @@ export class AddPersonalDetailsComponent {
   genderOptions = Object.values(Gender);
   nationalityOptions = Object.values(Nationality);
   titleOptions = Object.values(Title);
-  planOptions! :any[]
+  policyOptions! :any[]
+  planOptions! : any[]
+  selectedPolicy: any;
+  selectedPlan: any;
+  selectedPremium:any;
+  filteredPlans: any[] = [];
+  filteredPremium: any[] =[];
   accountsForm!: FormGroup
   currentStep = 0;
   data:any
   accountsId:any;
   accounts:any
   formData:any
+  selectedPolicyId:any
+  selectedPlanId:any
+  selectedPremiumId:any;
 
   constructor(private fb: FormBuilder, private http: ApiService, private route: ActivatedRoute,
     private spinner: NgxSpinnerService,private alert: AlertService) {
@@ -40,30 +47,67 @@ export class AddPersonalDetailsComponent {
       }
       });
 
-    this.accountsForm = this.fb.group({
-      title: '',
-      name: '',
-      surname: '',
-      gender: '',
-      nationality: '',
-      idNumber: '',
-      dateOfBirth: '',
-      sourceOfIncome: '',
-      plan: {
-        id:'',
-        name: ''
-              }
+      this.accountsForm = this.fb.group({
+        title: '',
+        name: '',
+        surname: '',
+        gender: '',
+        nationality: '',
+        idNumber: '',
+        dateOfBirth: '',
+        sourceOfIncome: '',
+        plan: {
+          id: '',
+          name: '',
+          premiums: {
+            name: '',
+            amount: 0 
+          }
+        }
       });
 
+
+
     this.http.getFromUrl(`${API.SERVICE}policies`)
-    .subscribe((res)=>{
-      this.planOptions = res.content.map((plan: any) => ({ id: plan.id, name: plan.name }));
-      console.log(this.planOptions)
+    .subscribe((res) => {
+      this.policyOptions = res.content
     });
 
-
+    this.http.getFromUrl(`${API.SERVICE}plan`)
+    .subscribe((res) => {
+      this.planOptions = res.content
+    });
+    
   }
 
+
+  onPolicyChange(event: any) {
+    const policyId = event?.target?.value; 
+    if (policyId) { 
+      this.selectedPolicyId = policyId;
+      this.selectedPolicy = this.policyOptions.find(policy => policy?.id);
+      if (this.selectedPolicy) {
+        this.filteredPlans = this.selectedPolicy.plans;
+      } else {
+        this.filteredPlans = [];
+      } 
+    }
+  }
+
+  onPlanChange(event:any){
+    const planId = event?.target?.value; 
+    if (planId) { 
+      this.selectedPremiumId = planId;
+      this.selectedPremium = this.planOptions.find(plan => plan?.id);
+      if (this.selectedPremium) {
+        this.filteredPremium = this.selectedPremium.premiums;
+      } else {
+        this.filteredPremium = [];
+      } 
+    }
+  }
+  
+  
 
   getAccount(accountsId:any){
     this.http.getFromUrl(`${API.CLIENTS}clients/${accountsId}`)
@@ -74,12 +118,15 @@ export class AddPersonalDetailsComponent {
   nextStep(event: Event) {
     event.preventDefault(); 
     if (this.accountsForm.valid) { 
-      this.spinner.show()
-
+      // this.spinner.show()
+console.log(this.accountsForm)
       const selectedPlan = this.accountsForm.value.plan;
+      const selectedPremiumName = this.accountsForm.value.plan.premiums && this.accountsForm.value.plan.premiums.length > 0 ? this.accountsForm.value.plan.premiums[0].name : '';
+      const selectedAmount = this.accountsForm.value.plan.premiums && this.accountsForm.value.plan.premiums.length > 0 ? this.accountsForm.value.plan.premiums[0].amount : 0;      
       const selectedPlanId = selectedPlan.id; 
       const selectedPlanName = selectedPlan.name; 
-
+      // const selectedPremiumName = selectedPremium.name; 
+      // const selectedPremiumNames = selectedPremium.map((premium: { name: any; }) => premium.name); // Extracting all premium names
       const requestBody = {
         title: this.accountsForm.value.title,
         name: this.accountsForm.value.name,
@@ -91,7 +138,12 @@ export class AddPersonalDetailsComponent {
         sourceOfIncome: this.accountsForm.value.sourceOfIncome,
         plan: {
           id: selectedPlanId,
-          name: selectedPlanName 
+          name: selectedPlanName,
+          premiums: {
+            name: selectedPremiumName,
+            amount: selectedAmount 
+          }
+          // premiums: selectedPremiumNames.map((name: any) => ({ name, amount: 0 })) 
         }
       };
         this.output.emit(requestBody)

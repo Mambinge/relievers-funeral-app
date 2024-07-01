@@ -24,7 +24,7 @@ export class PaymentMethodComponent implements OnInit {
 
   getAll(){
     this.spinner.show()
-    this.service.getAll(`${API.SERVICE}payment-methods?page=${this.currentPage}&size=8`).subscribe((res)=>{
+    this.service.getAll(`${API.SERVICE}payment-methods?page=${this.currentPage}&size=7`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide()
       this.totalPages = res.totalPages;

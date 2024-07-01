@@ -36,6 +36,8 @@ import { UpdateAccountsComponent } from './ui/accounts/update-accounts/update-ac
 import { ArrearsComponent } from './ui/payments/arrears/arrears.component';
 import { AccountApprovalComponent } from './ui/account-approval/account-approval.component';
 import { ViewAccountApprovalComponent } from './ui/account-approval/view-account-approval/view-account-approval.component';
+import { PlannerComponent } from './ui/system-parameters/planner/planner.component';
+import { ViewPlannerComponent } from './ui/system-parameters/planner/view-planner/view-planner.component';
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent},
@@ -65,9 +67,8 @@ const routes: Routes = [
       { path: 'view-policy/:id', component: ViewPolicyComponent},
       { path: 'update-policies/:id', component: UpdatePolicyComponent},
 
-      { path: 'plans', component: PlansComponent},
-      { path: 'view-plans/:id', component: ViewPlansComponent},
-      { path: 'update-plans/:id', component: UpdatePlanComponent},
+      { path: 'plan', component: PlannerComponent},
+      { path: 'view-plan/:id', component: ViewPlannerComponent},
 
       { path: 'premiums', component: PremiumsComponent},
       { path: 'update-premiums/:id', component: UpdatePremiumsComponent},

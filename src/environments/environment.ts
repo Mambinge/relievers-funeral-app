@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  baseUrl:"https://22ce-68-178-203-55.ngrok-free.app/"
+  baseUrl:"https://b807-197-211-207-230.ngrok-free.app/"
+  // baseUrl:"http://192.168.10.86:8989/"
+
 };
 
 /*
