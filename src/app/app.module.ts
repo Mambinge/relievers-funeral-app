@@ -80,6 +80,10 @@ import { PlanPremiumsComponent } from './ui/system-parameters/planner/plan-premi
 import { AddPlanPremiumsComponent } from './ui/system-parameters/planner/plan-premiums/add-plan-premiums/add-plan-premiums.component';
 import { UpdatePlanPremiumsComponent } from './ui/system-parameters/planner/plan-premiums/update-plan-premiums/update-plan-premiums.component';
 import { ViewArrearsComponent } from './ui/payments/arrears/view-arrears/view-arrears.component';
+import { DeathTypeComponent } from './ui/system-parameters/death-type/death-type.component';
+import { AddDeathTypeComponent } from './ui/system-parameters/death-type/add-death-type/add-death-type.component';
+import { UpdateDeathTypeComponent } from './ui/system-parameters/death-type/update-death-type/update-death-type.component';
+import { DeathPeriodComponent } from './ui/system-parameters/death-period/death-period.component';
 
 // function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
 //   return () => {
@@ -167,6 +171,10 @@ import { ViewArrearsComponent } from './ui/payments/arrears/view-arrears/view-ar
     AddPlanPremiumsComponent,
     UpdatePlanPremiumsComponent,
     ViewArrearsComponent,
+    DeathTypeComponent,
+    AddDeathTypeComponent,
+    UpdateDeathTypeComponent,
+    DeathPeriodComponent,
     
   ],
   imports: [
