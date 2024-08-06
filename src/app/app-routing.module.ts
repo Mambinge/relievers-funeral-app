@@ -38,6 +38,7 @@ import { AccountApprovalComponent } from './ui/account-approval/account-approval
 import { ViewAccountApprovalComponent } from './ui/account-approval/view-account-approval/view-account-approval.component';
 import { PlannerComponent } from './ui/system-parameters/planner/planner.component';
 import { ViewPlannerComponent } from './ui/system-parameters/planner/view-planner/view-planner.component';
+import { DeathTypeComponent } from './ui/system-parameters/death-type/death-type.component';
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent},
@@ -94,6 +95,9 @@ const routes: Routes = [
       { path: 'payment-premiums', component: PaymentPremiumsComponent},
 
       { path: 'dependent', component: DependentsComponent},
+
+      { path: 'death-types', component: DeathTypeComponent},
+
 
       { path: '**', component: DashboardComponent }
     ]
