@@ -39,6 +39,10 @@ import { ViewAccountApprovalComponent } from './ui/account-approval/view-account
 import { PlannerComponent } from './ui/system-parameters/planner/planner.component';
 import { ViewPlannerComponent } from './ui/system-parameters/planner/view-planner/view-planner.component';
 import { DeathTypeComponent } from './ui/system-parameters/death-type/death-type.component';
+import { ClaimsComponent } from './ui/claims/claims.component';
+import { ClaimsParametersComponent } from './ui/system-parameters/claims-parameters/claims-parameters.component';
+import { PaymentsParametersComponent } from './ui/system-parameters/payments-parameters/payments-parameters.component';
+import { ViewClaimsComponent } from './ui/claims/view-claims/view-claims.component';
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent},
@@ -97,7 +101,11 @@ const routes: Routes = [
       { path: 'dependent', component: DependentsComponent},
 
       { path: 'death-types', component: DeathTypeComponent},
+      { path: 'claims', component: ClaimsComponent},
+      { path: 'claims-parameters', component: ClaimsParametersComponent},
+      { path: 'view-claims/:id', component: ViewClaimsComponent},
 
+      { path: 'payments-parameters', component: PaymentsParametersComponent},
 
       { path: '**', component: DashboardComponent }
     ]

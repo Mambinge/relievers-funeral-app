@@ -1,7 +1,7 @@
 <!-- <p class="text-xl text-gray-900 dark:text-white font-bold">Payouts</p> -->
 
 <div class="flex justify-end">
-    <app-add-payouts (payoutAdded)="onpayoutAdded()"></app-add-payouts>
+    <app-add-payouts [policyNumber]="policyNumber" (payoutAdded)="onpayoutAdded()" ></app-add-payouts>
   </div>
   
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">

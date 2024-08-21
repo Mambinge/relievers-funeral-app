@@ -84,6 +84,16 @@ import { DeathTypeComponent } from './ui/system-parameters/death-type/death-type
 import { AddDeathTypeComponent } from './ui/system-parameters/death-type/add-death-type/add-death-type.component';
 import { UpdateDeathTypeComponent } from './ui/system-parameters/death-type/update-death-type/update-death-type.component';
 import { DeathPeriodComponent } from './ui/system-parameters/death-period/death-period.component';
+import { AddDeathPeriodComponent } from './ui/system-parameters/death-period/add-death-period/add-death-period.component';
+import { UpdateDeathPeriodComponent } from './ui/system-parameters/death-period/update-death-period/update-death-period.component';
+import { ClaimsComponent } from './ui/claims/claims.component';
+import { AddClaimsComponent } from './ui/claims/add-claims/add-claims.component';
+import { UpdateClaimsComponent } from './ui/claims/update-claims/update-claims.component';
+import { ClaimsParametersComponent } from './ui/system-parameters/claims-parameters/claims-parameters.component';
+import { PaymentsParametersComponent } from './ui/system-parameters/payments-parameters/payments-parameters.component';
+import { ClaimApprovalComponent } from './ui/claim-approval/claim-approval.component';
+import { AddClaimApprovalComponent } from './ui/claim-approval/add-claim-approval/add-claim-approval.component';
+import { ViewClaimsComponent } from './ui/claims/view-claims/view-claims.component';
 
 // function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
 //   return () => {
@@ -119,6 +129,7 @@ import { DeathPeriodComponent } from './ui/system-parameters/death-period/death-
     UpdatePlanComponent,
     PremiumsComponent,
     UpdatePremiumsComponent,
+    AddAccountPayoutsComponent,
     AddPremiumsComponent,
     RidersComponent,
     AddRidersComponent,
@@ -160,7 +171,6 @@ import { DeathPeriodComponent } from './ui/system-parameters/death-period/death-
     AddArrearsComponent,
     AccountPremiumsComponent,
     AccountPayoutsComponent,
-    AddAccountPayoutsComponent,
     AddAccountPremiumsComponent,
     AccountApprovalComponent,
     AddAccountApprovalComponent,
@@ -175,6 +185,17 @@ import { DeathPeriodComponent } from './ui/system-parameters/death-period/death-
     AddDeathTypeComponent,
     UpdateDeathTypeComponent,
     DeathPeriodComponent,
+    AddDeathPeriodComponent,
+    UpdateDeathPeriodComponent,
+    ClaimsComponent,
+    AddClaimsComponent,
+    UpdateClaimsComponent,
+    UpdateClaimsComponent,
+    ClaimsParametersComponent,
+    PaymentsParametersComponent,
+    ClaimApprovalComponent,
+    AddClaimApprovalComponent,
+    ViewClaimsComponent,
     
   ],
   imports: [

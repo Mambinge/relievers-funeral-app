@@ -38,7 +38,7 @@ export class DeathTypeComponent {
   }
 
   deletedeathType(id: string) {
-    this.service.delete(`${API.SERVICE}type/${id}`).subscribe(() => {
+    this.service.delete(`${API.CLAIMS}type/${id}`).subscribe(() => {
       this.getAll();
     });
   }

@@ -230,7 +230,7 @@
         <app-account-premiums [policyNumber]="account?.policyNumber"></app-account-premiums>
       </ng-container>
       <ng-container *ngIf="selectedTab === 'payouts'">
-        <app-account-payouts></app-account-payouts>
+        <app-account-payouts [policyNumber]="account?.policyNumber"></app-account-payouts>
       </ng-container>
     </div>
   </div>

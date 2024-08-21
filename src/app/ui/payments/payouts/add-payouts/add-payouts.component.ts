@@ -22,6 +22,8 @@ export class AddPayoutsComponent {
   id: any;
   @Output() payoutAdded: EventEmitter<number> = new EventEmitter<number>();
   @Input() payoutId!:  any;
+  @Input() policyNumber:any
+  number:any
 
   constructor(
     private fb: FormBuilder,
@@ -30,12 +32,13 @@ export class AddPayoutsComponent {
   ) {}
 
   ngOnInit() {
-    console.log(this.payoutId);
+    console.log(this.policyNumber);
+    this.number = this.policyNumber
 
     // this.isAddMode = !this.id;
 
     this.payoutForm = this.fb.group({
-      claimId: '',
+      claimId: this.policyNumber,
       paymentMethodId: '',
       amount: '',
       balance: '',
@@ -54,6 +57,14 @@ export class AddPayoutsComponent {
 
     this.http.getFromUrl(`${API.SERVICE}payment-methods`).subscribe((res)=>{
       this.paymentMethodOptions = res.content;
+    })
+
+    this.getClaims()
+  }
+
+  getClaims(){
+    this.http.getFromUrl(`${API.CLAIMS}claims`).subscribe((res)=>{
+      this.claimOptions = res.content;
       console.log(this.claimOptions)
     })
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { API, ApiService } from 'src/app/shared/services';
@@ -16,6 +16,7 @@ export class PayoutsComponent {
   payout!: any[]
   clientsId:any
   id:any
+  @Input() policyNumber:any
 
   constructor(private route: ActivatedRoute, private service: ApiService, private router: Router,  private spinner: NgxSpinnerService,){}
 
