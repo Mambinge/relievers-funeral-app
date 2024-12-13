@@ -43,8 +43,6 @@ export class AuthService {
 
   public saveToken(token: string) {
     sessionStorage.setItem(AuthService.NAME, token);
-    const userDetails = this.jwtHelper.decodeToken(token ? token :'');
-    sessionStorage.setItem(AuthService.USER, JSON.stringify(userDetails.resource_access.Frontend));
   }
 
   public getToken() {

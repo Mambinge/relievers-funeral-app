@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { API, ApiService } from 'src/app/shared/services';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { Settings } from 'src/app/models/policy-status';
 
 @Component({
   selector: 'app-add-personal-details',
@@ -23,6 +24,7 @@ export class AddPersonalDetailsComponent {
   selectedPremium:any;
   filteredPlans: any[] = [];
   filteredPremium: any[] =[];
+  filteredAmount:any
   accountsForm!: FormGroup
   currentStep = 0;
   data:any
@@ -32,6 +34,10 @@ export class AddPersonalDetailsComponent {
   selectedPolicyId:any
   selectedPlanId:any
   selectedPremiumId:any;
+  accountTypeOptions = Object.values(Settings);
+  agentOptions! :any[]
+  selectedAgentId: any;
+  selectedAgent: any;
 
   constructor(private fb: FormBuilder, private http: ApiService, private route: ActivatedRoute,
     private spinner: NgxSpinnerService,private alert: AlertService) {
@@ -56,6 +62,8 @@ export class AddPersonalDetailsComponent {
         idNumber: '',
         dateOfBirth: '',
         sourceOfIncome: '',
+        agentId:'',
+        accountType:'',
         plan: {
           id: '',
           name: '',
@@ -77,9 +85,25 @@ export class AddPersonalDetailsComponent {
     .subscribe((res) => {
       this.planOptions = res.content
     });
+
+    this.http.getFromUrl(`${API.SERVICE}policies`)
+    .subscribe((res) => {
+      this.policyOptions = res.content
+    });
+
+    this.http.getFromUrl(`${API.CLIENTS}agents`)
+    .subscribe((res) => {
+      this.agentOptions = res.content
+    });
     
   }
-
+onAgentChange(event: any) {
+  const agentId = event?.target?.value;
+  if (agentId) {
+    this.selectedAgentId = Number(agentId); // Ensure it's a number
+    this.accountsForm.patchValue({ agentId: this.selectedAgentId }); // Update the form control
+  }
+}
 
   onPolicyChange(event: any) {
     const policyId = event?.target?.value; 
@@ -87,7 +111,9 @@ export class AddPersonalDetailsComponent {
       this.selectedPolicyId = policyId;
       this.selectedPolicy = this.policyOptions.find(policy => policy?.id);
       if (this.selectedPolicy) {
+        console.log(this.selectedPolicy)
         this.filteredPlans = this.selectedPolicy.plans;
+
       } else {
         this.filteredPlans = [];
       } 
@@ -101,6 +127,16 @@ export class AddPersonalDetailsComponent {
       this.selectedPremium = this.planOptions.find(plan => plan?.id);
       if (this.selectedPremium) {
         this.filteredPremium = this.selectedPremium.premiums;
+        console.log( this.filteredPremium)
+
+        this.filteredAmount = this.selectedPremium.premiums.amount
+        console.log( this.filteredAmount)
+                this.accountsForm.patchValue({
+            premiums: {
+              amount: this.selectedPremium.premiums.amount
+            }
+          
+        });
       } else {
         this.filteredPremium = [];
       } 
@@ -136,6 +172,9 @@ console.log(this.accountsForm)
         idNumber: this.accountsForm.value.idNumber,
         dateOfBirth: this.accountsForm.value.dateOfBirth,
         sourceOfIncome: this.accountsForm.value.sourceOfIncome,
+        agentId:this.accountsForm.value.agentId,
+        accountType: this.accountsForm.value.accountType,
+
         plan: {
           id: selectedPlanId,
           name: selectedPlanName,

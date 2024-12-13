@@ -19,15 +19,21 @@ export class AddAccountsComponent {
   personalDetails:any
   contactDetails:any
   bankDetails:any
+  files:any;
   data:any;
+  accountId:any;
 
-constructor(private fb: FormBuilder, private http: ApiService, private router: Router,
+constructor(private fb: FormBuilder,private route: ActivatedRoute, 
+  private http: ApiService, private router: Router,
   private spinner: NgxSpinnerService,private alert: AlertService){
 
 }
 
-  ngOnInit(){
-  }
+ngOnInit() {
+  this.route.params.subscribe(params => {
+    this.accountId = params['id'];
+  });
+}
 
 
   
@@ -40,7 +46,7 @@ constructor(private fb: FormBuilder, private http: ApiService, private router: R
     setAccount(account: Accounts, name: string) {
       this.personalDetails = account;
       console.log(this.personalDetails)
-      if (this.currentStep < 3) {
+      if (this.currentStep < 4) {
       this.currentStep++;
     } 
    }
@@ -48,13 +54,18 @@ constructor(private fb: FormBuilder, private http: ApiService, private router: R
     setContactDetails(contract:any) {
     this.contactDetails = contract
    
-    if (this.currentStep < 3) {
+    if (this.currentStep < 4) {
       this.currentStep++;
     }  
    }
    setBankDetails(contract:any) {
     this.bankDetails = contract 
     this.onSubmit(this.bankDetails)
+   }
+   setFiles(contract:any){
+    this.files = contract
+    this.router.navigate(['/accounts']);
+
    }
 
    onSubmit(event:any){
@@ -73,6 +84,9 @@ console.log(personalDetails)
       idNumber: personalDetails.idNumber,
       dateOfBirth: personalDetails.dateOfBirth,
       sourceOfIncome: personalDetails.sourceOfIncome,
+      agentId:personalDetails.agentId,
+      accountType:personalDetails.accountType,
+
       plan: {
         id: personalDetails.plan.id,
         name: personalDetails.plan.name,
@@ -98,9 +112,13 @@ console.log(personalDetails)
 
       this.http.postToUrl(`${API.CLIENTS}clients`, requestBody).subscribe((res)=>{
         this.data = res
+        this.accountId = res.id
+        console.log(this.accountId)
         this.spinner.hide()
         this.alert.showSuccess("Saved Successfully")
-        this.router.navigate(['/accounts']);
+        if (this.currentStep < 4) {
+          this.currentStep++;
+        } 
       })
 
    

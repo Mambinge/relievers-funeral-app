@@ -17,6 +17,7 @@ export class AccountPremiumsComponent {
   clientsId:any
   id:any
   @Input() policyNumber:any
+  @Input() clientAccountId:any
 number:any
   constructor(private service: ApiService, private route: ActivatedRoute,
      private router: Router,  private spinner: NgxSpinnerService,){}
@@ -62,7 +63,7 @@ number:any
   }
 
   onpayoutAdded() {
-    this.getAll(false);
+    this.getAll(this.clientsId);
   }
 
   toggleView() {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -16,7 +16,8 @@ export class FilesComponent {
   totalPages:any
   data:any
   account:any
-  accountsId:any
+  accountsId:any;
+  @Input() accountId: any;
 
   constructor(private service: ApiService, private spinner: NgxSpinnerService,
     private router: Router, private fb: FormBuilder, private route: ActivatedRoute){}

@@ -1,6 +1,6 @@
 
   <div class="flex justify-end">
-  <app-add-files (fileAdded)="onfileAdded()"></app-add-files>
+  <app-add-files [accountId]="accountId" (fileAdded)="onfileAdded()"></app-add-files>
  </div>
     <span style="color: red;">*</span><b>Add at least 2 or more files</b>
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">

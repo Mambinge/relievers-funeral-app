@@ -70,12 +70,26 @@
         </div>
 
       <!-- Amount -->
-<div *ngIf="selectedPremium">
-    <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount</label>
-    <input formControlName="plan.premiums.amount" type="number" name="amount" id="amount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  >
-</div>
+      <div *ngIf="selectedPremium">
+        <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount</label>
+        <input [value]="filteredAmount" type="number" name="amount" id="amount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+    </div>
 
-        
+    <div >
+        <label for="accountType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select account type</label>
+        <select formControlName="accountType" id="accountType" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <option *ngFor="let accountType of accountTypeOptions" [value]="accountType">{{accountType}}</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="agentId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Agent</label>
+        <select (change)="onAgentChange($event)" id="agentId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="" disabled selected>Select Agent</option>
+            <option *ngFor="let agent of agentOptions" [value]="agent.id">{{agent.name}}</option>
+        </select>
+    </div>
+
     </div>
     <button type="submit"
     class="block text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">

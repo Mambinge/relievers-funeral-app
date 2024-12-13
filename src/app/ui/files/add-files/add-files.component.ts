@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
@@ -15,6 +15,8 @@ import { UploadService } from './file.service';
 })
 export class AddFilesComponent {
   @Output() fileAdded = new EventEmitter<void>();
+  @Output() output = new EventEmitter<any>();
+
   policyForm!: FormGroup;
   fileForm!: FormGroup;
   typeOptions = Object.values(Type);
@@ -23,6 +25,7 @@ export class AddFilesComponent {
   account:any
   accountsId:any
   dataFile: any;
+  @Input() accountId: any;
 
   constructor(private spinner: NgxSpinnerService ,private alert: AlertService, private route: ActivatedRoute,
      private fb: FormBuilder, private service: ApiService,private uploadService: UploadService ) {
@@ -73,6 +76,8 @@ export class AddFilesComponent {
         this.alert.showSuccess('Saved Successfully')
         this.spinner.hide()
         this.closeModal()
+        this.output.emit(this.policyForm.value)
+
         this.fileAdded.emit();
         this.policyForm.reset()
         this.fileForm.reset()
