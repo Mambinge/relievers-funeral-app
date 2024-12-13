@@ -137,10 +137,12 @@
         </div>
       </div>
       <br />
-      <div class="flex justify-end" *ngIf="account?.approvalStage !== null">
+      <div class="flex justify-end" style="margin-right: 8px;" *ngIf="account?.approvalStage !== null">
         <button (click)="approveClaim($event)" class="block text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800" type="button">
           Approve Claim
       </button>
+
+
         <!-- <app-add-claim-approval
           (approvalAdded)="approvalAdded()"
           [account]="account?.approvalStage"
@@ -149,6 +151,12 @@
           [claimId]="claimId"
         ></app-add-claim-approval> -->
       </div>
+      <div class="flex justify-end" style="margin-right: 8px;" *ngIf="account?.status === 'APPROVED'">
+        <button (click)="payouts($event)" class="block text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800" type="button">
+          Payout
+           </button>
+       </div>
+       <br>
     </li>
   </ol>
 

@@ -26,7 +26,7 @@ export class AccountsComponent {
   getAll(reload: boolean, _$event?: Event){
     this.spinner.show();
     this.service.getAll(`${API.CLIENTS}clients?page=${this.currentPage}&size=7`).subscribe((res)=>{
-      this.products = res.content
+      this.products = res.content;
       this.spinner.hide();
       this.totalPages = res.totalPages;
     })

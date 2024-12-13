@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService, API } from 'src/app/shared/services';
@@ -28,9 +28,10 @@ export class ViewClaimsComponent {
   claimId:any;
   status ="APPROVED"
   data:any;
+  clientAccount:any;
 
   constructor(private route: ActivatedRoute, private service: ApiService, private spinner: NgxSpinnerService,    
-    private alert: AlertService
+    private alert: AlertService, private router: Router,
   ){}
 
   ngOnInit(){
@@ -70,6 +71,10 @@ getWorkflow(accountsId:any){
       this.account = res
 this.policyNumber = res.clientAccount.policyNumber
 this.claimId = res.id
+this.clientAccount = res.clientAccount.id
+console.log(this.clientAccount)
+
+
       console.log(this.account)
     })
   }
@@ -122,10 +127,15 @@ this.claimId = res.id
           this.alert.showSuccess('Approved Successfully');
           this.getAccount(this.accountId)
         });
+
+
   }
 
   
-
+  payouts(event:any){
+    console.log(event)
+    console.log(this.clientAccount)
+    this.router.navigate(['/client-payouts', this.clientAccount, this.account.id]);  }
 
   }
 

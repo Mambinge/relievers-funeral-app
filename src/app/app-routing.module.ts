@@ -43,14 +43,32 @@ import { ClaimsComponent } from './ui/claims/claims.component';
 import { ClaimsParametersComponent } from './ui/system-parameters/claims-parameters/claims-parameters.component';
 import { PaymentsParametersComponent } from './ui/system-parameters/payments-parameters/payments-parameters.component';
 import { ViewClaimsComponent } from './ui/claims/view-claims/view-claims.component';
+import { PermissionsComponent } from './ui/auth/permissions/permissions.component';
+import { RolesComponent } from './ui/auth/roles/roles.component';
+import { UserAccountsComponent } from './ui/user-accounts/user-accounts.component';
+import { ForgotPasswordComponent } from './ui/auth/forgot-password/forgot-password.component';
+import { PassowrdPolicyComponent } from './ui/auth/passowrd-policy/passowrd-policy.component';
+import { ResetPasswordComponent } from './ui/auth/reset-password/reset-password.component';
+import { CommissionSettingsComponent } from './ui/system-parameters/commission-settings/commission-settings.component';
+import { CommissionsComponent } from './ui/commissions/commissions.component';
+import { AgentComponent } from './ui/agent/agent.component';
+import { PayoutsCommissionsComponent } from './ui/commissions/payouts-commissions/payouts-commissions.component';
+import { CommissionParametersComponent } from './ui/system-parameters/commission-parameters/commission-parameters.component';
+import { SecurityParametersComponent } from './ui/system-parameters/security-parameters/security-parameters.component';
+import { RemittanceComponent } from './ui/remittance/remittance.component';
+import { RemittancePayoutComponent } from './ui/remittance/remittance-payout/remittance-payout.component';
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent},
-
+  { path: 'forgot-password', component: ForgotPasswordComponent},
+  {
+    path : 'reset-password/:email/:uniqueId',
+    component : ResetPasswordComponent
+},
   {
     path: '',
     component: LayoutComponent,
-    canActivate: [],
+    canActivate: [AuthGuard],
     children: [
       { path: 'accounts', component: AccountsComponent},
       { path: 'view-accounts/:id', component: ViewAccountsComponent},
@@ -64,7 +82,6 @@ const routes: Routes = [
       { path: 'arrears', component: ArrearsComponent},
 
 
-      { path: 'users', component: UsersComponent},
       { path: 'user-profile', component: UserProfileComponent},
 
       { path: 'policies', component: PolicyComponent},
@@ -95,6 +112,7 @@ const routes: Routes = [
       { path: 'update-work-stage/:id', component: UpdateWorkStagesComponent},
 
       { path: 'payment-payouts', component: PayoutsComponent},
+      { path: 'client-payouts/:id/:claimId', component: PayoutsComponent },
 
       { path: 'payment-premiums', component: PaymentPremiumsComponent},
 
@@ -106,6 +124,22 @@ const routes: Routes = [
       { path: 'view-claims/:id', component: ViewClaimsComponent},
 
       { path: 'payments-parameters', component: PaymentsParametersComponent},
+
+      { path: 'permissions', component: PermissionsComponent},
+      { path: 'roles', component: RolesComponent},
+      { path: 'users', component: UserAccountsComponent},
+      { path: 'password-policy', component: PassowrdPolicyComponent},
+
+
+      { path: 'security-parameters', component: SecurityParametersComponent},
+
+      { path: 'commission-settings', component: CommissionParametersComponent},
+      { path: 'commissions', component: CommissionsComponent},
+      { path: 'agent', component: AgentComponent},
+      { path: 'commission-payouts', component: PayoutsCommissionsComponent},
+      { path: 'remittance-payouts', component: RemittancePayoutComponent},
+      { path: 'remittance', component: RemittanceComponent},
+
 
       { path: '**', component: DashboardComponent }
     ]

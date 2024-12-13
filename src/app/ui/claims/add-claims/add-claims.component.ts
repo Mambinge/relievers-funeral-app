@@ -15,7 +15,6 @@ import { UploadService } from '../../files/add-files/file.service';
 })
 export class AddClaimsComponent {
   typeForm!: FormGroup;
-  // units = Object.values(Unit);
   data: any
   @Output() planAdded = new EventEmitter<void>();
   statusOptions = Object.values(PaymentStatus);
@@ -24,7 +23,6 @@ export class AddClaimsComponent {
   units: any[] = [];
   clients: any[] = [];
   policyNumbers: string[] = [];
-  // fileUri!: FormControl;
   selectedPolicyNumber: any ;
   dataFile:any
   policyHolderId:any;

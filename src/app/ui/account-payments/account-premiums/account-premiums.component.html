@@ -1,7 +1,7 @@
 <!-- <p class="text-xl text-gray-900 dark:text-white font-bold">Payment Premiums</p> -->
 
 <div class="flex justify-end">
-    <app-add-account-premiums [policyNumber]="number" (payoutAdded)="onpayoutAdded()"></app-add-account-premiums>
+    <app-add-account-premiums [policyNumber]="number" [clientAccountId]="clientAccountId" (payoutAdded)="onpayoutAdded()"></app-add-account-premiums>
   </div>
   
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">

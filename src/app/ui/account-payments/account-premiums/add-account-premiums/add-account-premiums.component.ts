@@ -23,6 +23,7 @@ export class AddAccountPremiumsComponent {
   @Output() payoutAdded: EventEmitter<number> = new EventEmitter<number>();
   @Input() payoutId!:  any;
   @Input() policyNumber:any
+  @Input() clientAccountId:any
 
   constructor(
     private fb: FormBuilder,
@@ -37,13 +38,12 @@ export class AddAccountPremiumsComponent {
     // this.isAddMode = !this.id;
 
     this.payoutForm = this.fb.group({
-      clientPolicyId: this.policyNumber,
-      paymentMethodId: '',
+      clientAccountId: this.clientAccountId,
+      paymentMethodId: 0,
       amount: '',
       // balance: '',
       paymentDate: '',
       paymentReference: '',
-      // status: '',
       notes: '',
     });
 
@@ -63,14 +63,20 @@ export class AddAccountPremiumsComponent {
   onSubmit(event: Event) {
     event.preventDefault();
     if (this.payoutForm.valid) {
-      this.http.postToUrl(`${API.PAYMENTS}payment/premiums/pay`, this.payoutForm.value).subscribe((res) => {
+      // Format the paymentDate to the required format
+      const formattedDate = new Date(this.payoutForm.value.paymentDate).toISOString();
+      this.payoutForm.patchValue({
+        paymentMethodId: Number(this.payoutForm.value.paymentMethodId),
+        paymentDate: formattedDate // Update the paymentDate with the formatted date
+      });
+      console.log(this.payoutForm.value)
+      this.http.postToUrl(`${API.PAYMENTS}payments/premiums/pay`, this.payoutForm.value).subscribe((res) => {
         this.data = res;
         this.payoutAdded.emit(res);
         this.closeModal();
       });
     }
   }
-
   closeModal() {
     const modalOptions: ModalOptions = {
       onHide: () => {},

@@ -94,6 +94,35 @@ import { PaymentsParametersComponent } from './ui/system-parameters/payments-par
 import { ClaimApprovalComponent } from './ui/claim-approval/claim-approval.component';
 import { AddClaimApprovalComponent } from './ui/claim-approval/add-claim-approval/add-claim-approval.component';
 import { ViewClaimsComponent } from './ui/claims/view-claims/view-claims.component';
+import { ClientFilesComponent } from './ui/files/client-files/client-files.component';
+import { AddClientFilesComponent } from './ui/files/client-files/add-client-files/add-client-files.component';
+import { PermissionsComponent } from './ui/auth/permissions/permissions.component';
+import { AddPermissionsComponent } from './ui/auth/permissions/add-permissions/add-permissions.component';
+import { UpdatePermissionsComponent } from './ui/auth/permissions/update-permissions/update-permissions.component';
+import { RolesComponent } from './ui/auth/roles/roles.component';
+import { AddRolesComponent } from './ui/auth/roles/add-roles/add-roles.component';
+import { UpdateRolesComponent } from './ui/auth/roles/update-roles/update-roles.component';
+import { PassowrdPolicyComponent } from './ui/auth/passowrd-policy/passowrd-policy.component';
+import { AddPasswordPolicyComponent } from './ui/auth/passowrd-policy/add-password-policy/add-password-policy.component';
+import { UpdatePasswordPolicyComponent } from './ui/auth/passowrd-policy/update-password-policy/update-password-policy.component';
+import { UserAccountsComponent } from './ui/user-accounts/user-accounts.component';
+import { AddUserAccountComponent } from './ui/user-accounts/add-user-account/add-user-account.component';
+import { UpdateUserAccountComponent } from './ui/user-accounts/update-user-account/update-user-account.component';
+import { ForgotPasswordComponent } from './ui/auth/forgot-password/forgot-password.component';
+import { AgentComponent } from './ui/agent/agent.component';
+import { AddAgentComponent } from './ui/agent/add-agent/add-agent.component';
+import { UpdateAgentComponent } from './ui/agent/update-agent/update-agent.component';
+import { CommissionSettingsComponent } from './ui/system-parameters/commission-settings/commission-settings.component';
+import { AddCommissionSettingsComponent } from './ui/system-parameters/commission-settings/add-commission-settings/add-commission-settings.component';
+import { UpdateCommissionSettingsComponent } from './ui/system-parameters/commission-settings/update-commission-settings/update-commission-settings.component';
+import { CommissionsComponent } from './ui/commissions/commissions.component';
+import { PayoutsCommissionsComponent } from './ui/commissions/payouts-commissions/payouts-commissions.component';
+import { PayCommissionComponent } from './ui/commissions/payouts-commissions/pay-commission/pay-commission.component';
+import { CommissionParametersComponent } from './ui/system-parameters/commission-parameters/commission-parameters.component';
+import { SecurityParametersComponent } from './ui/system-parameters/security-parameters/security-parameters.component';
+import { RemittanceComponent } from './ui/remittance/remittance.component';
+import { RemittancePayoutComponent } from './ui/remittance/remittance-payout/remittance-payout.component';
+import { PayRemittanceComponent } from './ui/remittance/remittance-payout/pay-remittance/pay-remittance.component';
 
 // function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
 //   return () => {
@@ -196,6 +225,35 @@ import { ViewClaimsComponent } from './ui/claims/view-claims/view-claims.compone
     ClaimApprovalComponent,
     AddClaimApprovalComponent,
     ViewClaimsComponent,
+    ClientFilesComponent,
+    AddClientFilesComponent,
+    PermissionsComponent,
+    AddPermissionsComponent,
+    UpdatePermissionsComponent,
+    RolesComponent,
+    AddRolesComponent,
+    UpdateRolesComponent,
+    PassowrdPolicyComponent,
+    AddPasswordPolicyComponent,
+    UpdatePasswordPolicyComponent,
+    UserAccountsComponent,
+    AddUserAccountComponent,
+    UpdateUserAccountComponent,
+    ForgotPasswordComponent,
+    AgentComponent,
+    AddAgentComponent,
+    UpdateAgentComponent,
+    CommissionSettingsComponent,
+    AddCommissionSettingsComponent,
+    UpdateCommissionSettingsComponent,
+    CommissionsComponent,
+    PayoutsCommissionsComponent,
+    PayCommissionComponent,
+    CommissionParametersComponent,
+    SecurityParametersComponent,
+    RemittanceComponent,
+    RemittancePayoutComponent,
+    PayRemittanceComponent,
     
   ],
   imports: [

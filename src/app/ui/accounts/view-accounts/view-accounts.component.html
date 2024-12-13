@@ -87,14 +87,14 @@
             Premiums
                 </a>
       </li>
-      <li (click)="selectTab('payouts')" [class.active]="selectedTab === 'payouts'">
+      <!-- <li (click)="selectTab('payouts')" [class.active]="selectedTab === 'payouts'">
         <a  class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white">
             <svg class="w-4 h-4 me-2 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 3v4c0 .6-.4 1-1 1H5m14-4v16c0 .6-.4 1-1 1H6a1 1 0 0 1-1-1V8c0-.4.1-.6.3-.8l4-4 .6-.2H18c.6 0 1 .4 1 1Z"/>
               </svg>
             Payouts
                 </a>
-      </li>
+      </li> -->
     </ul>
   
     <div class="p-6 bg-purple text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full">
@@ -227,11 +227,11 @@
       </ng-container>
 
       <ng-container *ngIf="selectedTab === 'premiums'">
-        <app-account-premiums [policyNumber]="account?.policyNumber"></app-account-premiums>
+        <app-account-premiums [policyNumber]="account?.policyNumber" [clientAccountId]="account?.id"></app-account-premiums>
       </ng-container>
-      <ng-container *ngIf="selectedTab === 'payouts'">
+      <!-- <ng-container *ngIf="selectedTab === 'payouts'">
         <app-account-payouts [policyNumber]="account?.policyNumber"></app-account-payouts>
-      </ng-container>
+      </ng-container> -->
     </div>
   </div>
   

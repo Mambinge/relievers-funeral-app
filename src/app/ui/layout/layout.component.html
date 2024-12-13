@@ -56,13 +56,13 @@
           >
             <div class="px-4 py-3" role="none">
               <p class="text-sm text-gray-900 dark:text-white" role="none">
-                Neil Sims
+                Allen Bonasi
               </p>
               <p
                 class="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
                 role="none"
               >
-                neil.sims@relievers.com
+                allenb@afrosoft.co.zw
               </p>
             </div>
             <ul class="py-1" role="none">
@@ -74,22 +74,22 @@
                   >Profile</a
                 >
               </li>
-              <li>
+              <!-- <li>
                 <a
                   href="#"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                   role="menuitem"
                   >Settings</a
                 >
-              </li>
+              </li> -->
 
               <li>
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem"
-                  >Sign out</a
-                >
+                <button
+                  type="button" 
+                  class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  (click)="logout()">
+                  Sign out
+                </button>
               </li>
             </ul>
           </div>
@@ -222,6 +222,36 @@
               >Arrears</a
             >
           </li>
+          <li class="links">
+            <a
+              href="/commissions"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >Commissions</a
+            >
+          </li>
+          <li class="links">
+            <a
+              href="/commission-payouts"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >Commission Payouts</a
+            >
+          </li>
+
+          <li class="links">
+            <a
+              href="/remittance"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >Remittance</a
+            >
+          </li>
+          <li class="links">
+            <a
+              href="/remittance-payouts"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >Remittance Payouts</a
+            >
+          </li>
+
         </ul>
       </li>
       <li>
@@ -241,6 +271,45 @@
             />
           </svg>
           <span class="flex-1 ms-3 whitespace-nowrap">Claims</span>
+        </a>
+      </li>
+      <!-- <li>
+        <a
+          href="/commissions"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        >
+          <svg
+            class="w-4 h-5 text-purple-800 transition duration-75 dark:text-gray-400 group-hover:text-orange-500 dark:group-hover:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 22 21"
+          >
+            <path
+              d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"
+            />
+          </svg>
+          <span class="flex-1 ms-3 whitespace-nowrap">Commissions</span>
+        </a>
+      </li> -->
+
+      <li>
+        <a
+          href="/users"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+        >
+          <svg
+            class="w-4 h-5 text-purple-800 transition duration-75 dark:text-gray-400 group-hover:text-orange-500 dark:group-hover:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 22 21"
+          >
+            <path
+              d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"
+            />
+          </svg>
+          <span class="flex-1 ms-3 whitespace-nowrap">User Management</span>
         </a>
       </li>
       <li>
@@ -298,18 +367,32 @@
           </li>
           <li class="links">
             <a
+              href="/commission-settings"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >Commission Parameters</a
+            >
+          </li>
+          <li class="links">
+            <a
+              href="/security-parameters"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >Security Parameters</a
+            >
+          </li>
+          <li class="links">
+            <a
               href="/policies"
               class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
               >Policy</a
             >
           </li>
-          <li class="links">
+          <!-- <li class="links">
             <a
               href="/plan"
               class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
               >Plan</a
             >
-          </li>
+          </li> -->
           <li class="links">
             <a
               href="/premiums"
@@ -339,7 +422,27 @@
               >Work Stages</a
             >
           </li>
-
+          <!-- <li class="links">
+            <a
+              href="/permissions"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >Permissions</a
+            >
+          </li>
+          <li class="links">
+            <a
+              href="/password-policy"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >Password Policy</a
+            >
+          </li>
+          <li class="links">
+            <a
+              href="/roles"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              >Roles</a
+            >
+          </li> -->
           <!-- <li class="links">
             <a
               href="/payment-method"
