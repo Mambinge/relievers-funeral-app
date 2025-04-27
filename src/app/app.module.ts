@@ -5,12 +5,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './ui/layout/layout.component';
 import { UsersComponent } from './ui/users/users.component';
-import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpHandler,
+} from '@angular/common/http';
 import { AddUsersComponent } from './ui/users/add-users/add-users.component';
 import { UserProfileComponent } from './ui/users/user-profile/user-profile.component';
 import { ResetPasswordComponent } from './ui/auth/reset-password/reset-password.component';
 import { UpdateUsersComponent } from './ui/users/update-users/update-users.component';
-import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { PolicyComponent } from './ui/policy/policy.component';
 import { AddPolicyComponent } from './ui/policy/add-policy/add-policy.component';
 import { UpdatePolicyComponent } from './ui/policy/update-policy/update-policy.component';
@@ -45,7 +49,7 @@ import { AddWorkStagesComponent } from './ui/system-parameters/work-stages/add-w
 import { UpdateWorkStagesComponent } from './ui/system-parameters/work-stages/update-work-stages/update-work-stages.component';
 import { LoginPageComponent } from './ui/auth/login-page/login-page.component';
 import { DashboardComponent } from './ui/dashboard/dashboard.component';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PayoutsComponent } from './ui/payments/payouts/payouts.component';
 import { PaymentPremiumsComponent } from './ui/payments/payment-premiums/payment-premiums.component';
@@ -123,6 +127,10 @@ import { SecurityParametersComponent } from './ui/system-parameters/security-par
 import { RemittanceComponent } from './ui/remittance/remittance.component';
 import { RemittancePayoutComponent } from './ui/remittance/remittance-payout/remittance-payout.component';
 import { PayRemittanceComponent } from './ui/remittance/remittance-payout/pay-remittance/pay-remittance.component';
+import { PaymentsPremiumReportComponent } from './ui/reports/payments-premium-report.component';
+import { PayoutsReportComponent } from './ui/reports/payouts-report/payouts-report.component';
+import { ClientReportComponent } from './ui/reports/client-report/client-report.component';
+import { ClaimsReportComponent } from './ui/reports/claims-report/claims-report.component';
 
 // function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
 //   return () => {
@@ -219,7 +227,6 @@ import { PayRemittanceComponent } from './ui/remittance/remittance-payout/pay-re
     ClaimsComponent,
     AddClaimsComponent,
     UpdateClaimsComponent,
-    UpdateClaimsComponent,
     ClaimsParametersComponent,
     PaymentsParametersComponent,
     ClaimApprovalComponent,
@@ -254,14 +261,20 @@ import { PayRemittanceComponent } from './ui/remittance/remittance-payout/pay-re
     RemittanceComponent,
     RemittancePayoutComponent,
     PayRemittanceComponent,
-    
+    PaymentsPremiumReportComponent,
+    PayoutsReportComponent,
+    ClientReportComponent,
+    ClaimsReportComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     KeycloakAngularModule,
-    SharedModule.forRoot({ environment: environment.baseUrl, production: environment.production }),
+    SharedModule.forRoot({
+      environment: environment.baseUrl,
+      production: environment.production,
+    }),
     HttpClientModule,
     FormsModule,
     ToastrModule.forRoot({
@@ -269,12 +282,15 @@ import { PayRemittanceComponent } from './ui/remittance/remittance-payout/pay-re
       positionClass: 'toast-top-right',
       preventDuplicates: true,
       progressAnimation: 'increasing',
-      closeButton: true
+      closeButton: true,
     }),
     ReactiveFormsModule,
-    NgxSpinnerModule.forRoot({ type: 'ball-clip-rotate-multiple' })  
+    NgxSpinnerModule.forRoot({ type: 'ball-clip-rotate-multiple' }),
   ],
-  providers: [HttpClient, ApiService, KeycloakService,
+  providers: [
+    HttpClient,
+    ApiService,
+    KeycloakService,
 
     // {
     //   provide: APP_INITIALIZER,
@@ -282,7 +298,8 @@ import { PayRemittanceComponent } from './ui/remittance/remittance-payout/pay-re
     //   multi: true,
     //   deps: [KeycloakService],
     // },
-  ],  bootstrap: [AppComponent]
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor(private readonly keycloak: KeycloakService) {

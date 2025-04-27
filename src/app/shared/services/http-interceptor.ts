@@ -46,14 +46,10 @@ export class HTTPListener implements HttpInterceptor {
   getMessage(err: HttpErrorResponse) {
     if (err.status == 0) return 'This service currently unreachable';
     if(err.status == 401) return 'UnAuthorized';
-     if(err.status == 500) return 'Internal Server Error';
-
-    // if(err.status == 404) return err.error? err.error.narrative ? err.error.narrative : err.error.error_description : '';
+    if(err.status == 500) return 'Internal Server Error';
     if (err.error) {
-      const error = (typeof err.error === 'string' || err.error instanceof String) ?
-         JSON.parse(err.error.toString()) : err.error;
-      if (error && (error.message || error.error))
-        return error.error ? error.error : error.error;
+      if (err.error && (err.message || err.error || err.error.message))
+        return err.error.message
     }
     return err.message ? err.message : 'Sorry, Unexpected Server Response';
   }

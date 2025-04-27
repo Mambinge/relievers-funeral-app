@@ -57,100 +57,118 @@ import { CommissionParametersComponent } from './ui/system-parameters/commission
 import { SecurityParametersComponent } from './ui/system-parameters/security-parameters/security-parameters.component';
 import { RemittanceComponent } from './ui/remittance/remittance.component';
 import { RemittancePayoutComponent } from './ui/remittance/remittance-payout/remittance-payout.component';
+import { PaymentsPremiumReportComponent } from './ui/reports/payments-premium-report.component';
+import { PayoutsReportComponent } from './ui/reports/payouts-report/payouts-report.component';
+import { ClientReportComponent } from './ui/reports/client-report/client-report.component';
+import { ClaimsReportComponent } from './ui/reports/claims-report/claims-report.component';
 
 const routes: Routes = [
-  { path: '', component: LoginPageComponent},
-  { path: 'forgot-password', component: ForgotPasswordComponent},
+  { path: '', component: LoginPageComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
   {
-    path : 'reset-password/:email/:uniqueId',
-    component : ResetPasswordComponent
-},
+    path: 'reset-password/:email/:uniqueId',
+    component: ResetPasswordComponent,
+  },
   {
     path: '',
     component: LayoutComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [
-      { path: 'accounts', component: AccountsComponent},
-      { path: 'view-accounts/:id', component: ViewAccountsComponent},
-      { path: 'open-account', component: AddAccountsComponent},
-      { path: 'update-accounts/:id', component: UpdateAccountsComponent},
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'accounts', component: AccountsComponent },
+      { path: 'view-accounts/:id', component: ViewAccountsComponent },
+      { path: 'open-account', component: AddAccountsComponent },
+      { path: 'update-accounts/:id', component: UpdateAccountsComponent },
+      { path: 'account-approvals', component: AccountApprovalComponent },
+      {
+        path: 'view-account-approval/:id',
+        component: ViewAccountApprovalComponent,
+      },
 
-      { path: 'account-approvals', component: AccountApprovalComponent},
-      { path: 'view-account-approval/:id', component: ViewAccountApprovalComponent},
+      { path: 'arrears', component: ArrearsComponent },
 
+      { path: 'user-profile', component: UserProfileComponent },
 
-      { path: 'arrears', component: ArrearsComponent},
+      { path: 'policies', component: PolicyComponent },
+      { path: 'view-policy', component: ViewPolicyComponent },
+      { path: 'view-policy/:id', component: ViewPolicyComponent },
+      { path: 'update-policies/:id', component: UpdatePolicyComponent },
 
+      { path: 'plan', component: PlannerComponent },
+      { path: 'view-plan/:id', component: ViewPlannerComponent },
 
-      { path: 'user-profile', component: UserProfileComponent},
+      { path: 'premiums', component: PremiumsComponent },
+      { path: 'update-premiums/:id', component: UpdatePremiumsComponent },
 
-      { path: 'policies', component: PolicyComponent},
-      { path: 'view-policy', component: ViewPolicyComponent},
-      { path: 'view-policy/:id', component: ViewPolicyComponent},
-      { path: 'update-policies/:id', component: UpdatePolicyComponent},
+      { path: 'riders', component: RidersComponent },
+      { path: 'update-riders/:id', component: UpdateRidersComponent },
 
-      { path: 'plan', component: PlannerComponent},
-      { path: 'view-plan/:id', component: ViewPlannerComponent},
+      { path: 'payment-method', component: PaymentMethodComponent },
+      {
+        path: 'update-payment-method/:id',
+        component: UpdatePaymentMethodComponent,
+      },
 
-      { path: 'premiums', component: PremiumsComponent},
-      { path: 'update-premiums/:id', component: UpdatePremiumsComponent},
+      { path: 'payment-settings', component: PaymentSettingsComponent },
+      {
+        path: 'update-payment-settings/:id',
+        component: UpdatePaymentSettingsComponent,
+      },
 
-      { path: 'riders', component: RidersComponent},
-      { path: 'update-riders/:id', component: UpdateRidersComponent},
+      { path: 'work-flows', component: WorkFlowsComponent },
+      { path: 'update-work-flow/:id', component: UpdateWorkFlowComponent },
+      { path: 'view-work-flows/:id', component: ViewWorkFlowComponent },
 
-      { path: 'payment-method', component: PaymentMethodComponent},
-      { path: 'update-payment-method/:id', component: UpdatePaymentMethodComponent},
+      { path: 'work-flows-stage', component: WorkStagesComponent },
+      { path: 'update-work-stage/:id', component: UpdateWorkStagesComponent },
 
-      { path: 'payment-settings', component: PaymentSettingsComponent},
-      { path: 'update-payment-settings/:id', component: UpdatePaymentSettingsComponent},
-
-      { path: 'work-flows', component: WorkFlowsComponent},
-      { path: 'update-work-flow/:id', component: UpdateWorkFlowComponent},
-      { path: 'view-work-flows/:id', component: ViewWorkFlowComponent},
-      
-      { path: 'work-flows-stage', component: WorkStagesComponent},
-      { path: 'update-work-stage/:id', component: UpdateWorkStagesComponent},
-
-      { path: 'payment-payouts', component: PayoutsComponent},
+      { path: 'payment-payouts', component: PayoutsComponent },
       { path: 'client-payouts/:id/:claimId', component: PayoutsComponent },
 
-      { path: 'payment-premiums', component: PaymentPremiumsComponent},
+      { path: 'payment-premiums', component: PaymentPremiumsComponent },
 
-      { path: 'dependent', component: DependentsComponent},
+      { path: 'dependent', component: DependentsComponent },
 
-      { path: 'death-types', component: DeathTypeComponent},
-      { path: 'claims', component: ClaimsComponent},
-      { path: 'claims-parameters', component: ClaimsParametersComponent},
-      { path: 'view-claims/:id', component: ViewClaimsComponent},
+      { path: 'death-types', component: DeathTypeComponent },
+      { path: 'claims', component: ClaimsComponent },
+      { path: 'claims-parameters', component: ClaimsParametersComponent },
+      { path: 'view-claims/:id', component: ViewClaimsComponent },
 
-      { path: 'payments-parameters', component: PaymentsParametersComponent},
+      { path: 'payments-parameters', component: PaymentsParametersComponent },
 
-      { path: 'permissions', component: PermissionsComponent},
-      { path: 'roles', component: RolesComponent},
-      { path: 'users', component: UserAccountsComponent},
-      { path: 'password-policy', component: PassowrdPolicyComponent},
+      { path: 'permissions', component: PermissionsComponent },
+      { path: 'roles', component: RolesComponent },
+      { path: 'users', component: UserAccountsComponent },
+      { path: 'password-policy', component: PassowrdPolicyComponent },
 
+      { path: 'security-parameters', component: SecurityParametersComponent },
 
-      { path: 'security-parameters', component: SecurityParametersComponent},
+      { path: 'commission-settings', component: CommissionParametersComponent },
+      { path: 'commissions', component: CommissionsComponent },
+      { path: 'agent', component: AgentComponent },
+      { path: 'commission-payouts', component: PayoutsCommissionsComponent },
+      { path: 'remittance-payouts', component: RemittancePayoutComponent },
+      { path: 'remittance', component: RemittanceComponent },
 
-      { path: 'commission-settings', component: CommissionParametersComponent},
-      { path: 'commissions', component: CommissionsComponent},
-      { path: 'agent', component: AgentComponent},
-      { path: 'commission-payouts', component: PayoutsCommissionsComponent},
-      { path: 'remittance-payouts', component: RemittancePayoutComponent},
-      { path: 'remittance', component: RemittanceComponent},
+      {
+        path: 'reports/payments-premium',
+        component: PaymentsPremiumReportComponent,
+      },
+      {
+        path: 'reports/payout',
+        component: PayoutsReportComponent,
+      },
+      { path: 'reports/client', component: ClientReportComponent },
+    
+      { path: 'reports/claims', component: ClaimsReportComponent },
 
-
-      { path: '**', component: DashboardComponent }
-    ]
+      { path: '**', component: DashboardComponent },
+    ],
   },
-
 ];
-
-;
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

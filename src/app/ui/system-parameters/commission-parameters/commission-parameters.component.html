@@ -1,30 +1,63 @@
-<div class="flex justify-between items-center">
-    <p class=" text-xl text-gray-900 dark:text-white font-bold">
-      Commission and Remittance Parameters
-    </p>
-  </div>
-
+      <div class="p-6 ">
+        <!-- Header -->
+      <!-- Header Section -->
+      <div class="bg-purple-300 dark:bg-gray-800 p-6 rounded-lg shadow-sm mb-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <!-- Left side -->
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Commission and Remittance</h1>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage and monitor all commission and remittance settings</p>
+          </div>
+          
+          <!-- Right side -->
+          <div class="flex items-center gap-3">
+            <!-- Export button -->
+            <button (click)="exportToCSV()" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Export
+            </button>
+          </div>
+        </div>
+      
+      </div>
+      
       <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="text-purple-600 hover:text-purple-600 dark:text-purple-500 dark:hover:text-purple-500 border-purple-600 dark:border-purple-500" data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
             <li class="me-2" role="presentation">
-                <button class="inline-block p-4 border-b-2 rounded-t-lg" id="commission-styled-tab" data-tabs-target="#styled-commission" type="button" role="tab" aria-controls="commission" aria-selected="false">Commission & Remittance</button>
+                <button class="inline-block p-4 border-b-2 rounded-t-lg" id="deathType-styled-tab" data-tabs-target="#styled-deathType" type="button" role="tab" aria-controls="deathType" aria-selected="false">Commission & Remittance</button>
             </li>
             <li class="me-2" role="presentation">
-                <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="agents-styled-tab" data-tabs-target="#styled-agents" type="button" role="tab" aria-controls="agents" aria-selected="false">Agent</button>
+                <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="deathPeriod-styled-tab" data-tabs-target="#styled-deathPeriod" type="button" role="tab" aria-controls="deathPeriod" aria-selected="false">Agents</button>
             </li>
-
+      
         </ul>
       </div>
       <div id="default-styled-tab-content">
-        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-commission" role="tabpanel" aria-labelledby="commission-tab">
-            <app-commission-settings></app-commission-settings>
-        </div>
-        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-agents" role="tabpanel" aria-labelledby="agents-tab">
-            <app-agent></app-agent>
-        </div>
+        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-deathType" role="tabpanel" aria-labelledby="deathType-tab">
 
+      
+        <!-- Table -->
+        <app-commission-settings></app-commission-settings>
+
+           </div>
+        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-deathPeriod" role="tabpanel" aria-labelledby="deathPeriod-tab">
+          <app-agent></app-agent>
+        </div>
+      
+      
+      
+      
       </div>
       
-
-
+      <!-- Loading Spinner -->
+      <ngx-spinner
+        bdColor="rgba(0, 0, 0, 0.8)"
+        size="medium"
+        color="#fff"
+        type="ball-clip-rotate"
+        [fullScreen]="true">
+        <p style="color: white">Loading...</p>
+      </ngx-spinner>
   

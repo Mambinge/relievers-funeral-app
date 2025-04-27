@@ -26,19 +26,32 @@ export class UpdateDeathTypeComponent {
   } 
 
   ngOnInit(){
-
+console.log(this.deathTypesId)
     this.deathTypeForm = this.fb.group({
       name: '',
       description: '',
     });
   }
 
-  getdeathType(deathTypeId:any){
-      this.service.getFromUrl(`${API.CLAIMS}type/${deathTypeId}`).pipe(first())
-        .subscribe(x => this.deathTypeForm.patchValue(x));
+  getdeathType(deathTypeId: any) {
+    this.service.getFromUrl(`${API.CLAIMS}type/${deathTypeId}`).pipe(first())
+      .subscribe(
+        (response: any) => {
+          console.log('Fetched death type:', response); // Check if data is correct
+          this.deathType = response;
+          this.deathTypeForm.patchValue(response); // Patch the form with new data
+        },
+        error => {
+          console.error('Error fetching death type:', error);
+        }
+      );
   }
+  
+  
 
   onSubmit(event: Event, deathTypesId: any) {
+    console.log(this.deathTypesId)
+
     event.preventDefault(); 
     if (this.deathTypeForm.valid) {
       this.spinner.show() 
@@ -54,9 +67,11 @@ export class UpdateDeathTypeComponent {
   }
 
   showModal(deathTypesId: any) {
+    console.log(deathTypesId)
     const modalOptions: ModalOptions = {
       onShow: () => {
-        this.getdeathType(deathTypesId); 
+        // Clear and load the new data before showing the modal
+        this.getdeathType(deathTypesId);
       },
     };
     const instanceOptions: InstanceOptions = {
@@ -64,9 +79,11 @@ export class UpdateDeathTypeComponent {
       override: true
     };
     const modal = new Modal(document.getElementById('modal'), modalOptions, instanceOptions);
+    
+    // Ensure the modal is being properly shown
     modal.show();
   }
-
+  
   closeModal() {
     const modalOptions: ModalOptions = {
       onHide: () => {

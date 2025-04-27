@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl:"https://b807-197-211-207-230.ngrok-free.app/"
-  // baseUrl:"http://192.168.10.86:8989/"
+  // baseUrl:"https://d46a-98-97-185-51.ngrok-free.app/"
+  baseUrl:"http://192.168.10.86:8989/"
 
 };
 

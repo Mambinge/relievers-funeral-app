@@ -1,76 +1,120 @@
 
-<p class="text-xl text-gray-900 dark:text-white font-bold">
-  Commission & Remittance</p>
+    <div class="p-6 ">
 
-  <div class="flex justify-end">
-    <app-add-commission-settings (settingsAdded)="onsettingsAdded()"></app-add-commission-settings>  </div>
+      <div id="default-styled-tab-content">
+        <!-- Filters -->
+        <div class="flex flex-col md:flex-row gap-4 mb-6">
+          <div class="flex-1">
+            <input
+              [formControl]="searchControl"
+              type="text"
+              class="w-1/2 px-4 py-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+              placeholder="Search payment methods..."
+            />
+          </div>
+          <div class="w-full md:w-48">
+            <select
+              (change)="onStatusChange($event)"
+              class="w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            >
+              <option *ngFor="let option of statusOptions" [value]="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+          </div>
+          <app-add-commission-settings></app-add-commission-settings>
+        </div>
       
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" class="px-6 py-3">
-                   Type
-                </th>
-                    <th scope="col" class="px-6 py-3">
-                        Account Type
+        <!-- Table -->
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+              <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th *ngFor="let header of ['Type', 'Account Type', 'Commission', 'Expiry Date']" 
+                        scope="col" 
+                        class="px-6 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
+                        (click)="sort(header.toLowerCase())">
+                      <div class="flex items-center">
+                        {{ header }}
+                        <svg class="w-3 h-3 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z"/>
+                        </svg>
+                      </div>
                     </th>
-                    <th scope="col" class="px-6 py-3">
-                        Commission
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                      Expiry Date
-                  </th>
-                    <th scope="col" class="px-6 py-3">
-                        Action
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let setting of settings" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ setting.type }}
-                  </th>
-                  <td class="px-6 py-4">
-                    {{ setting.accountType }}
-                  </td>
-
-                  <td class="px-6 py-4">
-                    {{ setting.commission }}
-                  </td>
-                  <td class="px-6 py-4">
-                      {{ setting.expiryDatr }}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let product of settings" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      {{ product.type }}
                     </td>
-                  <td class="px-6 py-4 flex space-x-4">
-                    <app-update-commission-settings (settingsAdded)="onsettingsAdded()" [settingsId]="setting.id"></app-update-commission-settings>
-          <a  (click)="deleteSettings(setting.id); $event.preventDefault()" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"> 
-            <svg class="w-[16px] h-[16px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"/>
-            </svg>
-          </a>
-    
-    
-                  </td>
-                  
-                </tr>
-              </tbody>   
-           </table>
-              <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
-                <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-                    <li>
-                      <a (click)="changePage(currentPage - 1)" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-                    </li>
-                    <li *ngFor="let page of [].constructor(totalPages); let i = index">
-                        <a (click)="changePage(i)" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{i + 1}}</a>
-                    </li>
-                    <li>
-                <a  (click)="changePage(currentPage + 1)" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-                    </li>
-                </ul>
-            </nav>
-    </div>
-    
-  
-    
-  
+                    <td class="px-6 py-4">{{ product.accountType }}</td>
+                    <td class="px-6 py-4">{{ product.commission }}</td>
+                    <td class="px-6 py-4">{{ product.expiryDate | date }}</td>
+
+                    <td class="px-6 py-4">
+                      <div class="flex items-center space-x-4">
+                        <button (click)="updatePlan(product.id)" 
+                                class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+                                title="Edit">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                          </svg>
+                        </button>
+                        <button (click)="deleteSettings(product.id)"
+                                class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                                title="Delete">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr *ngIf="filteredProducts.length === 0" class="bg-white dark:bg-gray-800">
+                    <td colspan="7" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
+                      No clients found
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          
+            <!-- Pagination -->
+            <div class="flex items-center justify-between mt-4">
+              <div class="flex items-center space-x-2">
+                <button 
+                  (click)="changePage(currentPage - 1)"
+                  [disabled]="currentPage === 0"
+                  class="px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700">
+                  Previous
+                </button>
+                <div class="flex space-x-1">
+                  <button *ngFor="let page of [].constructor(totalPages); let i = index"
+                          (click)="changePage(i)"
+                          [class.bg-purple-600]="currentPage === i"
+                          [class.text-white]="currentPage === i"
+                          class="px-3 py-1 text-sm font-medium border border-gray-300 rounded-md hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700">
+                    {{ i + 1 }}
+                  </button>
+                </div>
+                <button 
+                  (click)="changePage(currentPage + 1)"
+                  [disabled]="currentPage === totalPages - 1"
+                  class="px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700">
+                  Next
+                </button>
+              </div>
+            </div> 
+      </div>
+      
+      <!-- Loading Spinner -->
+      <ngx-spinner
+        bdColor="rgba(0, 0, 0, 0.8)"
+        size="medium"
+        color="#fff"
+        type="ball-clip-rotate"
+        [fullScreen]="true">
+        <p style="color: white">Loading...</p>
+      </ngx-spinner> 
   

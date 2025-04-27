@@ -10,23 +10,32 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css']
+  styleUrls: ['./login-page.component.css'],
 })
 export class LoginPageComponent {
   username: string = '';
   password: string = '';
   typeForm!: FormGroup;
-  data:any;
+  data: any;
 
-  constructor(private request: HttpClient, private spinner: NgxSpinnerService,private alert: AlertService,    private route: ActivatedRoute,
-    private guard: AuthGuard,private router: Router, private service: ApiService, private fb: FormBuilder,){
+  constructor(
+    private request: HttpClient,
+    private spinner: NgxSpinnerService,
+    private alert: AlertService,
+    private route: ActivatedRoute,
+    private guard: AuthGuard,
+    private router: Router, // Inject Router service
+    private service: ApiService,
+    private fb: FormBuilder
+  ) {
     this.typeForm = this.fb.group({
       username: '',
       password: '',
     });
   }
-
-
+  navigateToDashboard() {
+    this.router.navigate(['/dashboard']);
+  }
 
   onClick(event: Event) {
     event.preventDefault(); 
