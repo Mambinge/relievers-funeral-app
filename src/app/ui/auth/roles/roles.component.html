@@ -1,0 +1,85 @@
+<p class="text-xl text-gray-900 dark:text-white font-bold">
+    Role</p>
+  
+  <div class="flex justify-end">
+  <app-add-roles (rolesAdded)="onrolesAdded()"></app-add-roles>  </div>
+    
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+
+                  <th scope="col" class="px-6 py-3">
+                      Name
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Department
+                  </th>
+                 
+                  <th scope="col" class="px-6 py-3">
+                      Action
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let roles of roles" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {{ roles.name }}
+                </th>
+                <td class="px-6 py-4">
+                  {{ roles.department }}
+                </td>
+               
+                <td class="px-6 py-4 flex space-x-4">
+                  <app-update-roles (rolesAdded)="onrolesAdded()" [rolesId]=[roles.id]></app-update-roles>
+
+        <a  (click)="deleteroles(roles.id); $event.preventDefault()" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"> 
+          <svg class="w-[16px] h-[16px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"/>
+          </svg>
+        </a>
+        <a
+        (click)="viewroles(roles.id)"
+        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+      >
+        <svg
+          class="w-[16px] h-[16px] text-gray-800 dark:text-white"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 14"
+        >
+          <g
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+          >
+            <path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+            <path
+              d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z"
+            />
+          </g>
+        </svg>
+      </a>
+  
+                </td>
+                
+              </tr>
+            </tbody>   
+         </table>
+            <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
+              <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                  <li>
+                    <a (click)="changePage(currentPage - 1)" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                  </li>
+                  <li *ngFor="let page of [].constructor(totalPages); let i = index">
+                      <a (click)="changePage(i)" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{i + 1}}</a>
+                  </li>
+                  <li>
+              <a  (click)="changePage(currentPage + 1)" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                  </li>
+              </ul>
+          </nav>
+  </div>
+  

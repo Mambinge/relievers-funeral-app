@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { API, ApiService } from 'src/app/shared/services';
 
 @Component({
@@ -22,7 +22,7 @@ export class ViewAccountApprovalComponent {
   currentStep = 0;
   sortedApprovalStages!: any[];
 
-  constructor(private route: ActivatedRoute, private service: ApiService){}
+  constructor( private route: ActivatedRoute, private service: ApiService){}
 
   ngOnInit(){
     this.route.params.subscribe((params : any) => {
@@ -71,9 +71,7 @@ getApprovals(accountsId: any) {
     this.selectedTab = tab;
   }
   
-  onClick(){
 
-  }
   
   }
 

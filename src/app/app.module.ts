@@ -5,12 +5,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './ui/layout/layout.component';
 import { UsersComponent } from './ui/users/users.component';
-import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpHandler,
+} from '@angular/common/http';
 import { AddUsersComponent } from './ui/users/add-users/add-users.component';
 import { UserProfileComponent } from './ui/users/user-profile/user-profile.component';
 import { ResetPasswordComponent } from './ui/auth/reset-password/reset-password.component';
 import { UpdateUsersComponent } from './ui/users/update-users/update-users.component';
-import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { PolicyComponent } from './ui/policy/policy.component';
 import { AddPolicyComponent } from './ui/policy/add-policy/add-policy.component';
 import { UpdatePolicyComponent } from './ui/policy/update-policy/update-policy.component';
@@ -45,7 +49,7 @@ import { AddWorkStagesComponent } from './ui/system-parameters/work-stages/add-w
 import { UpdateWorkStagesComponent } from './ui/system-parameters/work-stages/update-work-stages/update-work-stages.component';
 import { LoginPageComponent } from './ui/auth/login-page/login-page.component';
 import { DashboardComponent } from './ui/dashboard/dashboard.component';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PayoutsComponent } from './ui/payments/payouts/payouts.component';
 import { PaymentPremiumsComponent } from './ui/payments/payment-premiums/payment-premiums.component';
@@ -84,6 +88,49 @@ import { DeathTypeComponent } from './ui/system-parameters/death-type/death-type
 import { AddDeathTypeComponent } from './ui/system-parameters/death-type/add-death-type/add-death-type.component';
 import { UpdateDeathTypeComponent } from './ui/system-parameters/death-type/update-death-type/update-death-type.component';
 import { DeathPeriodComponent } from './ui/system-parameters/death-period/death-period.component';
+import { AddDeathPeriodComponent } from './ui/system-parameters/death-period/add-death-period/add-death-period.component';
+import { UpdateDeathPeriodComponent } from './ui/system-parameters/death-period/update-death-period/update-death-period.component';
+import { ClaimsComponent } from './ui/claims/claims.component';
+import { AddClaimsComponent } from './ui/claims/add-claims/add-claims.component';
+import { UpdateClaimsComponent } from './ui/claims/update-claims/update-claims.component';
+import { ClaimsParametersComponent } from './ui/system-parameters/claims-parameters/claims-parameters.component';
+import { PaymentsParametersComponent } from './ui/system-parameters/payments-parameters/payments-parameters.component';
+import { ClaimApprovalComponent } from './ui/claim-approval/claim-approval.component';
+import { AddClaimApprovalComponent } from './ui/claim-approval/add-claim-approval/add-claim-approval.component';
+import { ViewClaimsComponent } from './ui/claims/view-claims/view-claims.component';
+import { ClientFilesComponent } from './ui/files/client-files/client-files.component';
+import { AddClientFilesComponent } from './ui/files/client-files/add-client-files/add-client-files.component';
+import { PermissionsComponent } from './ui/auth/permissions/permissions.component';
+import { AddPermissionsComponent } from './ui/auth/permissions/add-permissions/add-permissions.component';
+import { UpdatePermissionsComponent } from './ui/auth/permissions/update-permissions/update-permissions.component';
+import { RolesComponent } from './ui/auth/roles/roles.component';
+import { AddRolesComponent } from './ui/auth/roles/add-roles/add-roles.component';
+import { UpdateRolesComponent } from './ui/auth/roles/update-roles/update-roles.component';
+import { PassowrdPolicyComponent } from './ui/auth/passowrd-policy/passowrd-policy.component';
+import { AddPasswordPolicyComponent } from './ui/auth/passowrd-policy/add-password-policy/add-password-policy.component';
+import { UpdatePasswordPolicyComponent } from './ui/auth/passowrd-policy/update-password-policy/update-password-policy.component';
+import { UserAccountsComponent } from './ui/user-accounts/user-accounts.component';
+import { AddUserAccountComponent } from './ui/user-accounts/add-user-account/add-user-account.component';
+import { UpdateUserAccountComponent } from './ui/user-accounts/update-user-account/update-user-account.component';
+import { ForgotPasswordComponent } from './ui/auth/forgot-password/forgot-password.component';
+import { AgentComponent } from './ui/agent/agent.component';
+import { AddAgentComponent } from './ui/agent/add-agent/add-agent.component';
+import { UpdateAgentComponent } from './ui/agent/update-agent/update-agent.component';
+import { CommissionSettingsComponent } from './ui/system-parameters/commission-settings/commission-settings.component';
+import { AddCommissionSettingsComponent } from './ui/system-parameters/commission-settings/add-commission-settings/add-commission-settings.component';
+import { UpdateCommissionSettingsComponent } from './ui/system-parameters/commission-settings/update-commission-settings/update-commission-settings.component';
+import { CommissionsComponent } from './ui/commissions/commissions.component';
+import { PayoutsCommissionsComponent } from './ui/commissions/payouts-commissions/payouts-commissions.component';
+import { PayCommissionComponent } from './ui/commissions/payouts-commissions/pay-commission/pay-commission.component';
+import { CommissionParametersComponent } from './ui/system-parameters/commission-parameters/commission-parameters.component';
+import { SecurityParametersComponent } from './ui/system-parameters/security-parameters/security-parameters.component';
+import { RemittanceComponent } from './ui/remittance/remittance.component';
+import { RemittancePayoutComponent } from './ui/remittance/remittance-payout/remittance-payout.component';
+import { PayRemittanceComponent } from './ui/remittance/remittance-payout/pay-remittance/pay-remittance.component';
+import { PaymentsPremiumReportComponent } from './ui/reports/payments-premium-report.component';
+import { PayoutsReportComponent } from './ui/reports/payouts-report/payouts-report.component';
+import { ClientReportComponent } from './ui/reports/client-report/client-report.component';
+import { ClaimsReportComponent } from './ui/reports/claims-report/claims-report.component';
 
 // function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
 //   return () => {
@@ -119,6 +166,7 @@ import { DeathPeriodComponent } from './ui/system-parameters/death-period/death-
     UpdatePlanComponent,
     PremiumsComponent,
     UpdatePremiumsComponent,
+    AddAccountPayoutsComponent,
     AddPremiumsComponent,
     RidersComponent,
     AddRidersComponent,
@@ -160,7 +208,6 @@ import { DeathPeriodComponent } from './ui/system-parameters/death-period/death-
     AddArrearsComponent,
     AccountPremiumsComponent,
     AccountPayoutsComponent,
-    AddAccountPayoutsComponent,
     AddAccountPremiumsComponent,
     AccountApprovalComponent,
     AddAccountApprovalComponent,
@@ -175,14 +222,59 @@ import { DeathPeriodComponent } from './ui/system-parameters/death-period/death-
     AddDeathTypeComponent,
     UpdateDeathTypeComponent,
     DeathPeriodComponent,
-    
+    AddDeathPeriodComponent,
+    UpdateDeathPeriodComponent,
+    ClaimsComponent,
+    AddClaimsComponent,
+    UpdateClaimsComponent,
+    ClaimsParametersComponent,
+    PaymentsParametersComponent,
+    ClaimApprovalComponent,
+    AddClaimApprovalComponent,
+    ViewClaimsComponent,
+    ClientFilesComponent,
+    AddClientFilesComponent,
+    PermissionsComponent,
+    AddPermissionsComponent,
+    UpdatePermissionsComponent,
+    RolesComponent,
+    AddRolesComponent,
+    UpdateRolesComponent,
+    PassowrdPolicyComponent,
+    AddPasswordPolicyComponent,
+    UpdatePasswordPolicyComponent,
+    UserAccountsComponent,
+    AddUserAccountComponent,
+    UpdateUserAccountComponent,
+    ForgotPasswordComponent,
+    AgentComponent,
+    AddAgentComponent,
+    UpdateAgentComponent,
+    CommissionSettingsComponent,
+    AddCommissionSettingsComponent,
+    UpdateCommissionSettingsComponent,
+    CommissionsComponent,
+    PayoutsCommissionsComponent,
+    PayCommissionComponent,
+    CommissionParametersComponent,
+    SecurityParametersComponent,
+    RemittanceComponent,
+    RemittancePayoutComponent,
+    PayRemittanceComponent,
+    PaymentsPremiumReportComponent,
+    PayoutsReportComponent,
+    ClientReportComponent,
+    ClaimsReportComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     KeycloakAngularModule,
-    SharedModule.forRoot({ environment: environment.baseUrl, production: environment.production }),
+    SharedModule.forRoot({
+      environment: environment.baseUrl,
+      production: environment.production,
+    }),
     HttpClientModule,
     FormsModule,
     ToastrModule.forRoot({
@@ -190,12 +282,15 @@ import { DeathPeriodComponent } from './ui/system-parameters/death-period/death-
       positionClass: 'toast-top-right',
       preventDuplicates: true,
       progressAnimation: 'increasing',
-      closeButton: true
+      closeButton: true,
     }),
     ReactiveFormsModule,
-    NgxSpinnerModule.forRoot({ type: 'ball-clip-rotate-multiple' })  
+    NgxSpinnerModule.forRoot({ type: 'ball-clip-rotate-multiple' }),
   ],
-  providers: [HttpClient, ApiService, KeycloakService,
+  providers: [
+    HttpClient,
+    ApiService,
+    KeycloakService,
 
     // {
     //   provide: APP_INITIALIZER,
@@ -203,7 +298,8 @@ import { DeathPeriodComponent } from './ui/system-parameters/death-period/death-
     //   multi: true,
     //   deps: [KeycloakService],
     // },
-  ],  bootstrap: [AppComponent]
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor(private readonly keycloak: KeycloakService) {

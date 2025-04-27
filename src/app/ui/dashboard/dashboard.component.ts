@@ -1,205 +1,163 @@
-import { Component } from '@angular/core';
-import * as ApexCharts from 'apexcharts';
+import { Component, OnInit } from '@angular/core';
+import {
+  Chart,
+  registerables, // Import all required components
+} from 'chart.js';
+import { API, ApiService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent {
-  charts:any
+export class DashboardComponent implements OnInit {
+  // Quick Stats
+  newClientsThisMonth = 34;
+  activePolicies: any;
+  activePercentage = 87;
+  pendingClaims = 23;
+  avgProcessingDays = 3;
+  monthlyRevenue = 158432;
+  revenueGrowth = 12;
+  currentPage = 0;
+  totalPages: number = 0;
+  pageSize = 7;
+  totalClients: any;
 
-  constructor(){
+  // Recent Claims
+  recentClaims = [
+    {
+      clientName: 'John Smith',
+      policyNumber: '1234',
+      amount: 5000,
+      status: 'Pending',
+    },
+    {
+      clientName: 'Sarah Johnson',
+      policyNumber: '1235',
+      amount: 7500,
+      status: 'Approved',
+    },
+    {
+      clientName: 'Michael Brown',
+      policyNumber: '1236',
+      amount: 6000,
+      status: 'Pending',
+    },
+    {
+      clientName: 'Emma Wilson',
+      policyNumber: '1237',
+      amount: 4500,
+      status: 'Approved',
+    },
+  ];
 
-}
+  // Upcoming Remittances
 
-ngOnInit() {
-  window.addEventListener("load", function() {
-    let options = {
-      chart: {
-        height: "100%",
-        maxWidth: "100%",
-        type: "area",
-        fontFamily: "Inter, sans-serif",
-        dropShadow: {
-          enabled: false,
-        },
-        toolbar: {
-          show: false,
-        },
-      },
-      tooltip: {
-        enabled: true,
-        x: {
-          show: false,
-        },
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          opacityFrom: 0.55,
-          opacityTo: 0,
-          shade: "#1C64F2",
-          gradientToColors: ["#1C64F2"],
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        width: 6,
-      },
-      grid: {
-        show: false,
-        strokeDashArray: 4,
-        padding: {
-          left: 2,
-          right: 2,
-          top: 0
-        },
-      },
-      series: [
-        {
-          name: "New users",
-          data: [6500, 6418, 6456, 6526, 6356, 6456],
-          color: "#1A56DB",
-        },
-      ],
-      xaxis: {
-        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
-        labels: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      yaxis: {
-        show: false,
-      },
-    }
+  // Commission Summary
+  commissionSummary: any;
+  upcomingRemittances: any;
 
-    if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
-      const chart = new ApexCharts(document.getElementById("area-chart"), options);
-      chart.render();
-    }
+  constructor(private service: ApiService) {
+    Chart.register(...registerables); // Register all required components globally
+  }
 
-  
-  });
+  ngOnInit() {
+    this.initPremiumChart();
+    this.initArrearsChart();
+    this.getTotalClients();
+    this.getTotalPolicies();
+    this.getRemmittances();
+    this.getCommissions();
+  }
 
-  window.addEventListener("load", function() {
-    const options = {
-          colors: ["#1A56DB", "#FDBA8C"],
-          series: [
-            {
-              name: "Organic",
-              color: "#1A56DB",
-              data: [
-                { x: "Mon", y: 231 },
-                { x: "Tue", y: 122 },
-                { x: "Wed", y: 63 },
-                { x: "Thu", y: 421 },
-                { x: "Fri", y: 122 },
-                { x: "Sat", y: 323 },
-                { x: "Sun", y: 111 },
-              ],
-            },
-            {
-              name: "Social media",
-              color: "#FDBA8C",
-              data: [
-                { x: "Mon", y: 232 },
-                { x: "Tue", y: 113 },
-                { x: "Wed", y: 341 },
-                { x: "Thu", y: 224 },
-                { x: "Fri", y: 522 },
-                { x: "Sat", y: 411 },
-                { x: "Sun", y: 243 },
-              ],
-            },
-          ],
-          chart: {
-            type: "bar",
-            height: "320px",
-            fontFamily: "Inter, sans-serif",
-            toolbar: {
-              show: false,
-            },
-          },
-          plotOptions: {
-            bar: {
-              horizontal: false,
-              columnWidth: "70%",
-              borderRadiusApplication: "end",
-              borderRadius: 8,
-            },
-          },
-          tooltip: {
-            shared: true,
-            intersect: false,
-            style: {
-              fontFamily: "Inter, sans-serif",
-            },
-          },
-          states: {
-            hover: {
-              filter: {
-                type: "darken",
-                value: 1,
-              },
-            },
-          },
-          stroke: {
-            show: true,
-            width: 0,
-            colors: ["transparent"],
-          },
-          grid: {
-            show: false,
-            strokeDashArray: 4,
-            padding: {
-              left: 2,
-              right: 2,
-              top: -14
-            },
-          },
-          dataLabels: {
-            enabled: false,
-          },
-          legend: {
-            show: false,
-          },
-          xaxis: {
-            floating: false,
-            labels: {
-              show: true,
-              style: {
-                fontFamily: "Inter, sans-serif",
-                cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
-              }
-            },
-            axisBorder: {
-              show: false,
-            },
-            axisTicks: {
-              show: false,
-            },
-          },
-          yaxis: {
-            show: false,
-          },
-          fill: {
-            opacity: 1,
-          },
-        }
+  getCommissions() {
+    this.service.getAll(`${API.CLIENTS}commissions?page=${this.currentPage}&size=7`).subscribe((res)=>{
+      this.commissionSummary = res.content.slice(0, 5);
+      this.totalPages = res.totalPages;
+    })  }
 
-        if(document.getElementById("column-chart") && typeof ApexCharts !== 'undefined') {
-          const chart = new ApexCharts(document.getElementById("column-chart"), options);
-          chart.render();
-        }
+  getRemmittances() {
+    this.service
+      .getAll(`${API.CLIENTS}remittances?page=${this.currentPage}&size=7`)
+      .subscribe((res) => {
+        this.upcomingRemittances = res.content.slice(0, 5);
+        this.totalPages = res.totalPages;
       });
-}
+  }
+
+  getTotalPolicies() {
+    this.service
+      .getAll(
+        `${API.SERVICE}policies?page=${this.currentPage}&size=${this.pageSize}`
+      )
+      .subscribe({
+        next: (res) => {
+          this.activePolicies = res.totalElements;
+          this.totalPages = res.totalPages;
+        },
+      });
+  }
+
+  getTotalClients() {
+    this.service
+      .getAll(
+        `${API.CLIENTS}clients?page=${this.currentPage}&size=${this.pageSize}`
+      )
+      .subscribe({
+        next: (res) => {
+          this.totalClients = res.totalElements;
+          this.totalPages = res.totalPages;
+        },
+      });
+  }
+
+  initPremiumChart() {
+    const ctx = document.getElementById('premiumChart') as HTMLCanvasElement;
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+          {
+            label: 'Premium Collections',
+            data: [65000, 72000, 68000, 78000, 82000, 85000],
+            borderColor: 'rgb(79, 70, 229)',
+            tension: 0.1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  }
+
+  initArrearsChart() {
+    const ctx = document.getElementById('arrearsChart') as HTMLCanvasElement;
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['0-30 Days', '31-60 Days', '60+ Days'],
+        datasets: [
+          {
+            data: [65, 25, 10],
+            backgroundColor: [
+              'rgb(34, 197, 94)',
+              'rgb(234, 179, 8)',
+              'rgb(239, 68, 68)',
+            ],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+      },
+    });
+  }
 }

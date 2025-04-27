@@ -1,0 +1,82 @@
+<div class="flex justify-between items-center">
+  <p class="text-xl text-gray-900 dark:text-white font-bold">
+    Security Parameters
+  </p>
+</div>
+
+<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+  <ul
+    class="flex flex-wrap -mb-px text-sm font-medium text-center"
+    id="default-styled-tab"
+    data-tabs-toggle="#default-styled-tab-content"
+    data-tabs-active-classes="text-purple-600 hover:text-purple-600 dark:text-purple-500 dark:hover:text-purple-500 border-purple-600 dark:border-purple-500"
+    data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300"
+    role="tablist"
+  >
+    <li class="me-2" role="presentation">
+      <button
+        class="inline-block p-4 border-b-2 rounded-t-lg"
+        id="roles-styled-tab"
+        data-tabs-target="#styled-roles"
+        type="button"
+        role="tab"
+        aria-controls="roles"
+        aria-selected="false"
+      >
+        Roles
+      </button>
+    </li>
+    <li class="me-2" role="presentation">
+      <button
+        class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+        id="password-policy-styled-tab"
+        data-tabs-target="#styled-password-policy"
+        type="button"
+        role="tab"
+        aria-controls="password-policy"
+        aria-selected="false"
+      >
+        Password Policy
+      </button>
+    </li>
+    <li class="me-2" role="presentation">
+      <button
+        class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+        id="permissions-styled-tab"
+        data-tabs-target="#styled-permissions"
+        type="button"
+        role="tab"
+        aria-controls="permissions"
+        aria-selected="false"
+      >
+        Permissions
+      </button>
+    </li>
+  </ul>
+</div>
+<div id="default-styled-tab-content">
+  <div
+    class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+    id="styled-roles"
+    role="tabpanel"
+    aria-labelledby="roles-tab"
+  >
+    <app-roles></app-roles>
+  </div>
+  <div
+    class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+    id="styled-password-policy"
+    role="tabpanel"
+    aria-labelledby="password-policy-tab"
+  >
+    <app-passowrd-policy></app-passowrd-policy>
+  </div>
+  <div
+    class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+    id="styled-permissions"
+    role="tabpanel"
+    aria-labelledby="permissions-tab"
+  >
+    <app-permissions></app-permissions>
+  </div>
+</div>

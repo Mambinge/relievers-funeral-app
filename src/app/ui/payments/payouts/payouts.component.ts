@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { API, ApiService } from 'src/app/shared/services';
@@ -16,18 +16,24 @@ export class PayoutsComponent {
   payout!: any[]
   clientsId:any
   id:any
+  @Input() policyNumber:any
+  accountId:any
+  claimId:any;
 
   constructor(private route: ActivatedRoute, private service: ApiService, private router: Router,  private spinner: NgxSpinnerService,){}
 
 
   ngOnInit(){
-    this.getAll(false)
+    this.route.params.subscribe(params => {
+      this.accountId = params['id'];
+      this.claimId = params['claimId'];
+      console.log('Account ID:', this.accountId);
+      this.getAll(this.claimId)
+    }); }
 
- }
-
-  getAll(clientId:any, _$event?: Event){
-    // this.spinner.show();
-    this.service.getAll(`${API.PAYMENTS}payments/payouts?&page=${this.currentPage}&size=7`).subscribe((res)=>{
+  getAll(claimId:number){
+    // this.spinner.show();http://192.168.12.134:8990/payments/payouts?page=0&size=1&clientId=3
+    this.service.getAll(`${API.PAYMENTS}payments/payouts?&page=${this.currentPage}&size=7&claimId=${claimId}`).subscribe((res)=>{
       this.products = res.content
       this.spinner.hide();
       this.totalPages = res.totalPages;
@@ -37,13 +43,13 @@ export class PayoutsComponent {
   changePage(newPage: number) {
     if(newPage >= 0 && newPage < this.totalPages) {
       this.currentPage = newPage;
-      this.getAll(false);
+      this.getAll(this.accountId);
     }
   }
 
   deletepayout(id: string) {
     this.service.delete(`${API.PAYMENTS}payout/${id}`).subscribe((res) => {
-      this.getAll(false)
+      this.getAll(this.accountId);
     });
   }
 
@@ -52,7 +58,7 @@ export class PayoutsComponent {
   }
 
   onpayoutAdded() {
-    this.getAll(false);
+    this.getAll(this.accountId);
   }
 
   toggleView() {

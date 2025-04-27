@@ -15,7 +15,7 @@ export class AddDeathTypeComponent {
   typeForm!: FormGroup;
   statusOptions = Object.values(Status);
   data: any
-  @Output() planAdded = new EventEmitter<void>();
+  @Output() deathTypeAdded = new EventEmitter<void>();
 
   constructor(private fb: FormBuilder, private service: ApiService, private spinner: NgxSpinnerService,private alert: AlertService) {
     this.typeForm = this.fb.group({
@@ -32,7 +32,7 @@ export class AddDeathTypeComponent {
         this.data = res;
         this.spinner.hide()
         this.alert.showSuccess("Saved Successfully")
-        this.planAdded.emit();
+        this.deathTypeAdded.emit();
         this.closeModal();
       });
     }
