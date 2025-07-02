@@ -45,7 +45,6 @@ onSubmit(event: Event) {
   event.preventDefault(); 
   if (this.typeForm.valid) { 
     this.spinner.show()
-    console.log( this.typeForm.value)
     this.service.postToUrl(`${API.AUTH}password-policy/create`, this.typeForm.value).subscribe((res) => {
       this.data = res;
       this.spinner.hide()

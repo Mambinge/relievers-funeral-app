@@ -13,8 +13,8 @@ import { ApiService, API } from 'src/app/shared/services';
 export class PayoutsCommissionsComponent {
   showListUsers = true;
   currentPage = 0;
-  totalPages:any
-  id:any;
+  totalPages: any
+  id: any;
   agents: any;
   selectedTab: string = 'deathType';
   searchControl = new FormControl('');
@@ -29,12 +29,12 @@ export class PayoutsCommissionsComponent {
     { value: 'AWAITING_APPROVALS', label: 'Awaiting Approvals' },
     { value: 'ACTIVE', label: 'Active' }
   ];
-  constructor(private spinner: NgxSpinnerService,private route: ActivatedRoute,
-    private service: ApiService, private router: Router){}
+  constructor(private spinner: NgxSpinnerService, private route: ActivatedRoute,
+    private service: ApiService, private router: Router) { }
 
 
-  ngOnInit(){
-    this.getAll(false)      
+  ngOnInit() {
+    this.getAll(false)
     this.setupSearch();
   }
 
@@ -61,7 +61,7 @@ export class PayoutsCommissionsComponent {
 
   applyFilters() {
     let filtered = [...this.filteredProducts];
-    
+
     if (this.selectedStatus) {
       filtered = filtered.filter(product => product.status === this.selectedStatus);
     }
@@ -70,7 +70,7 @@ export class PayoutsCommissionsComponent {
       filtered.sort((a, b) => {
         const aValue = this.getNestedValue(a, this.sortField);
         const bValue = this.getNestedValue(b, this.sortField);
-        
+
         if (this.sortDirection === 'asc') {
           return aValue > bValue ? 1 : -1;
         } else {
@@ -102,19 +102,22 @@ export class PayoutsCommissionsComponent {
   }
 
   exportToCSV() {
-    const headers = ['Title', 'Full Name', 'Gender', 'Nationality', 'Plan', 'Status'];
-    const rows = this.filteredProducts.map(product => [
-      product.title,
-      `${product.name} ${product.surname}`,
-      product.gender,
-      product.nationality,
-      product?.plan?.name || '-',
-      product.status
+    const headers = [
+      'Agent',
+      'Amount',
+      'Payment Date',
+      'Status',
+    ];
+    const rows = this.agents.map((agent: any) => [
+      (agent.agent?.name || '') + ' ' + (agent.agent?.surname || ''),
+      agent.amount || '',
+      agent.paymentDate || '',
+      agent.status || '',
     ]);
 
     let csvContent = 'data:text/csv;charset=utf-8,';
     csvContent += headers.join(',') + '\n'; // Add headers
-    rows.forEach(row => {
+    rows.forEach((row: any) => {
       csvContent += row.join(',') + '\n'; // Add rows
     });
 
@@ -122,7 +125,7 @@ export class PayoutsCommissionsComponent {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', 'clients.csv');
+    link.setAttribute('download', 'payouts-commissions.csv');
     document.body.appendChild(link);
     link.click(); // Trigger the download
     document.body.removeChild(link);
@@ -132,9 +135,9 @@ export class PayoutsCommissionsComponent {
     this.applyFilters();
   }
 
-  getAll(reload: boolean){
+  getAll(reload: boolean) {
     this.spinner.show()
-    this.service.getAll(`${API.CLIENTS}commissions/payouts?page=${this.currentPage}&size=7`).subscribe((res)=>{
+    this.service.getAll(`${API.CLIENTS}commissions/payouts?page=${this.currentPage}&size=7`).subscribe((res) => {
       this.agents = res.content
       this.spinner.hide()
       this.totalPages = res.totalPages;
@@ -142,7 +145,7 @@ export class PayoutsCommissionsComponent {
   }
 
   changePage(newPage: number) {
-    if(newPage >= 0 && newPage < this.totalPages) {
+    if (newPage >= 0 && newPage < this.totalPages) {
       this.currentPage = newPage;
       this.getAll(false);
     }

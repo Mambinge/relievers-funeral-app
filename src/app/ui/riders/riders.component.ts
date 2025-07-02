@@ -1,57 +1,104 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { API, ApiService } from 'src/app/shared/services';
+import { ToastrService } from 'ngx-toastr';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { RidersService, Rider } from 'src/app/services/riders.service';
 
 @Component({
   selector: 'app-riders',
   templateUrl: './riders.component.html',
   styleUrls: ['./riders.component.css']
 })
-export class RidersComponent {
-  products:any
-  showListUsers = true;
+export class RidersComponent implements OnInit {
+  riders: Rider[] = [];
   currentPage = 0;
-  totalPages:any
+  totalPages = 0;
+  sortField = 'fullName';
+  sortOrder = 'asc';
+  searchControl = new FormControl();
+  selectedRider: Rider | null = null;
+  isEditModalOpen = false;
 
-  constructor(private router: Router, private spinner: NgxSpinnerService,private service: ApiService){}
+  constructor(
+    private ridersService: RidersService,
+    private router: Router,
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService
+  ) { }
 
-
-  ngOnInit(){
-    this.getAll()
+  ngOnInit() {
+    this.loadRiders();
+    this.searchControl.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(value => {
+        this.currentPage = 0;
+        return of(value);
+      })
+    ).subscribe(() => this.loadRiders());
   }
 
-  getAll(){
-    this.spinner.show()
-    this.service.getAll(`${API.SERVICE}rider?page=${this.currentPage}&size=7`).subscribe((res)=>{
-      this.products = res.content
-      this.spinner.hide()
-      this.totalPages = res.totalPages;
-    })
+  loadRiders() {
+    this.spinner.show();
+    this.ridersService.getRiders(this.currentPage, 7, this.sortField, this.sortOrder, this.searchControl.value).subscribe(
+      res => {
+        this.riders = res.content;
+        this.totalPages = res.totalPages;
+        this.spinner.hide();
+      },
+      () => {
+        this.spinner.hide();
+        this.toastr.error('Failed to load riders');
+      }
+    );
   }
 
   changePage(newPage: number) {
-    if(newPage >= 0 && newPage < this.totalPages) {
+    if (newPage >= 0 && newPage < this.totalPages) {
       this.currentPage = newPage;
-      this.getAll();
+      this.loadRiders();
     }
   }
 
-  deleteRiders(id: string) {
-    this.service.delete(`${API.SERVICE}rider/${id}`).subscribe((res) => {
-      this.getAll()
-    });
+  deleteRider(id: string) {
+    this.spinner.show();
+    this.ridersService.deleteRider(id).subscribe(
+      () => {
+        this.spinner.hide();
+        this.toastr.success('Rider deleted successfully');
+        this.loadRiders();
+      },
+      () => {
+        this.spinner.hide();
+        this.toastr.error('Failed to delete rider');
+      }
+    );
   }
 
-  updatePlan(id: string) {
-    this.router.navigate(['/update-riders', id]);
+  viewRider(id: string) {
+    // Implement navigation if there's a view page for a rider
+    // this.router.navigate(['/view-rider', id]);
   }
 
-  toggleView() {
-    this.showListUsers = !this.showListUsers;
+  openEditModal(rider: Rider) {
+    this.selectedRider = { ...rider };
+    this.isEditModalOpen = true;
   }
 
-  onPlanAdded() {
-    this.getAll();
+  closeEditModal() {
+    this.isEditModalOpen = false;
+    this.selectedRider = null;
+  }
+
+  onRiderUpdated(): void {
+    this.loadRiders();
+    this.closeEditModal();
+  }
+
+  onRiderAdded(): void {
+    this.loadRiders();
   }
 }

@@ -3,11 +3,9 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { first } from 'rxjs';
-import { Status } from 'src/app/models/policy-status';
 import { API, ApiService } from 'src/app/shared/services';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { Plan } from '../../plans/plans.component';
+import { Plan } from 'src/app/services/plans.service';
 
 @Component({
   selector: 'app-add-dependents',
@@ -21,55 +19,53 @@ export class AddDependentsComponent {
   dependentForm!: FormGroup;
   data: any
   isAddMode!: boolean;
-  id:any;
-  @Output() dependentAdded : EventEmitter<number> = new EventEmitter<number>();
+  id: any;
+  @Output() dependentAdded: EventEmitter<number> = new EventEmitter<number>();
   @Input() planId!: Plan | any;
   dependentsId!: number;
-  dependents!:any
+  dependents!: any
 
   constructor(private fb: FormBuilder, private http: ApiService, private route: ActivatedRoute,
-    private spinner: NgxSpinnerService,private alert: AlertService) {
-  } 
+    private spinner: NgxSpinnerService, private alert: AlertService) {
+  }
 
   ngOnInit() {
-    this.route.params.subscribe((params : any) => {
+    this.route.params.subscribe((params: any) => {
       const dependentsId = params['id'];
       this.dependentsId = +dependentsId
-      if(dependentsId){
-      console.log(this.dependentsId)
-    }
-    }); 
+      if (dependentsId) {
+      }
+    });
 
     this.dependentForm = this.fb.group({
-        policyHolderId: '',
-        name: '',
-        surname: '',
-        idNumber: '',
-        relationshipToMember: '',
-        plan: {
-          id:'',
-          name: ''
-                }
+      policyHolderId: '',
+      name: '',
+      surname: '',
+      idNumber: '',
+      relationshipToMember: '',
+      plan: {
+        id: '',
+        name: ''
+      }
     });
 
 
     this.http.getFromUrl(`${API.SERVICE}plan`)
-    .subscribe((res)=>{
-      this.planOptions = res.content.map((plan: any) => ({ id: plan.id, name: plan.name }));
-      console.log(this.planOptions);
-        });
+      .subscribe((res) => {
+        this.planOptions = res.content.map((plan: any) => ({ id: plan.id, name: plan.name }));
+      });
 
   }
 
 
   onSubmit(event: Event) {
-    event.preventDefault(); 
-    if (this.dependentForm.valid) { 
+    event.preventDefault();
+    if (this.dependentForm.valid) {
       this.spinner.show();
 
       const selectedPlan = this.dependentForm.value.plan;
-      const selectedPlanId = selectedPlan.id; 
-      const selectedPlanName = selectedPlan.name; 
+      const selectedPlanId = selectedPlan.id;
+      const selectedPlanName = selectedPlan.name;
 
       const requestBody = {
         policyHolderId: this.dependentsId,
@@ -79,10 +75,10 @@ export class AddDependentsComponent {
         relationshipToMember: this.dependentForm.value.relationshipToMember,
         plan: {
           id: selectedPlanId,
-          name: selectedPlanName 
+          name: selectedPlanName
         }
       };
-  
+
       this.http.postToUrl(`${API.CLIENTS}dependants`, requestBody).subscribe((res) => {
         this.data = res;
         this.spinner.hide();
@@ -97,11 +93,11 @@ export class AddDependentsComponent {
     const modalOptions: ModalOptions = {
       onHide: () => {
       },
-  };
-  const instanceOptions: InstanceOptions = {
-    id: 'crud-modal',
-    override: true
-  };
+    };
+    const instanceOptions: InstanceOptions = {
+      id: 'crud-modal',
+      override: true
+    };
     const modal = new Modal(document.getElementById('crud-modal'), modalOptions, instanceOptions);
     modal.hide();
   }
@@ -110,11 +106,11 @@ export class AddDependentsComponent {
     const modalOptions: ModalOptions = {
       onShow: () => {
       },
-  };
-  const instanceOptions: InstanceOptions = {
-    id: 'crud-modal',
-    override: true
-  };
+    };
+    const instanceOptions: InstanceOptions = {
+      id: 'crud-modal',
+      override: true
+    };
     const modal = new Modal(document.getElementById('crud-modal'), modalOptions, instanceOptions);
     modal.show();
   }

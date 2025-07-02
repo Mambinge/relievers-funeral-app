@@ -1,13 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { first } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { Agent, AgentService } from 'src/app/services/agent.service';
 import { Status } from 'src/app/models/policy-status';
-import { ApiService, API } from 'src/app/shared/services';
-import { AlertService } from 'src/app/shared/services/alert.service';
-import { UploadService } from '../../files/add-files/file.service';
 import { Gender, Nationality, Title } from '../../accounts/model/accounts';
 
 @Component({
@@ -15,31 +11,24 @@ import { Gender, Nationality, Title } from '../../accounts/model/accounts';
   templateUrl: './update-agent.component.html',
   styleUrls: ['./update-agent.component.css']
 })
-export class UpdateAgentComponent {
-  typeForm!: FormGroup;
-  data: any
-  isAddMode!: boolean;
-  id:any;
-  @Output() agentsAdded : EventEmitter<number> = new EventEmitter<number>();
-  @Input() agentsId! : any;
+export class UpdateAgentComponent implements OnChanges {
+  agentForm: FormGroup;
   genderOptions = Object.values(Gender);
   nationalityOptions = Object.values(Nationality);
   statusOptions = Object.values(Status);
   titleOptions = Object.values(Title);
 
+  @Input() agentToEdit: Agent | null = null;
+  @Output() agentUpdated = new EventEmitter<void>();
+  @Output() closeModal = new EventEmitter<void>();
 
-  constructor(private uploadService: UploadService, private route: ActivatedRoute,
-    private fb: FormBuilder, private service: ApiService, private spinner: NgxSpinnerService,private alert: AlertService) {
-  } 
-
-  ngOnInit() {
-    console.log(this.agentsId)
-    const agentId = this.agentsId
-    if (agentId) {        
-      this.getAgent(agentId)
-    }
-    console.log(this.agentsId)
-    this.typeForm = this.fb.group({
+  constructor(
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService,
+    private agentService: AgentService
+  ) {
+    this.agentForm = this.fb.group({
       title: ['', Validators.required],
       name: ['', Validators.required],
       surname: ['', Validators.required],
@@ -60,66 +49,34 @@ export class UpdateAgentComponent {
       }),
       status: ['', Validators.required],
     });
-}
-
-  getAgent(agentId:any) {
-    this.service.getFromUrl(`${API.CLIENTS}agents/${agentId}`).pipe(first())
-        .subscribe(x => {
-            // Patch each field one by one
-            this.typeForm.patchValue({
-              title: x.title,
-              name: x.name,
-              surname: x.surname,
-              gender: x.gender,
-              nationality: x.nationality,
-              idNumber: x.idNumber,
-              dateOfBirth: x.dateOfBirth,
-              bankDetails: x.bankDetails,
-              contactDetails: x.contactDetails,
-              status: x.status,
-            });
-        });
   }
 
-  onSubmit(event: Event) {
-    event.preventDefault(); 
-    if (this.typeForm.valid) { 
-      this.spinner.show();
-
-      this.service.updateToUrl(`${API.CLIENTS}agents/${this.agentsId}`, this.typeForm.value).subscribe((res) => {
-        this.data = res;
-        this.spinner.hide();
-        this.alert.showSuccess("Saved Successfully");
-        this.closeModal();
-        this.agentsAdded.emit(res);
-      });
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['agentToEdit'] && this.agentToEdit) {
+      this.agentForm.patchValue(this.agentToEdit);
     }
   }
-  closeModal() {
-    const modalOptions: ModalOptions = {
-      onHide: () => {
-      },
-  };
-  const instanceOptions: InstanceOptions = {
-    id: 'modal',
-    override: true
-  };
-    const modal = new Modal(document.getElementById('modal'), modalOptions, instanceOptions);
-    modal.hide();
+
+  onSubmit(event: Event): void {
+    event.preventDefault();
+    if (this.agentForm.valid && this.agentToEdit) {
+      this.spinner.show();
+      this.agentService.updateAgent(this.agentToEdit.id, this.agentForm.value).subscribe(
+        () => {
+          this.spinner.hide();
+          this.toastr.success('Agent updated successfully');
+          this.agentUpdated.emit();
+          this.onCloseModal();
+        },
+        () => {
+          this.spinner.hide();
+          this.toastr.error('Failed to update agent');
+        }
+      );
+    }
   }
 
-  showModal() {
-    const modalOptions: ModalOptions = {
-      onShow: () => {
-      },
-  };
-  const instanceOptions: InstanceOptions = {
-    id: 'modal',
-    override: true
-  };
-    const modal = new Modal(document.getElementById('modal'), modalOptions, instanceOptions);
-    modal.show();
+  onCloseModal(): void {
+    this.closeModal.emit();
   }
-
-
 }

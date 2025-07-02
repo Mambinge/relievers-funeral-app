@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { Status } from 'src/app/models/policy-status';
 import { API, ApiService } from 'src/app/shared/services';
 import { first } from 'rxjs/operators';
-import { Plan } from '../plans.component';
+import { Plan, PlansService } from 'src/app/services/plans.service';
+import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
@@ -59,12 +60,6 @@ export class AddPlansComponent implements OnInit {
 
   }
 
-  // getAll(policyId:any){
-  //   this.http.getFromUrl(`${API.SERVICE}policies/${policyId}`).subscribe((res) => {
-  //     this.products = res.plans
-  //     console.log(this.products)
-  //   })
-  // }
 
   onSubmit(event: Event) {
     event.preventDefault(); 

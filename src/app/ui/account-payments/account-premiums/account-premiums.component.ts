@@ -31,7 +31,6 @@ export class AccountPremiumsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.policyNumber);
     this.number = this.policyNumber;
     this.route.params.subscribe((params: any) => {
       const clientId = params['id'];

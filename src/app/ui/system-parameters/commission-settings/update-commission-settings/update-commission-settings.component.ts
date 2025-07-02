@@ -28,7 +28,6 @@ export class UpdateCommissionSettingsComponent {
   } 
 
   ngOnInit(){
-    console.log(this.settingsId)
     this.typeForm = this.fb.group({
       commssion: '',
       expiryDate: '',
@@ -40,10 +39,8 @@ export class UpdateCommissionSettingsComponent {
   getSetting(settingId: any) {
     this.service.getFromUrl(`${API.CLAIMS}commission-settings/${settingId}`).pipe(first())
       .subscribe(x => {
-        console.log('Data received for patching:', x);
 
         this.typeForm.patchValue(x);
-        console.log(this.typeForm)
       });
   }
 

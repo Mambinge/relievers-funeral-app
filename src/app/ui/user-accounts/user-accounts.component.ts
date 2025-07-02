@@ -1,176 +1,156 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ApiService, API } from 'src/app/shared/services';
-import { AddUserAccountComponent } from './add-user-account/add-user-account.component';
-import { Modal } from 'flowbite';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import * as XLSX from 'xlsx';
+import { UserAccountsService, User } from 'src/app/services/user-accounts.service';
 
 @Component({
   selector: 'app-user-accounts',
   templateUrl: './user-accounts.component.html',
   styleUrls: ['./user-accounts.component.css']
 })
-export class UserAccountsComponent {
-  products: any;
-  showListUsers = true;
+export class UserAccountsComponent implements OnInit {
+
+  products: User[] = [];
+  searchControl = new FormControl();
   currentPage = 0;
-  totalPages: any;
-  selectedUser: any = null;
-  searchControl = new FormControl('');
-  sortField: string = '';
-  sortDirection: 'asc' | 'desc' = 'asc';
-  selectedStatus: string = '';
-  
+  totalPages = 0;
+  sortField = 'username';
+  sortOrder = 'asc';
+  statusFilter: 'ACTIVE' | 'INACTIVE' | null = null;
+  selectedUser: any;
+  isEditModalOpen = false;
+
   statusOptions = [
-    { value: '', label: 'All Statuses' },
-    { value: 'APPROVED', label: 'Approved' },
-    { value: 'PENDING', label: 'Pending' },
-    { value: 'AWAITING_APPROVALS', label: 'Awaiting Approvals' },
-    { value: 'ACTIVE', label: 'Active' }
+    { label: 'All Statuses', value: '' },
+    { label: 'Active', value: 'ACTIVE' },
+    { label: 'Inactive', value: 'INACTIVE' }
   ];
 
-  constructor(private router: Router, private spinner: NgxSpinnerService, private service: ApiService) {}
+  constructor(
+    private userAccountsService: UserAccountsService,
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
+  ) { }
 
-  ngOnInit() {
-    this.getAll();
-    this.setupSearch();
-  }
-
-  setupSearch() {
+  ngOnInit(): void {
+    this.loadUsers();
     this.searchControl.valueChanges.pipe(
       debounceTime(300),
-      distinctUntilChanged()
-    ).subscribe(value => {
-      this.filterProducts(value || '');
-    });
+      distinctUntilChanged(),
+      switchMap(value => {
+        this.currentPage = 0; // Reset to first page on search
+        return of(value); // Not making an API call here, just passing the value
+      })
+    ).subscribe(() => this.loadUsers());
   }
-    filterProducts(searchTerm: string) {
-      this.products = this.products.filter((product:any) => {
-        const searchString = searchTerm.toLowerCase();
-        return (
-          product.name?.toLowerCase().includes(searchString) ||
-          product.surname?.toLowerCase().includes(searchString) ||
-          product.nationality?.toLowerCase().includes(searchString) ||
-          product?.plan?.name?.toLowerCase().includes(searchString)
-        );
-      });
-      this.applyFilters();
-    }
-  
-    applyFilters() {
-      let filtered = [...this.products];
-      
-      if (this.selectedStatus) {
-        filtered = filtered.filter(product => product.status === this.selectedStatus);
-      }
-  
-      if (this.sortField) {
-        filtered.sort((a, b) => {
-          const aValue = this.getNestedValue(a, this.sortField);
-          const bValue = this.getNestedValue(b, this.sortField);
-          
-          if (this.sortDirection === 'asc') {
-            return aValue > bValue ? 1 : -1;
-          } else {
-            return aValue < bValue ? 1 : -1;
-          }
-        });
-      }
-  
-      this.products = filtered;
-    }
-  
-    getNestedValue(obj: any, path: string): any {
-      return path.split('.').reduce((o, i) => o?.[i], obj);
-    }
-  
-    sort(field: string) {
-      if (this.sortField === field) {
-        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-      } else {
-        this.sortField = field;
-        this.sortDirection = 'asc';
-      }
-      this.applyFilters();
-    }
-  
-    getSortIcon(field: string): string {
-      if (this.sortField !== field) return 'sort';
-      return this.sortDirection === 'asc' ? 'sort-up' : 'sort-down';
-    }
-  
-    changePage(newPage: number) {
-      if (newPage >= 0 && newPage < this.totalPages) {
-        this.currentPage = newPage;
-        this.getAll();
-      }
-    }
-  
-    onStatusChange(event: any) {
-      this.selectedStatus = event.target.value;
-      this.applyFilters();
-    }
 
-    exportToCSV() {
-      const headers = ['Title', 'Full Name', 'Gender', 'Nationality', 'Plan', 'Status'];
-      const rows = this.products.map((product:any) => [
-        product.title,
-        `${product.name} ${product.surname}`,
-        product.gender,
-        product.nationality,
-        product?.plan?.name || '-',
-        product.status
-      ]);
-  
-      let csvContent = 'data:text/csv;charset=utf-8,';
-      csvContent += headers.join(',') + '\n'; // Add headers
-      rows.forEach((row:any) => {
-        csvContent += row.join(',') + '\n'; // Add rows
-      });
-  
-      // Create a downloadable link
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement('a');
-      link.setAttribute('href', encodedUri);
-      link.setAttribute('download', 'clients.csv');
-      document.body.appendChild(link);
-      link.click(); // Trigger the download
-      document.body.removeChild(link);
-    }
-
-
-  getAll() {
+  loadUsers(): void {
     this.spinner.show();
-    this.service.getAll(`${API.AUTH}users?page=${this.currentPage}&size=7`).subscribe((res) => {
-      this.products = res.content;
-      this.spinner.hide();
-      this.totalPages = res.totalPages;
-    });
+    this.userAccountsService.getUsers(
+      this.currentPage,
+      5, // Page size
+      this.sortField,
+      this.sortOrder,
+      this.searchControl.value,
+      this.statusFilter
+    ).subscribe(
+      response => {
+        this.products = response.content.map((user: any) => ({
+          id: user.id,
+          username: user.username,
+          phoneNumber: user.phoneNumber,
+          department: user.department ? user.department.name : 'N/A', // Handle null department
+          otpEnabled: user.otpEnabled ? 'true' : 'false',
+          status: user.accountStatus
+        }));
+        this.totalPages = response.totalPages;
+        this.spinner.hide();
+      },
+      error => {
+        this.toastr.error('Failed to load users');
+        this.spinner.hide();
+      }
+    );
   }
 
-
-
-  deleteUsers(id: string) {
-    this.service.delete(`${API.AUTH}users/${id}`).subscribe((res) => {
-      this.getAll();
-    });
-  }
-
-  editUser(user: any) {
-    // this.user = user;
-    
-    const modal = document.getElementById('editUserModal');
-    // const modalInstance = new Flowbite.Modal(modal);
-    // modalInstance.show();
-  }
-
-  toggleView() {
-    this.showListUsers = !this.showListUsers;
+  deleteUsers(userId: string): void {
+    if (confirm('Are you sure you want to delete this user?')) {
+      this.spinner.show();
+      this.userAccountsService.deleteUser(userId).subscribe(
+        () => {
+          this.toastr.success('User deleted successfully');
+          this.loadUsers(); // Refresh the list
+          this.spinner.hide();
+        },
+        error => {
+          this.toastr.error('Failed to delete user');
+          this.spinner.hide();
+        }
+      );
+    }
   }
 
   onPlanAdded() {
-    this.getAll();
+    this.loadUsers(); // Refresh the list when a plan is added
+    this.closeEditModal();
   }
+
+  // Sorting logic
+  sort(field: string): void {
+    if (this.sortField === field) {
+      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortField = field;
+      this.sortOrder = 'asc';
+    }
+    // Implement sorting for dummy data if needed, for now it reloads (which does nothing)
+    this.loadUsers();
+  }
+
+  // Pagination logic
+  changePage(page: number): void {
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.loadUsers();
+    }
+  }
+
+  // Status filter logic
+  onStatusChange(event: any): void {
+    const value = event.target.value;
+    this.statusFilter = value ? value : null;
+    this.currentPage = 0; // Reset to first page
+    this.loadUsers(); // Implement filtering for dummy data if needed
+  }
+
+  // Method to open the edit modal
+  openEditModal(user: any): void {
+    this.selectedUser = { ...user };
+    this.isEditModalOpen = true;
+  }
+
+  closeEditModal(): void {
+    this.isEditModalOpen = false;
+    this.selectedUser = null;
+  }
+
+  // Export to CSV
+  exportToCSV(): void {
+    const dataToExport = this.products.map(product => ({
+      Username: product.username,
+      'Phone Number': product.phoneNumber,
+      Department: product.department,
+      'OTP Enabled': product.otpEnabled,
+      Status: product.status
+    }));
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Users');
+    XLSX.writeFile(wb, 'Users.csv');
+  }
+
 }

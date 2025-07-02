@@ -29,8 +29,6 @@ export class PayRemittanceComponent {
   } 
 
   ngOnInit() {
-
-    console.log(this.paysId)
     this.typeForm = this.fb.group({
       dateTo: '',
       dateFrom: '',
@@ -45,7 +43,6 @@ export class PayRemittanceComponent {
     event.preventDefault();
     if (this.typeForm.valid) {
       this.spinner.show();
-  console.log(this.typeForm.value)
       this.service.postToUrl(`${API.CLIENTS}remittances/pay`, this.typeForm.value).subscribe(
         (res) => {
           this.data = res;

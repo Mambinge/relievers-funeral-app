@@ -102,10 +102,10 @@
           >
             <option
               *ngFor="let policyNumber of policyNumbers"
-              [value]="policyNumber"
-            >
-              {{ policyNumber }}
-            </option>
+              [value]="policyNumber.id"
+              >
+              {{ policyNumber.clientAccount.name }} {{ policyNumber.clientAccount.surname }} - {{ policyNumber.clientAccount.policyNumber }}
+                </option>
           </select>
         </div>
         <div>

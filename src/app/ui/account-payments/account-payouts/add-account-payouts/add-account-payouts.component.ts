@@ -30,10 +30,6 @@ export class AddAccountPayoutsComponent {
   ) {}
 
   ngOnInit() {
-    console.log(this.payoutId);
-
-    // this.isAddMode = !this.id;
-
     this.payoutForm = this.fb.group({
       claimId: '',
       paymentMethodId: '',
@@ -54,7 +50,6 @@ export class AddAccountPayoutsComponent {
 
     this.http.getFromUrl(`${API.SERVICE}payment-methods`).subscribe((res)=>{
       this.paymentMethodOptions = res.content;
-      console.log(this.claimOptions)
     })
   }
 

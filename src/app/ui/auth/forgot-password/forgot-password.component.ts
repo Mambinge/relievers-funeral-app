@@ -30,13 +30,11 @@ export class ForgotPasswordComponent {
     event.preventDefault(); 
     if (this.typeForm.valid) { 
       this.spinner.show();
-      console.log(this.typeForm.value);
       this.request.post(`${API.AUTH}auth/forgot-password?username=${this.typeForm.value.username}`, {...this.typeForm.value},
         {
           observe: 'response',
         }
       ).subscribe((res: any) => {
-        console.log(res);
         if (res.status === 200) {
           this.alert.showSuccess(res.body.message,'Success');
         } else {

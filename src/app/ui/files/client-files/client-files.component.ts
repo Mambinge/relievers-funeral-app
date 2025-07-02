@@ -30,7 +30,6 @@ export class ClientFilesComponent {
 
 
   ngOnInit(){
-  console.log(this.accountId)
   this.clientAccountId.emit();
 
     this.route.params.subscribe((params : any) => {
@@ -56,7 +55,6 @@ export class ClientFilesComponent {
     // this.spinner.show();
     this.service.getAll(`${API.CLIENTS}kyc-files?page=${this.currentPage}&size=7&accountId=${this.accountId}`).subscribe((res)=>{
       this.products = res.content
-      // console.log(this.products)
       // this.spinner.hide()
       this.totalPages = res.totalPages;
     })

@@ -27,7 +27,6 @@ export class PayoutsComponent {
     this.route.params.subscribe(params => {
       this.accountId = params['id'];
       this.claimId = params['claimId'];
-      console.log('Account ID:', this.accountId);
       this.getAll(this.claimId)
     }); }
 

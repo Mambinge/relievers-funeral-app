@@ -31,7 +31,6 @@ export class PayCommissionComponent {
 
   ngOnInit() {
 
-    console.log(this.paysId)
     this.typeForm = this.fb.group({
       dateTo: '',
       dateFrom: '',
@@ -44,9 +43,7 @@ export class PayCommissionComponent {
   getAgents(){
     this.service.getFromUrl(`${API.CLIENTS}agents`).pipe(first())
     .subscribe((data:any)=> {
-      console.log(data)
       this.agents = data.content.map((agent: any) => ({ id: agent.id, name: agent.name }));
-      console.log(this.agents);
         });
   }
 
@@ -56,7 +53,6 @@ export class PayCommissionComponent {
     event.preventDefault();
     if (this.typeForm.valid) {
       this.spinner.show();
-  console.log(this.typeForm.value)
       this.service.postToUrl(`${API.CLIENTS}commissions/pay`, this.typeForm.value).subscribe(
         (res) => {
           this.data = res;

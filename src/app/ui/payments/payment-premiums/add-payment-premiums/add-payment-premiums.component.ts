@@ -30,7 +30,6 @@ export class AddPaymentPremiumsComponent {
   ) {}
 
   ngOnInit() {
-    console.log(this.payoutId);
 
     // this.isAddMode = !this.id;
 
@@ -54,7 +53,6 @@ export class AddPaymentPremiumsComponent {
 
     this.http.getFromUrl(`${API.SERVICE}payment-methods`).subscribe((res)=>{
       this.paymentMethodOptions = res.content;
-      console.log(this.claimOptions)
     })
   }
 

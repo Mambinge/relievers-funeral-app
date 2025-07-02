@@ -26,7 +26,6 @@ export class ViewAccountsComponent {
   getAccount(accountsId:any){
     this.request.getFromUrl(`${API.CLIENTS}clients/${accountsId}`).subscribe((res) => {
       this.account = res
-      console.log(this.account)
     })
   }
 

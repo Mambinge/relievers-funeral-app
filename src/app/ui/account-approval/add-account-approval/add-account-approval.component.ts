@@ -79,7 +79,6 @@ onWorkFlowChange(event: Event) {
           id: this.account?.id
         }
       };
-      console.log(requestBody)
       this.http.postToUrl(`${API.CLIENTS}account-approval`, requestBody).subscribe((res) => {
         this.data = res;
         this.alert.showSuccess('Saved Successfully')

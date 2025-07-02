@@ -26,7 +26,6 @@ export class UpdateDeathTypeComponent {
   } 
 
   ngOnInit(){
-console.log(this.deathTypesId)
     this.deathTypeForm = this.fb.group({
       name: '',
       description: '',
@@ -37,7 +36,6 @@ console.log(this.deathTypesId)
     this.service.getFromUrl(`${API.CLAIMS}type/${deathTypeId}`).pipe(first())
       .subscribe(
         (response: any) => {
-          console.log('Fetched death type:', response); // Check if data is correct
           this.deathType = response;
           this.deathTypeForm.patchValue(response); // Patch the form with new data
         },
@@ -50,8 +48,6 @@ console.log(this.deathTypesId)
   
 
   onSubmit(event: Event, deathTypesId: any) {
-    console.log(this.deathTypesId)
-
     event.preventDefault(); 
     if (this.deathTypeForm.valid) {
       this.spinner.show() 
@@ -67,7 +63,6 @@ console.log(this.deathTypesId)
   }
 
   showModal(deathTypesId: any) {
-    console.log(deathTypesId)
     const modalOptions: ModalOptions = {
       onShow: () => {
         // Clear and load the new data before showing the modal

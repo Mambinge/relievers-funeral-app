@@ -22,7 +22,7 @@ export class AccountsComponent {
   sortField: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
   selectedStatus: string = '';
-  
+
   statusOptions = [
     { value: '', label: 'All Statuses' },
     { value: 'APPROVED', label: 'Approved' },
@@ -32,10 +32,10 @@ export class AccountsComponent {
   ];
 
   constructor(
-    private service: ApiService, 
+    private service: ApiService,
     private router: Router,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getAll(false);
@@ -84,7 +84,7 @@ export class AccountsComponent {
 
   applyFilters() {
     let filtered = [...this.filteredProducts];
-    
+
     if (this.selectedStatus) {
       filtered = filtered.filter(product => product.status === this.selectedStatus);
     }
@@ -93,7 +93,7 @@ export class AccountsComponent {
       filtered.sort((a, b) => {
         const aValue = this.getNestedValue(a, this.sortField);
         const bValue = this.getNestedValue(b, this.sortField);
-        
+
         if (this.sortDirection === 'asc') {
           return aValue > bValue ? 1 : -1;
         } else {
@@ -165,20 +165,27 @@ export class AccountsComponent {
     this.router.navigate(['/open-account']);
   }
 
-   exportToCSV() {
-    const headers = ['Title', 'Full Name', 'Gender', 'Nationality', 'Plan', 'Status'];
-    const rows = this.filteredProducts.map(product => [
-      product.title,
-      `${product.name} ${product.surname}`,
-      product.gender,
-      product.nationality,
-      product?.plan?.name || '-',
-      product.status
+  exportToCSV() {
+    const headers = [
+      'Title',
+      'Full Name',
+      'Gender',
+      'Nationality',
+      'Plan',
+      'Status',
+    ];
+    const rows = this.filteredProducts.map((product: any) => [
+      product.title || '',
+      `${product.name || ''} ${product.surname || ''}`.trim(),
+      product.gender || '',
+      product.nationality || '',
+      (product.plan?.name || '-'),
+      product.status || '',
     ]);
 
     let csvContent = 'data:text/csv;charset=utf-8,';
     csvContent += headers.join(',') + '\n'; // Add headers
-    rows.forEach(row => {
+    rows.forEach((row: any) => {
       csvContent += row.join(',') + '\n'; // Add rows
     });
 
@@ -192,7 +199,7 @@ export class AccountsComponent {
     document.body.removeChild(link);
   }
 
-  approveAccount(id: string){
+  approveAccount(id: string) {
     this.router.navigate(['/view-account-approval', id]);
 
   }

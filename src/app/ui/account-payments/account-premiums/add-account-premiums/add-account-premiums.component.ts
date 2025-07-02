@@ -32,8 +32,6 @@ export class AddAccountPremiumsComponent {
   ) {}
 
   ngOnInit() {
-    console.log(this.payoutId);
-    console.log(this.policyNumber)
 
     // this.isAddMode = !this.id;
 
@@ -56,7 +54,6 @@ export class AddAccountPremiumsComponent {
 
     this.http.getFromUrl(`${API.SERVICE}payment-methods`).subscribe((res)=>{
       this.paymentMethodOptions = res.content;
-      console.log(this.claimOptions)
     })
   }
 
@@ -69,7 +66,6 @@ export class AddAccountPremiumsComponent {
         paymentMethodId: Number(this.payoutForm.value.paymentMethodId),
         paymentDate: formattedDate // Update the paymentDate with the formatted date
       });
-      console.log(this.payoutForm.value)
       this.http.postToUrl(`${API.PAYMENTS}payments/premiums/pay`, this.payoutForm.value).subscribe((res) => {
         this.data = res;
         this.payoutAdded.emit(res);

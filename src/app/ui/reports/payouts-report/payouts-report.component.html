@@ -102,9 +102,9 @@
           >
             <option
               *ngFor="let claim of claims"
-              [value]="claim"
+              [value]="claim.id"
             >
-              {{ claim }}
+              {{ claim.clientAccount.name }} {{ claim.clientAccount.surname }} - {{ claim.clientAccount.policyNumber }}
             </option>
           </select>
         </div>

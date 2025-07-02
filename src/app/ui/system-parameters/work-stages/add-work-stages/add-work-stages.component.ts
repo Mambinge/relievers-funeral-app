@@ -31,7 +31,6 @@ export class AddWorkStagesComponent {
       requiredPermissions: '',
       status: ''  
      });
-     console.log(this.workStageForm.value.workFlowId)
     this.service.getAll(`${API.SERVICE}workflows`).subscribe((data) => {
       this.workFlowOptions = data.content;
     });

@@ -41,13 +41,11 @@ export class LoginPageComponent {
     event.preventDefault(); 
     if (this.typeForm.valid) { 
       this.spinner.show()  
-      console.log( this.typeForm.value)
       this.request.post(`${API.AUTH}auth/sign-in`,{...this.typeForm.value},
         {
           observe: 'response',
         }
       ).subscribe((res:any) => {
-        console.log(res)
         if (res.status === 200) {
           this.guard.authService.saveToken(res.body.token);
           const returnUrl = this.route.snapshot.queryParams['returnUrl'];

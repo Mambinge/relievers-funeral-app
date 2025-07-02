@@ -32,9 +32,6 @@ constructor(private http: ApiService, private router: Router,private route: Acti
       const accountsId = params['id'];
       this.accountsId = accountsId
       this.accounts = this.getAccount(accountsId);
-      console.log(this.accounts)
-      console.log(this.accountsId)
-
     });
   }
 
@@ -61,7 +58,6 @@ constructor(private http: ApiService, private router: Router,private route: Acti
 
     setAccount(account: Accounts, name: string) {
       this.personalDetails = account;
-      console.log(this.personalDetails)
       if (this.currentStep < 3) {
       this.currentStep++;
     } 
@@ -112,8 +108,6 @@ constructor(private http: ApiService, private router: Router,private route: Acti
       }
     };
    
-      console.log(requestBody)
-
       this.http.updateToUrl(`${API.CLIENTS}clients/${this.accountsId}`, requestBody).subscribe((res)=>{
         this.data = res
         this.spinner.hide()

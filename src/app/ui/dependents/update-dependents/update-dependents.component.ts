@@ -1,13 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService, API } from 'src/app/shared/services';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { Plan } from '../../plans/plans.component';
+import { Plan } from 'src/app/services/plans.service';
 import { first } from 'rxjs';
-
 @Component({
   selector: 'app-update-dependents',
   templateUrl: './update-dependents.component.html',
@@ -20,58 +19,57 @@ export class UpdateDependentsComponent {
   dependentForm!: FormGroup;
   data: any
   isAddMode!: boolean;
-  id:any;
-  @Output() dependentAdded : EventEmitter<number> = new EventEmitter<number>();
+  id: any;
+  @Output() dependentAdded: EventEmitter<number> = new EventEmitter<number>();
   @Input() planId!: Plan | any;
-  @Input() dependentId! : any;
+  @Input() dependentId!: any;
   dependentsId!: number;
-  dependents!:any
+  dependents!: any
 
   constructor(private fb: FormBuilder, private http: ApiService, private route: ActivatedRoute,
-    private spinner: NgxSpinnerService,private alert: AlertService) {
-  } 
+    private spinner: NgxSpinnerService, private alert: AlertService) {
+  }
 
   ngOnInit() {
     this.dependentForm = this.fb.group({
-        policyHolderId: '',
-        name: '',
-        surname: '',
-        idNumber: '',
-        relationshipToMember: '',
-        plan: {
-          id:'',
-          name: ''
-                }
+      policyHolderId: '',
+      name: '',
+      surname: '',
+      idNumber: '',
+      relationshipToMember: '',
+      plan: {
+        id: '',
+        name: ''
+      }
     });
 
 
 
     this.http.getFromUrl(`${API.SERVICE}plan`)
-    .subscribe((res)=>{
-      this.planOptions = res.content.map((plan: any) => ({ id: plan.id, name: plan.name }));
-      console.log(this.planOptions);
-        });
+      .subscribe((res) => {
+        this.planOptions = res.content.map((plan: any) => ({ id: plan.id, name: plan.name }));
+      });
 
-        const dependentId = this.dependentId
-        if (dependentId) {        
-          this.getDependent()
-        }
+    const dependentId = this.dependentId
+    if (dependentId) {
+      this.getDependent()
+    }
   }
 
-  getDependent(){
+  getDependent() {
     this.http.getFromUrl(`${API.CLIENTS}dependants/${this.dependentId}`).pipe(first())
-    .subscribe(x => this.dependentForm.patchValue(x));
+      .subscribe(x => this.dependentForm.patchValue(x));
   }
 
 
   onSubmit(event: Event) {
-    event.preventDefault(); 
-    if (this.dependentForm.valid) { 
+    event.preventDefault();
+    if (this.dependentForm.valid) {
       this.spinner.show();
 
       const selectedPlan = this.dependentForm.value.plan;
-      const selectedPlanId = selectedPlan.id; 
-      const selectedPlanName = selectedPlan.name; 
+      const selectedPlanId = selectedPlan.id;
+      const selectedPlanName = selectedPlan.name;
 
       const requestBody = {
         policyHolderId: this.dependentsId,
@@ -81,10 +79,10 @@ export class UpdateDependentsComponent {
         relationshipToMember: this.dependentForm.value.relationshipToMember,
         plan: {
           id: selectedPlanId,
-          name: selectedPlanName 
+          name: selectedPlanName
         }
       };
-  
+
       this.http.updateToUrl(`${API.CLIENTS}dependants/${this.dependentId}`, requestBody).subscribe((res) => {
         this.data = res;
         this.spinner.hide();
@@ -98,11 +96,11 @@ export class UpdateDependentsComponent {
     const modalOptions: ModalOptions = {
       onHide: () => {
       },
-  };
-  const instanceOptions: InstanceOptions = {
-    id: 'modal',
-    override: true
-  };
+    };
+    const instanceOptions: InstanceOptions = {
+      id: 'modal',
+      override: true
+    };
     const modal = new Modal(document.getElementById('modal'), modalOptions, instanceOptions);
     modal.hide();
   }
@@ -111,11 +109,11 @@ export class UpdateDependentsComponent {
     const modalOptions: ModalOptions = {
       onShow: () => {
       },
-  };
-  const instanceOptions: InstanceOptions = {
-    id: 'modal',
-    override: true
-  };
+    };
+    const instanceOptions: InstanceOptions = {
+      id: 'modal',
+      override: true
+    };
     const modal = new Modal(document.getElementById('modal'), modalOptions, instanceOptions);
     modal.show();
   }

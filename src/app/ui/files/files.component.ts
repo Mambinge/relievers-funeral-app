@@ -48,7 +48,6 @@ export class FilesComponent {
     // this.spinner.show();
     this.service.getAll(`${API.CLIENTS}kyc-files?page=${this.currentPage}&size=7&accountId=${accountsId}`).subscribe((res)=>{
       this.products = res.content
-      // console.log(this.products)
       // this.spinner.hide()
       this.totalPages = res.totalPages;
     })

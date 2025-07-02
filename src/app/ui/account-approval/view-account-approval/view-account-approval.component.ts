@@ -39,12 +39,9 @@ export class ViewAccountApprovalComponent {
 getApprovals(accountsId: any) {
   this.service.getFromUrl(`${API.CLIENTS}account-approval?page=0&size=1000&accountId=${accountsId}`).subscribe((res) => {
     this.approvals = res.content;
-    console.log(this.approvals);
-
     if (Array.isArray(this.approvals)) {
       this.approvalName = this.approvals.map(approval => approval.workFlowStage);
       this.approvalOrder = this.approvals.map(approval => approval.workFlowStage.order)
-      console.log(this.approvalName);
     }
   });
 }
@@ -53,7 +50,6 @@ getApprovals(accountsId: any) {
   getAccount(accountsId:any){
     this.service.getFromUrl(`${API.CLIENTS}clients/${accountsId}`).subscribe((res) => {
       this.account = res
-      console.log(this.account)
     })
   }
   getWorkflow(accountsId:any){

@@ -28,16 +28,6 @@ export class UpdateDeathPeriodComponent {
   } 
 
   ngOnInit(){
-    console.log(this.deathPeriodsId)
-    // this.route.params.subscribe((params : any) => {
-    //   const deathPeriodId = params['id'];
-    //   console.log(deathPeriodId)
-    //   this.deathPeriodsId = deathPeriodId
-    //   console.log(this.deathPeriodId)
-
-    // });
-    // this.getdeathPeriod(this.deathPeriodsId);
-
     this.deathPeriodForm = this.fb.group({
       title: '',
       period: '',
@@ -55,10 +45,7 @@ export class UpdateDeathPeriodComponent {
   getdeathPeriod(deathPeriodId: any) {
     this.service.getFromUrl(`${API.CLAIMS}period/${deathPeriodId}`).pipe(first())
       .subscribe(x => {
-        console.log('Data received for patching:', x);
-
         this.deathPeriodForm.patchValue(x);
-        console.log(this.deathPeriodForm)
       });
   }
 

@@ -26,7 +26,6 @@ export class ViewWorkFlowComponent {
       this.workFlows = res
       this.stages = res.stages
       this.stages= this.stages.sort((a: { order: number; }, b: { order: number; }) => a.order - b.order);
-      console.log(this.workFlows)
     })
   }
 

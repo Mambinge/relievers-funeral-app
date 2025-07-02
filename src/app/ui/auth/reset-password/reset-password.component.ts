@@ -43,12 +43,10 @@ export class ResetPasswordComponent {
     event.preventDefault();
     if (this.typeForm.valid) {
       this.spinner.show();
-      console.log(this.typeForm.value);
       this.request.post(`${API.AUTH}auth/reset-password?username=${this.typeForm.value.username}`, {...this.typeForm.value}, {
         observe: 'response',
       }).subscribe({
         next: (res: any) => {
-          console.log(res);
           if (res.status === 200) {
             this.alert.showSuccess(res.body.message, 'Success');
           } else {
@@ -57,7 +55,6 @@ export class ResetPasswordComponent {
           this.spinner.hide();
         },
         error: (error: any) => {
-          console.log(error);
           const errorMessage = error.error?.message || 'An unexpected error occurred.';
           this.alert.showError('Error', errorMessage);
           this.spinner.hide();

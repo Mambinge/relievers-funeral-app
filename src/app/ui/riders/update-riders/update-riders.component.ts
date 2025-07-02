@@ -1,59 +1,61 @@
-import { Component, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
-import { Status } from 'src/app/models/policy-status';
-import { API, ApiService } from 'src/app/shared/services';
-import { first } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AlertService } from 'src/app/shared/services/alert.service';
+import { ToastrService } from 'ngx-toastr';
+import { Rider, RidersService } from 'src/app/services/riders.service';
 
 @Component({
   selector: 'app-update-riders',
   templateUrl: './update-riders.component.html',
   styleUrls: ['./update-riders.component.css']
 })
-export class UpdateRidersComponent {
-  riderForm!: FormGroup;
-  statusOptions = Object.values(Status);
-  data: any
-  @Input() ridersId!: string;
-  rider:any
-  
-  constructor(private spinner: NgxSpinnerService,private alert: AlertService, private route: ActivatedRoute,
-    private router: Router, private fb: FormBuilder, private service: ApiService) {
-  } 
+export class UpdateRidersComponent implements OnChanges {
+  riderForm: FormGroup;
 
-  ngOnInit(){
-    this.route.params.subscribe((params : any) => {
-      const riderId = params['id'];
-      this.ridersId = riderId
-      this.rider = this.getRider(riderId);
-    });
+  @Input() riderToEdit: Rider | null = null;
+  @Output() riderUpdated = new EventEmitter<void>();
+  @Output() closeModal = new EventEmitter<void>();
 
+  constructor(
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService,
+    private ridersService: RidersService
+  ) {
     this.riderForm = this.fb.group({
-      name: '',
-      description: '',
-      status: ''
+      ecNumber: ['', Validators.required],
+      fullName: ['', Validators.required],
+      username: ['', Validators.required],
+      phoneNumber: ['', Validators.required]
     });
   }
 
-  getRider(riderId:any){
-      this.service.getFromUrl(`${API.SERVICE}rider/${riderId}`).pipe(first())
-        .subscribe(x => this.riderForm.patchValue(x));
-  }
-
-  onSubmit(event: Event) {
-    event.preventDefault(); 
-    if (this.riderForm.valid) {
-      this.spinner.show() 
-      this.service.updateToUrl(`${API.SERVICE}rider/${this.ridersId}`, this.riderForm.value).subscribe((res) => {
-        this.data = res;
-        this.spinner.hide()
-        this.alert.showSuccess("Updated Successfully")
-        this.router.navigate(['/riders']);
-      });
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['riderToEdit'] && this.riderToEdit) {
+      this.riderForm.patchValue(this.riderToEdit);
     }
   }
 
+  onSubmit(event: Event): void {
+    event.preventDefault();
+    if (this.riderForm.valid && this.riderToEdit) {
+      this.spinner.show();
+      this.ridersService.updateRider(this.riderToEdit.id, this.riderForm.value).subscribe(
+        () => {
+          this.spinner.hide();
+          this.toastr.success('Rider updated successfully');
+          this.riderUpdated.emit();
+          this.onCloseModal();
+        },
+        () => {
+          this.spinner.hide();
+          this.toastr.error('Failed to update rider');
+        }
+      );
+    }
+  }
+
+  onCloseModal(): void {
+    this.closeModal.emit();
+  }
 }

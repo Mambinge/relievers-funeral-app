@@ -65,15 +65,12 @@ fetchPolicies() {
     this.clients = data.content.filter((client: { status: string; policyNumber: any; }) => client.status === 'APPROVED' && client.policyNumber);
     const policyNumbers = this.clients.map(client => client.policyNumber); 
      this.policyHolderId = this.clients.map(client => client.policyHolderId); 
-
-    console.log(policyNumbers); 
     });
 }
 
 onPolicyNumberChange() {
   const selectedPolicyNumber = this.typeForm.value.policyNumber;
   const selectedClient = this.clients.find(client => client.policyNumber === selectedPolicyNumber);
-  console.log(selectedClient)
   if (selectedClient) {
     this.fetchDependents(selectedClient.id); // Fetch dependents based on the selected client's policyHolderId
   }
@@ -91,7 +88,6 @@ onSubmit(event: Event) {
       dependantId: this.typeForm.value.dependantId ? Number(this.typeForm.value.dependantId) : "", 
       fileUri: this.dataFile
     });
-    console.log( this.typeForm.value)
     this.service.postToUrl(`${API.CLAIMS}claims`, this.typeForm.value).subscribe((res) => {
       this.data = res;
       this.spinner.hide()
@@ -105,7 +101,6 @@ onSubmit(event: Event) {
 fetchDependents(policyHolderId: string) { 
   this.service.getFromUrl(`${API.CLIENTS}dependants?policyHolderId=${policyHolderId}`).subscribe(data => {
     this.units = data.content;
-    console.log(data.content); 
   });
 }
 
@@ -128,8 +123,6 @@ fetchDependents(policyHolderId: string) {
     if (file) {
       this.uploadService.uploadFile(file).subscribe((response:any) => {
           this.dataFile = response.location;
-          console.log(this.dataFile);
-          // Update the form value here instead of binding directly
           this.typeForm.patchValue({
               fileUri: this.dataFile // Set the fileUri in the form after upload
           });

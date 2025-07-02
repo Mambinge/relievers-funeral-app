@@ -1,11 +1,9 @@
 <div class="p-6">
   <!-- Header -->
-  <!-- Header Section -->
   <div class="bg-purple-300 dark:bg-gray-800 p-6 rounded-lg shadow-sm mb-6">
     <div
       class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
     >
-      <!-- Left side -->
       <div>
         <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
           Payments Premium Report
@@ -14,10 +12,7 @@
           Manage and view premium report
         </p>
       </div>
-
-      <!-- Right side -->
       <div class="flex items-center gap-3">
-        <!-- Export button -->
         <button
           (click)="generatePDF()"
           class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
@@ -37,8 +32,25 @@
           </svg>
           Download PDF
         </button>
-
-
+        <button
+          (click)="exportToExcel()"
+          class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
+        >
+          <svg
+            class="w-4 h-4 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
+          </svg>
+          Export Excel
+        </button>
       </div>
     </div>
   </div>
@@ -84,9 +96,11 @@
         >
           <option
             *ngFor="let policyNumber of policyNumbers"
-            [value]="policyNumber"
+            [value]="policyNumber.clientAccount.policyNumber"
           >
-            {{ policyNumber }}
+            {{ policyNumber.clientAccount.name }}
+            {{ policyNumber.clientAccount.surname }} -
+            {{ policyNumber.clientAccount.policyNumber }}
           </option>
         </select>
       </div>
@@ -119,36 +133,63 @@
             scope="col"
             class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
           >
-            Column 1
+            Payment Date
           </th>
           <th
             scope="col"
             class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
           >
-            Column 2
+            Amount
           </th>
           <th
             scope="col"
             class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
           >
-            Column 3
+            Notes
+          </th>
+          <th
+            scope="col"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+          >
+            Name
+          </th>
+          <th
+            scope="col"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+          >
+            Policy Number
+          </th>
+          <th
+            scope="col"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+          >
+            ID Number
           </th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
         <tr *ngFor="let item of reportData" class="hover:bg-gray-50">
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-            {{ item.col1 }}
+            {{ item.paymentDate }}
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-            {{ item.col2 }}
+            {{ item.amount }}
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-            {{ item.col3 }}
+            {{ item.notes }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+            {{ item.name }} {{ item.surname }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+            {{ item.policyNumber }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+            {{ item.idNumber }}
           </td>
         </tr>
         <tr *ngIf="reportData.length === 0">
-          <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500">
+          <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
             No data available. Generate a report to view data.
           </td>
         </tr>
@@ -156,4 +197,3 @@
     </table>
   </div>
 </div>
-

@@ -111,7 +111,6 @@ onAgentChange(event: any) {
       this.selectedPolicyId = policyId;
       this.selectedPolicy = this.policyOptions.find(policy => policy?.id);
       if (this.selectedPolicy) {
-        console.log(this.selectedPolicy)
         this.filteredPlans = this.selectedPolicy.plans;
 
       } else {
@@ -127,10 +126,8 @@ onAgentChange(event: any) {
       this.selectedPremium = this.planOptions.find(plan => plan?.id);
       if (this.selectedPremium) {
         this.filteredPremium = this.selectedPremium.premiums;
-        console.log( this.filteredPremium)
 
         this.filteredAmount = this.selectedPremium.premiums.amount
-        console.log( this.filteredAmount)
                 this.accountsForm.patchValue({
             premiums: {
               amount: this.selectedPremium.premiums.amount
@@ -155,7 +152,6 @@ onAgentChange(event: any) {
     event.preventDefault(); 
     if (this.accountsForm.valid) { 
       // this.spinner.show()
-console.log(this.accountsForm)
       const selectedPlan = this.accountsForm.value.plan;
       const selectedPremiumName = this.accountsForm.value.plan.premiums && this.accountsForm.value.plan.premiums.length > 0 ? this.accountsForm.value.plan.premiums[0].name : '';
       const selectedAmount = this.accountsForm.value.plan.premiums && this.accountsForm.value.plan.premiums.length > 0 ? this.accountsForm.value.plan.premiums[0].amount : 0;      
@@ -186,7 +182,6 @@ console.log(this.accountsForm)
         }
       };
         this.output.emit(requestBody)
-        console.log(requestBody)
         this.spinner.hide()
 
     }

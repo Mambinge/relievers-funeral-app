@@ -36,12 +36,10 @@ export class UpdateClaimsComponent {
   } 
 
   ngOnInit() {
-    console.log(this.claimsId)
     const claimId = this.claimsId
     if (claimId) {        
       this.getClaim(claimId)
     }
-    console.log(this.claimsId)
     this.typeForm = this.fb.group({
       policyNumber: '',
       deathDate: '',
@@ -167,7 +165,6 @@ export class UpdateClaimsComponent {
     if (file) {
       this.uploadService.uploadFile(file).subscribe((response:any) => {
           this.dataFile = response.location;
-          console.log(this.dataFile);
           // Update the form value here instead of binding directly
           this.typeForm.patchValue({
               fileUri: this.dataFile // Set the fileUri in the form after upload

@@ -7,21 +7,28 @@ import { Component } from '@angular/core';
 })
 export class CommissionParametersComponent {
   filteredProducts: any;
-  
+
   exportToCSV() {
-    const headers = ['Title', 'Full Name', 'Gender', 'Nationality', 'Plan', 'Status'];
-    const rows = this.filteredProducts.map((product:any) => [
-      product.title,
-      `${product.name} ${product.surname}`,
-      product.gender,
-      product.nationality,
-      product?.plan?.name || '-',
-      product.status
+    const headers = [
+      'Title',
+      'Full Name',
+      'Gender',
+      'Nationality',
+      'Plan',
+      'Status',
+    ];
+    const rows = this.filteredProducts.map((product: any) => [
+      product.title || '',
+      `${product.name || ''} ${product.surname || ''}`.trim(),
+      product.gender || '',
+      product.nationality || '',
+      (product.plan?.name || '-'),
+      product.status || '',
     ]);
 
     let csvContent = 'data:text/csv;charset=utf-8,';
     csvContent += headers.join(',') + '\n'; // Add headers
-    rows.forEach((row:any) => {
+    rows.forEach((row: any) => {
       csvContent += row.join(',') + '\n'; // Add rows
     });
 
@@ -29,7 +36,7 @@ export class CommissionParametersComponent {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', 'clients.csv');
+    link.setAttribute('download', 'commission-parameters.csv');
     document.body.appendChild(link);
     link.click(); // Trigger the download
     document.body.removeChild(link);

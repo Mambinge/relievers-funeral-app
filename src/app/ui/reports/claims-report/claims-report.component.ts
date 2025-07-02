@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import jsPDF from 'jspdf';
-import { API } from 'src/app/shared/services';
+import { API, ApiService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-claims-report',
@@ -14,7 +14,7 @@ export class ClaimsReportComponent implements OnInit {
   form: FormGroup;
   policyNumbers: any[] = [];
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {
+  constructor(private http: HttpClient, private fb: FormBuilder,private service: ApiService) {
     this.form = this.fb.group({
       from: [''],
       to: [''],
@@ -28,9 +28,9 @@ export class ClaimsReportComponent implements OnInit {
   }
 
   fetchPolicyNumbers(): void {
-    this.http.get<any[]>(`${API.SERVICE}policies`).subscribe(
+    this.service.getAll(`${API.CLAIMS}claims`).subscribe(
       (data) => {
-        this.policyNumbers = data.map((policy) => policy.policyNumber);
+        this.policyNumbers = data.content.map((claim:any) =>claim);
       },
       (error) => {
         console.error('Error fetching policy numbers', error);

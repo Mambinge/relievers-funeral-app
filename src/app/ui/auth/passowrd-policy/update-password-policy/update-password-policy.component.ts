@@ -29,12 +29,10 @@ export class UpdatePasswordPolicyComponent {
   } 
 
   ngOnInit() {
-    console.log(this.passwordPolicyId)
     const passwordPolicyId = this.passwordPolicyId
     if (passwordPolicyId) {        
       this.getpasswordPolicy(passwordPolicyId)
     }
-    console.log(this.passwordPolicyId)
     this.typeForm = this.fb.group({
       department: '',
       regex: '',

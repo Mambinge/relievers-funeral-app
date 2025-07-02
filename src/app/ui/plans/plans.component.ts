@@ -1,89 +1,75 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { API, ApiService } from 'src/app/shared/services';
+import { ToastrService } from 'ngx-toastr';
+import { PlansService, Plan } from 'src/app/services/plans.service';
 
 @Component({
   selector: 'app-plans',
   templateUrl: './plans.component.html',
   styleUrls: ['./plans.component.css']
 })
-export class PlansComponent {
-  products:any
-  showListUsers = true;
-  currentPage = 0;
-  totalPages:any
-  plan!: Plan[]
-  policy:any
-  policies:any
+export class PlansComponent implements OnInit {
+  products: Plan[] = [];
+  policyId: string = '';
+  selectedPlan: Plan | null = null;
+  isEditModalOpen = false;
 
-  constructor(private service: ApiService, private router: Router, private route: ActivatedRoute,
-      private spinner: NgxSpinnerService,){}
+  constructor(
+    private plansService: PlansService,
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService
+  ) { }
 
-
-  ngOnInit(){
-    this.route.params.subscribe((params : any) => {
-      const policyId = params['id'];
-      // this.policy = this.getPolicy(policyId);
-      this.policy = +policyId
-
+  ngOnInit() {
+    this.route.params.subscribe((params: any) => {
+      this.policyId = params['id'];
+      this.loadPlans();
     });
-
-    this.getAll(false)
   }
 
-  getAll(reload: boolean, _$event?: Event){
-    this.service.getFromUrl(`${API.SERVICE}policies/${this.policy}`).subscribe((res) => {
-      this.products = res.plans
-
-      // this.user = res.permissions
-    })
-  }
-
-  // getAll(reload: boolean, _$event?: Event){
-  //   this.spinner.show();
-  //   this.service.getAll(`${API.SERVICE}plan?page=${this.currentPage}&size=7`).subscribe((res)=>{
-  //     this.products = res.content
-  //     this.spinner.hide();
-  //     this.totalPages = res.totalPages;
-  //   })
-  // }
-
-  changePage(newPage: number) {
-    if(newPage >= 0 && newPage < this.totalPages) {
-      this.currentPage = newPage;
-      this.getAll(false);
-    }
+  loadPlans() {
+    this.spinner.show();
+    this.plansService.getPlansForPolicy(this.policyId).subscribe(
+      (res) => {
+        this.products = res;
+        this.spinner.hide();
+      },
+      () => {
+        this.spinner.hide();
+        this.toastr.error('Failed to load plans');
+      }
+    );
   }
 
   deletePlan(id: string) {
-    this.service.delete(`${API.SERVICE}plan/${id}`).subscribe((res) => {
-      this.getAll(false)
-    });
+    this.spinner.show();
+    this.plansService.deletePlan(id).subscribe(
+      () => {
+        this.spinner.hide();
+        this.toastr.success('Plan deleted successfully');
+        this.loadPlans();
+      },
+      () => {
+        this.spinner.hide();
+        this.toastr.error('Failed to delete plan');
+      }
+    );
   }
 
-  viewPlan(id: string) {
-    this.router.navigate(['/view-plans', id]);
+  openEditModal(plan: Plan) {
+    this.selectedPlan = { ...plan };
+    this.isEditModalOpen = true;
   }
 
-  updatePlan(id: string) {
-    this.router.navigate(['/update-plans', id]);
+  closeEditModal() {
+    this.isEditModalOpen = false;
+    this.selectedPlan = null;
   }
 
   onPlanAdded() {
-    this.getAll(false);
+    this.loadPlans();
+    this.closeEditModal();
   }
-
-  toggleView() {
-    this.showListUsers = !this.showListUsers;
-  }
-}
-
-
-export interface Plan{
-  id:number,
-  name: string,
-  description: string,
-  status: string,
-  policyId:number
 }

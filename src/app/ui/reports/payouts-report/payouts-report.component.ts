@@ -14,7 +14,7 @@ export class PayoutsReportComponent implements OnInit {
   form: FormGroup;
   claims: any[] = [];
 
-  constructor(private service: ApiService, private fb: FormBuilder) {
+  constructor(private http: HttpClient,private service: ApiService, private fb: FormBuilder) {
     this.form = this.fb.group({
       from: [''],
       to: [''],
@@ -30,7 +30,8 @@ export class PayoutsReportComponent implements OnInit {
   fetchClaims(): void {
     this.service.getAll(`${API.CLAIMS}claims`).subscribe(
       (data) => {
-        this.claims = data;
+        this.claims = data.content.map((claim:any) =>claim);
+
       },
       (error) => {
         console.error('Error fetching policy numbers', error);
@@ -40,16 +41,16 @@ export class PayoutsReportComponent implements OnInit {
 
   fetchReportData(): void {
     const { from, to, policyNumber } = this.form.value;
-    const url = `${API.REPORTS}payments/premium?from=${from}&to=${to}&policyNumber=${policyNumber}`;
-    // this.service.get<any[]>(url).subscribe(
-    //   (data) => {
-    //     this.reportData = data;
-    //     this.generatePDF();
-    //   },
-    //   (error) => {
-    //     console.error('Error fetching report data', error);
-    //   }
-    // );
+    const url = `${API.REPORTS}payments/payouts?from=${from}&to=${to}&claimId=${policyNumber}`;
+    this.http.get<any[]>(url).subscribe(
+      (data) => {
+        this.reportData = data;
+        this.generatePDF();
+      },
+      (error) => {
+        console.error('Error fetching report data', error);
+      }
+    );
   }
 
   generatePDF(): void {

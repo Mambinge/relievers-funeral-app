@@ -55,10 +55,7 @@ export class AddClaimApprovalComponent implements AfterViewInit {
     }
   }
   ngOnInit() {
-    console.log(this.account);
-
     this.fetchWorkFlow();
-    console.log(this.policyNumber)
     this.typeForm = this.fb.group({
       claimId: this.claimId,
       status: this.status,
@@ -85,18 +82,15 @@ export class AddClaimApprovalComponent implements AfterViewInit {
   fetchWorkFlow() {
     this.service.getFromUrl(`${API.SERVICE}workflows`).subscribe((data) => {
       this.workFlowOptions = data.content;
-      console.log(this.workFlowOptions)
     });
   }
 
   onSubmit(event: Event) {
     event.preventDefault();
     if (this.typeForm.valid) {
-      console.log(this.typeForm.value)
       this.spinner.show();
 
       // const selectedWorkFlow = this.typeForm.get('workFlow')?.value;
-      // console.log(selectedWorkFlow)
       // if (selectedWorkFlow) {
       //   this.typeForm.patchValue({
       //     workFlow: {
@@ -123,8 +117,6 @@ export class AddClaimApprovalComponent implements AfterViewInit {
           id: this.account?.id
         }
       };
-      console.log(this.account);
-      console.log(requestBody);
 
       this.service
         .postToUrl(`${API.CLAIMS}claim-approval`, requestBody)

@@ -51,7 +51,6 @@ export class AddBankDetailsComponent {
     // if (this.accountsForm.valid) { 
       this.spinner.show()
         this.output.emit(this.accountsForm.value)
-        console.log(this.accountsForm.value)
         this.spinner.hide()
 
     // }

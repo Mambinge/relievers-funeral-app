@@ -34,7 +34,6 @@ export class AddPayoutsComponent {
   ) {}
 
   ngOnInit() {
-    console.log(this.policyNumber);
     this.number = this.policyNumber;
 
     // this.isAddMode = !this.id;
@@ -67,7 +66,6 @@ export class AddPayoutsComponent {
   getClaims() {
     this.http.getFromUrl(`${API.CLAIMS}claims`).subscribe((res) => {
       this.claimOptions = res.content;
-      console.log(this.claimOptions);
     });
   }
 

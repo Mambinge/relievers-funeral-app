@@ -49,12 +49,9 @@ export class ViewClaimsComponent {
 getApprovals(accountsId: any) {
   this.service.getFromUrl(`${API.CLAIMS}claim-approval?page=0&size=1000&accountId=${accountsId}`).subscribe((res) => {
     this.approvals = res.content;
-    console.log(this.approvals);
-
     if (Array.isArray(this.approvals)) {
       this.approvalName = this.approvals.map(approval => approval.workFlowStage);
       this.approvalOrder = this.approvals.map(approval => approval.workFlowStage.order)
-      console.log(this.approvalName);
     }
   });
 }
@@ -62,7 +59,6 @@ getApprovals(accountsId: any) {
 getWorkflow(accountsId:any){
   this.service.getFromUrl(`${API.CLAIMS}claim-approval?page=0&size=100&accountId=${accountsId}`).subscribe((res) => {
     this.workFlow = res.content[0]
-    console.log(this.workFlow)
   })
 
 }
@@ -72,18 +68,9 @@ getWorkflow(accountsId:any){
 this.policyNumber = res.clientAccount.policyNumber
 this.claimId = res.id
 this.clientAccount = res.clientAccount.id
-console.log(this.clientAccount)
-
-
-      console.log(this.account)
     })
   }
-  // getWorkflow(accountsId:any){
-  //   this.service.getFromUrl(`${API.CLIENTS}account-approval?page=0&size=1&accountId=${accountsId}`).subscribe((res) => {
-  //     this.workFlow = res.content[0]
-  //   })
 
-  // }
   approvalAdded(){
     this.getAccount(this.accountId)
     this.getApprovals(this.accountId)
@@ -116,8 +103,6 @@ console.log(this.clientAccount)
 
         }
       };
-      console.log(this.account);
-      console.log(requestBody);
 
       this.service
         .postToUrl(`${API.CLAIMS}claim-approval`, requestBody)
@@ -133,8 +118,6 @@ console.log(this.clientAccount)
 
   
   payouts(event:any){
-    console.log(event)
-    console.log(this.clientAccount)
     this.router.navigate(['/client-payouts', this.clientAccount, this.account.id]);  }
 
   }

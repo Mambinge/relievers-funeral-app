@@ -30,12 +30,10 @@ export class UpdateRolesComponent {
   } 
 
   ngOnInit() {
-    console.log(this.rolesId)
     const roleId = this.rolesId
     if (roleId) {        
       this.getrole(roleId)
     }
-    console.log(this.rolesId)
     this.typeForm = this.fb.group({
       name: '',
       department: '',

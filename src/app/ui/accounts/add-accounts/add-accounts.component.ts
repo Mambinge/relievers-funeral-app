@@ -45,7 +45,6 @@ ngOnInit() {
 
     setAccount(account: Accounts, name: string) {
       this.personalDetails = account;
-      console.log(this.personalDetails)
       if (this.currentStep < 4) {
       this.currentStep++;
     } 
@@ -74,7 +73,6 @@ ngOnInit() {
     const personalDetails = this.personalDetails
     const contactDetails = this.contactDetails 
     const bankDetails = this.bankDetails
-console.log(personalDetails)
     const requestBody = {
       title: personalDetails.title,
       name: personalDetails.name,
@@ -108,12 +106,9 @@ console.log(personalDetails)
       }
     };
    
-      console.log(requestBody)
-
       this.http.postToUrl(`${API.CLIENTS}clients`, requestBody).subscribe((res)=>{
         this.data = res
         this.accountId = res.id
-        console.log(this.accountId)
         this.spinner.hide()
         this.alert.showSuccess("Saved Successfully")
         if (this.currentStep < 4) {

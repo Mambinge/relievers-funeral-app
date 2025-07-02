@@ -33,8 +33,6 @@ export class AddClientFilesComponent {
   } 
 
   ngOnInit(){
-    console.log(this.accountId)
-
     this.route.params.subscribe((params : any) => {
       const accountsId = params['id'];
       this.accountsId = accountsId

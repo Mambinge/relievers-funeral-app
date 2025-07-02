@@ -1,100 +1,63 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Status } from 'src/app/models/policy-status';
-import { API, ApiService } from 'src/app/shared/services';
-import { first } from 'rxjs/operators';
-import { Plan } from '../plans.component';
-import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AlertService } from 'src/app/shared/services/alert.service';
-import { ModalOptions, InstanceOptions, Modal } from 'flowbite';
+import { ToastrService } from 'ngx-toastr';
+import { Plan, PlansService } from 'src/app/services/plans.service';
 
 @Component({
   selector: 'app-update-plan',
   templateUrl: './update-plan.component.html',
   styleUrls: ['./update-plan.component.css']
 })
-export class UpdatePlanComponent {
-  planForm!: FormGroup;
+export class UpdatePlanComponent implements OnChanges {
+  planForm: FormGroup;
   statusOptions = Object.values(Status);
-  data: any
-  @Input() planId!: Plan | any;
-  @Output() planAdded : EventEmitter<number> = new EventEmitter<number>();
-  planOptions: any[] = [];
-  planOption: any[] = [];
-  plan:any
 
-  constructor(private spinner: NgxSpinnerService,private alert: AlertService, private route: ActivatedRoute,
-   private fb: FormBuilder, private service: ApiService) {
-  } 
+  @Input() planToEdit: Plan | null = null;
+  @Output() planAdded = new EventEmitter<void>();
+  @Output() closeModal = new EventEmitter<void>();
 
-  ngOnInit() {
-    this.service.getFromUrl(`${API.SERVICE}policies`)
-    .subscribe((res)=>{
-      this.planOptions = res.content
-      this.route.params.subscribe((params : any) => {
-        const planId = params['id'];
-        this.planId = planId
-        this.plan = this.getPlan(planId);
-      });
-    });
-
+  constructor(
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService,
+    private plansService: PlansService
+  ) {
     this.planForm = this.fb.group({
-      name: '',
-      description: '',
-      status: '',
-      policyId: ''
-    });  
- 
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      status: ['', Validators.required],
+      policyId: ['', Validators.required]
+    });
   }
 
-  getPlan(planId:any){
-    if (planId) {
-      this.service.getFromUrl(`${API.SERVICE}plan/${planId}`).pipe(first())
-        .subscribe(x => this.planForm.patchValue(x));
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['planToEdit'] && this.planToEdit) {
+      this.planForm.patchValue(this.planToEdit);
     }
   }
 
-
-  onSubmit(event: Event) {
-    event.preventDefault(); 
-    if (this.planForm.valid) { 
-      this.spinner.show()
-      this.service.updateToUrl(`${API.SERVICE}plan/${this.planId}`, this.planForm.value).subscribe((res) => {
-        this.data = res;
-        this.spinner.hide()
-        this.alert.showSuccess("Updated Successfully")
-        this.closeModal();
-        this.planAdded.emit(res);
-      });
+  onSubmit(event: Event): void {
+    event.preventDefault();
+    if (this.planForm.valid && this.planToEdit) {
+      this.spinner.show();
+      this.plansService.updatePlan(this.planToEdit.id, this.planForm.value).subscribe(
+        () => {
+          this.spinner.hide();
+          this.toastr.success('Plan updated successfully');
+          this.planAdded.emit();
+          this.onCloseModal();
+        },
+        () => {
+          this.spinner.hide();
+          this.toastr.error('Failed to update plan');
+        }
+      );
     }
   }
 
-
-  closeModal() {
-    const modalOptions: ModalOptions = {
-      onHide: () => {
-      },
-  };
-  const instanceOptions: InstanceOptions = {
-    id: 'modal',
-    override: true
-  };
-    const modal = new Modal(document.getElementById('modal'), modalOptions, instanceOptions);
-    modal.hide();
+  onCloseModal(): void {
+    this.closeModal.emit();
   }
-
-  showModal() {
-    const modalOptions: ModalOptions = {
-      onShow: () => {
-      },
-  };
-  const instanceOptions: InstanceOptions = {
-    id: 'modal',
-    override: true
-  };
-    const modal = new Modal(document.getElementById('modal'), modalOptions, instanceOptions);
-    modal.show();
-  }
-
 }

@@ -30,7 +30,6 @@ export class PlanPremiumsComponent {
   getAll(reload: boolean, _$event?: Event){
     this.service.getFromUrl(`${API.SERVICE}plan/${this.plan}`).subscribe((res) => {
       this.products = res.premiums
-      console.log(this.products)
     })
   }
 
