@@ -18,14 +18,14 @@ export class UpdateDeathTypeComponent {
   statusOptions = Object.values(Status);
   data: any
   @Input() deathTypesId!: string;
-  deathType:any
+  deathType: any
   @Output() deathTypeAdded = new EventEmitter<void>();
 
-  constructor(private spinner: NgxSpinnerService,private alert: AlertService, private route: ActivatedRoute,
+  constructor(private spinner: NgxSpinnerService, private alert: AlertService, private route: ActivatedRoute,
     private router: Router, private fb: FormBuilder, private service: ApiService) {
-  } 
+  }
 
-  ngOnInit(){
+  ngOnInit() {
     this.deathTypeForm = this.fb.group({
       name: '',
       description: '',
@@ -44,13 +44,13 @@ export class UpdateDeathTypeComponent {
         }
       );
   }
-  
-  
+
+
 
   onSubmit(event: Event, deathTypesId: any) {
-    event.preventDefault(); 
+    event.preventDefault();
     if (this.deathTypeForm.valid) {
-      this.spinner.show() 
+      this.spinner.show()
       this.service.updateToUrl(`${API.CLAIMS}type/${deathTypesId}`, this.deathTypeForm.value).subscribe((res) => {
         this.data = res;
         this.spinner.hide()
@@ -74,20 +74,20 @@ export class UpdateDeathTypeComponent {
       override: true
     };
     const modal = new Modal(document.getElementById('modal'), modalOptions, instanceOptions);
-    
+
     // Ensure the modal is being properly shown
     modal.show();
   }
-  
+
   closeModal() {
     const modalOptions: ModalOptions = {
       onHide: () => {
       },
-  };
-  const instanceOptions: InstanceOptions = {
-    id: 'modal',
-    override: true
-  };
+    };
+    const instanceOptions: InstanceOptions = {
+      id: 'modal',
+      override: true
+    };
     const modal = new Modal(document.getElementById('modal'), modalOptions, instanceOptions);
     modal.hide();
   }
